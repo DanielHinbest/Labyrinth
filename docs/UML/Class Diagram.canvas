@@ -1,0 +1,26 @@
+{
+	"nodes":[
+		{"id":"ee6a9a6fb63d7e78","type":"group","x":-400,"y":-120,"width":290,"height":160,"label":"Marble"},
+		{"id":"d754581a165465ea","type":"group","x":-60,"y":-120,"width":290,"height":160,"label":"Wall"},
+		{"id":"835c797015bab1dd","type":"group","x":260,"y":-120,"width":290,"height":160,"label":"Goal"},
+		{"id":"47d727b0371afe0c","type":"group","x":-400,"y":320,"width":290,"height":160,"label":"Hole"},
+		{"id":"893e83616164954a","type":"group","x":-60,"y":320,"width":290,"height":160,"label":"Start Position"},
+		{"id":"373af5bbe045da7e","type":"group","x":260,"y":320,"width":290,"height":160,"label":"Timer"},
+		{"id":"36e2cfa9de2d5c6e","x":-60,"y":100,"width":290,"height":160,"type":"group","label":"Power-ups"},
+		{"id":"1ac91a330c1b5327","type":"text","text":"","x":-380,"y":-40,"width":250,"height":60},
+		{"id":"e58597ea69e9b62d","type":"text","text":"","x":-380,"y":-100,"width":250,"height":60},
+		{"id":"2531086920234b9b","type":"text","text":"","x":-40,"y":-100,"width":250,"height":60},
+		{"id":"505edde9f6d7a6c8","type":"text","text":"","x":-40,"y":-40,"width":250,"height":60},
+		{"id":"f84d15ed2bf3c02f","type":"text","text":"","x":280,"y":-100,"width":250,"height":60},
+		{"id":"f262ffe80f635b7f","type":"text","text":"","x":280,"y":-40,"width":250,"height":60},
+		{"id":"af4fd01eb5343581","type":"text","text":"","x":280,"y":340,"width":250,"height":60},
+		{"id":"a2721a2cd02d34de","type":"text","text":"","x":280,"y":400,"width":250,"height":60},
+		{"id":"3f19ff402456d6ba","type":"text","text":"","x":-40,"y":400,"width":250,"height":60},
+		{"id":"c7f8497145ec78f0","type":"text","text":"","x":-40,"y":340,"width":250,"height":60},
+		{"id":"7598335de85de360","type":"text","text":"","x":-380,"y":340,"width":250,"height":60},
+		{"id":"3f95e6a2b4df60e7","type":"text","text":"","x":-380,"y":400,"width":250,"height":60},
+		{"id":"1e4def958b32e195","x":-40,"y":120,"width":250,"height":60,"type":"text","text":""},
+		{"id":"90fb2ca009020310","x":-40,"y":180,"width":250,"height":60,"type":"text","text":""}
+	],
+	"edges":[]
+}
