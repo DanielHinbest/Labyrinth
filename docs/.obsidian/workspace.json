@@ -15,8 +15,8 @@
               "state": {
                 "file": "UML/Class Diagram.canvas",
                 "viewState": {
-                  "x": -211.4189990234376,
-                  "y": 159.50000000000006,
+                  "x": 44.46000000000001,
+                  "y": 640,
                   "zoom": 0
                 }
               }
@@ -72,7 +72,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "11acdd453dea1103",
