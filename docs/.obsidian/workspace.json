@@ -13,11 +13,11 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "UML/Class Diagram.canvas",
+                "file": "UML/View Scoreboard Activity Diagram.canvas",
                 "viewState": {
-                  "x": 44.46000000000001,
-                  "y": 62.40209335954893,
-                  "zoom": -0.3333333333333333
+                  "x": -264.3058651682164,
+                  "y": 1257.881405421079,
+                  "zoom": -0.6666666666666667
                 }
               }
             }
@@ -72,8 +72,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "11acdd453dea1103",
@@ -89,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "UML/Class Diagram.canvas",
+                "file": "UML/View Scoreboard Activity Diagram.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,7 +105,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "UML/Class Diagram.canvas",
+                "file": "UML/View Scoreboard Activity Diagram.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -129,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UML/Class Diagram.canvas"
+                "file": "UML/View Scoreboard Activity Diagram.canvas"
               }
             }
           }
@@ -152,8 +151,12 @@
   },
   "active": "857c5f1cdc4e06e5",
   "lastOpenFiles": [
-    "Mobile Course Project.pdf",
+    "Untitled.md",
+    "UML/View Scoreboard Activity Diagram.canvas",
     "UML/Class Diagram.canvas",
+    "UML/View Scoreboard Activity Diagram.canvas",
+    "UML/Untitled.md",
+    "Mobile Course Project.pdf",
     "Proposal.md",
     "Untitled",
     "UML",
