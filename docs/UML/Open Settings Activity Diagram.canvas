@@ -1,0 +1,262 @@
+{
+  "nodes": [
+    {
+      "id": "a0773a8567ff4541",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "circle"
+      },
+      "x": -160,
+      "y": -320,
+      "width": 60,
+      "height": 60
+    },
+    {
+      "id": "faabaef89b4460d9",
+      "type": "text",
+      "text": "User clicks menu icon",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -220,
+      "y": -100,
+      "width": 180,
+      "height": 60
+    },
+    {
+      "id": "82560f85ab869cd9",
+      "type": "text",
+      "text": "User clicks settings option",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -220,
+      "y": 100,
+      "width": 180,
+      "height": 60
+    },
+    {
+      "id": "6f670aa93e130724",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -160,
+      "y": 380,
+      "width": 60,
+      "height": 60
+    },
+    {
+      "id": "637cdebca5906051",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -165,
+      "y": 940,
+      "width": 70,
+      "height": 60
+    },
+    {
+      "id": "a8beb1066d748626",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond",
+        "textAlign": "center"
+      },
+      "x": -165,
+      "y": 1160,
+      "width": 70,
+      "height": 60
+    },
+    {
+      "id": "74c8ab5482431dbf",
+      "type": "text",
+      "text": "User changes the difficulty",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -100,
+      "y": 680,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "1338d3a5f861f923",
+      "type": "text",
+      "text": "Volume increases or decreases",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -420,
+      "y": 680,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "bbaa3af2129847d3",
+      "type": "text",
+      "text": "The settings are reverted",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -40,
+      "y": 1340,
+      "width": 220,
+      "height": 60
+    },
+    {
+      "id": "21b92bc28dc280f1",
+      "type": "text",
+      "text": "The settings are saved",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -440,
+      "y": 1340,
+      "width": 220,
+      "height": 60
+    },
+    {
+      "id": "9a7e608d30c03d30",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -160,
+      "y": 1580,
+      "width": 60,
+      "height": 60
+    },
+    {
+      "id": "815cdc0a4b263b32",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "circle"
+      },
+      "x": -160,
+      "y": 1800,
+      "width": 60,
+      "height": 60
+    }
+  ],
+  "edges": [
+    {
+      "id": "c2bfee88e9eb8180",
+      "styleAttributes": {},
+      "fromNode": "a0773a8567ff4541",
+      "fromSide": "bottom",
+      "toNode": "faabaef89b4460d9",
+      "toSide": "top"
+    },
+    {
+      "id": "31479afe0b499f84",
+      "styleAttributes": {},
+      "fromNode": "faabaef89b4460d9",
+      "fromSide": "bottom",
+      "toNode": "82560f85ab869cd9",
+      "toSide": "top"
+    },
+    {
+      "id": "ebd6fad1794b213a",
+      "styleAttributes": {},
+      "fromNode": "82560f85ab869cd9",
+      "fromSide": "bottom",
+      "toNode": "6f670aa93e130724",
+      "toSide": "top",
+      "label": "User selects a setting to change"
+    },
+    {
+      "id": "873b933306e12690",
+      "styleAttributes": {},
+      "fromNode": "6f670aa93e130724",
+      "fromSide": "bottom",
+      "toNode": "1338d3a5f861f923",
+      "toSide": "top",
+      "label": "User selects volume"
+    },
+    {
+      "id": "08f7a17df2799701",
+      "styleAttributes": {},
+      "fromNode": "6f670aa93e130724",
+      "fromSide": "bottom",
+      "toNode": "74c8ab5482431dbf",
+      "toSide": "top",
+      "label": "User changes difficulty"
+    },
+    {
+      "id": "87a1024f9f177e1b",
+      "styleAttributes": {},
+      "fromNode": "74c8ab5482431dbf",
+      "fromSide": "bottom",
+      "toNode": "637cdebca5906051",
+      "toSide": "top"
+    },
+    {
+      "id": "a6fb12ba51c05703",
+      "styleAttributes": {},
+      "fromNode": "1338d3a5f861f923",
+      "fromSide": "bottom",
+      "toNode": "637cdebca5906051",
+      "toSide": "top"
+    },
+    {
+      "id": "c962689184190c08",
+      "styleAttributes": {},
+      "fromNode": "637cdebca5906051",
+      "fromSide": "bottom",
+      "toNode": "a8beb1066d748626",
+      "toSide": "top",
+      "label": "User finishes in the settings menu"
+    },
+    {
+      "id": "1f13403371fe58c0",
+      "styleAttributes": {},
+      "fromNode": "a8beb1066d748626",
+      "fromSide": "bottom",
+      "toNode": "21b92bc28dc280f1",
+      "toSide": "top",
+      "label": "User selects save"
+    },
+    {
+      "id": "5366406373fc3bc9",
+      "styleAttributes": {},
+      "fromNode": "a8beb1066d748626",
+      "fromSide": "bottom",
+      "toNode": "bbaa3af2129847d3",
+      "toSide": "top",
+      "label": "User does not save"
+    },
+    {
+      "id": "6b8d20cfeb17367b",
+      "styleAttributes": {},
+      "fromNode": "bbaa3af2129847d3",
+      "fromSide": "bottom",
+      "toNode": "9a7e608d30c03d30",
+      "toSide": "top"
+    },
+    {
+      "id": "b5bf0aafd1e198c5",
+      "styleAttributes": {},
+      "fromNode": "21b92bc28dc280f1",
+      "fromSide": "bottom",
+      "toNode": "9a7e608d30c03d30",
+      "toSide": "top"
+    },
+    {
+      "id": "2c8403266e703cc2",
+      "styleAttributes": {},
+      "fromNode": "9a7e608d30c03d30",
+      "fromSide": "bottom",
+      "toNode": "815cdc0a4b263b32",
+      "toSide": "top"
+    }
+  ],
+  "metadata": {}
+}
