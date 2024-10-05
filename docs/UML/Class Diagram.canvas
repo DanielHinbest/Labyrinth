@@ -2,18 +2,18 @@
   "nodes": [
     {
       "id": "0d760d73869b79cf",
-      "x": -2060,
-      "y": 480,
+      "type": "group",
+      "x": -2360,
+      "y": 27,
       "width": 740,
       "height": 660,
-      "type": "group",
       "label": "Legend"
     },
     {
       "id": "2e9681f5f96effcc",
       "type": "group",
-      "x": -1695,
-      "y": 840,
+      "x": -1995,
+      "y": 387,
       "width": 300,
       "height": 260,
       "label": "Class"
@@ -24,8 +24,8 @@
       "styleAttributes": {
         "border": "dashed"
       },
-      "x": -2040,
-      "y": 570,
+      "x": -2340,
+      "y": 117,
       "width": 300,
       "height": 260,
       "label": "Abstract Class"
@@ -35,20 +35,10 @@
       "type": "group",
       "styleAttributes": {},
       "x": -920,
-      "y": -200,
+      "y": 647,
       "width": 290,
       "height": 180,
       "label": "Marble"
-    },
-    {
-      "id": "d754581a165465ea",
-      "type": "group",
-      "styleAttributes": {},
-      "x": -920,
-      "y": 40,
-      "width": 290,
-      "height": 180,
-      "label": "Wall"
     },
     {
       "id": "47d727b0371afe0c",
@@ -57,20 +47,10 @@
         "border": "dashed"
       },
       "x": -920,
-      "y": 280,
+      "y": 378,
       "width": 290,
       "height": 180,
       "label": "Hole"
-    },
-    {
-      "id": "893e83616164954a",
-      "type": "group",
-      "styleAttributes": {},
-      "x": -920,
-      "y": 520,
-      "width": 290,
-      "height": 180,
-      "label": "StartPos"
     },
     {
       "id": "66b325f7179e003e",
@@ -78,20 +58,80 @@
       "styleAttributes": {
         "border": "dashed"
       },
-      "x": -1360,
-      "y": 160,
+      "x": -1500,
+      "y": 378,
       "width": 290,
       "height": 180,
       "label": "GameElement"
+    },
+    {
+      "id": "d754581a165465ea",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -920,
+      "y": 90,
+      "width": 290,
+      "height": 103,
+      "label": "Wall"
+    },
+    {
+      "id": "3ebab148c2f5a695",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -160,
+      "y": 110,
+      "width": 290,
+      "height": 74,
+      "label": "Achievement"
+    },
+    {
+      "id": "8feb7f5e30acd758",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -160,
+      "y": 235,
+      "width": 290,
+      "height": 74,
+      "label": "Texture"
+    },
+    {
+      "id": "b451ef9139bd0833",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -160,
+      "y": 354,
+      "width": 290,
+      "height": 74,
+      "label": "Sound"
+    },
+    {
+      "id": "20c6afc87e79be48",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -160,
+      "y": 480,
+      "width": 290,
+      "height": 74,
+      "label": "Timer"
+    },
+    {
+      "id": "893e83616164954a",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -920,
+      "y": 247,
+      "width": 290,
+      "height": 65,
+      "label": "StartPos"
     },
     {
       "id": "7a7d35d52d0fe9f9",
       "type": "group",
       "styleAttributes": {},
       "x": -520,
-      "y": 280,
-      "width": 290,
-      "height": 180,
+      "y": 378,
+      "width": 260,
+      "height": 60,
       "label": "Goal"
     },
     {
@@ -99,176 +139,10 @@
       "type": "group",
       "styleAttributes": {},
       "x": -520,
-      "y": 520,
-      "width": 290,
-      "height": 180,
+      "y": 498,
+      "width": 260,
+      "height": 60,
       "label": "BadHole"
-    },
-    {
-      "id": "373af5bbe045da7e",
-      "type": "group",
-      "styleAttributes": {},
-      "x": -60,
-      "y": 380,
-      "width": 290,
-      "height": 160,
-      "label": "Timer"
-    },
-    {
-      "id": "9bbf197fa3d6e8d6",
-      "type": "group",
-      "styleAttributes": {},
-      "x": 15,
-      "y": 120,
-      "width": 290,
-      "height": 160,
-      "label": "Sound"
-    },
-    {
-      "id": "638f5ecefc982f44",
-      "type": "group",
-      "styleAttributes": {},
-      "x": 15,
-      "y": -340,
-      "width": 290,
-      "height": 160,
-      "label": "Achievement"
-    },
-    {
-      "id": "72a353f76c3084ee",
-      "type": "group",
-      "styleAttributes": {},
-      "x": 15,
-      "y": -110,
-      "width": 290,
-      "height": 160,
-      "label": "Texture"
-    },
-    {
-      "id": "e58597ea69e9b62d",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": -180,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "55cc2075fec4ca9a",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -500,
-      "y": 300,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "0aa26cab458f2b17",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -500,
-      "y": 380,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "97754fc55956e1d2",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -500,
-      "y": 540,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "f1ec7c0e1cc77efb",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -500,
-      "y": 620,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "2531086920234b9b",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": 60,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "505edde9f6d7a6c8",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": 140,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "1ac91a330c1b5327",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": -100,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "3f95e6a2b4df60e7",
-      "type": "text",
-      "text": "fall_sound",
-      "styleAttributes": {
-        "border": "dashed"
-      },
-      "x": -900,
-      "y": 380,
-      "width": 250,
-      "height": 60,
-      "color": "3"
-    },
-    {
-      "id": "7598335de85de360",
-      "type": "text",
-      "text": "on_marble_fall",
-      "styleAttributes": {
-        "border": "dashed"
-      },
-      "x": -900,
-      "y": 300,
-      "width": 250,
-      "height": 60,
-      "color": "3"
-    },
-    {
-      "id": "c7f8497145ec78f0",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": 540,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "3f19ff402456d6ba",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": 620,
-      "width": 250,
-      "height": 60
     },
     {
       "id": "503c796828911549",
@@ -278,8 +152,8 @@
         "border": "dashed",
         "shape": null
       },
-      "x": -2020,
-      "y": 590,
+      "x": -2320,
+      "y": 137,
       "width": 260,
       "height": 51,
       "color": "3"
@@ -291,8 +165,8 @@
       "styleAttributes": {
         "shape": "pill"
       },
-      "x": -2020,
-      "y": 670,
+      "x": -2320,
+      "y": 217,
       "width": 260,
       "height": 60,
       "color": "3"
@@ -305,8 +179,20 @@
         "border": null,
         "shape": "pill"
       },
-      "x": -2020,
-      "y": 750,
+      "x": -2320,
+      "y": 297,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "4fa9b5722205bdb9",
+      "type": "text",
+      "text": "global variable",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -2320,
+      "y": 567,
       "width": 260,
       "height": 60
     },
@@ -315,8 +201,8 @@
       "type": "text",
       "text": "Example code\n```dart\nvoid main() => runApp(MyApp());\n```",
       "styleAttributes": {},
-      "x": -1710,
-      "y": 580,
+      "x": -2010,
+      "y": 127,
       "width": 360,
       "height": 120
     },
@@ -328,8 +214,8 @@
         "shape": null,
         "border": null
       },
-      "x": -1675,
-      "y": 860,
+      "x": -1975,
+      "y": 407,
       "width": 260,
       "height": 60,
       "color": "3"
@@ -339,8 +225,8 @@
       "type": "text",
       "text": "variable",
       "styleAttributes": {},
-      "x": -1675,
-      "y": 940,
+      "x": -1975,
+      "y": 487,
       "width": 260,
       "height": 60
     },
@@ -349,30 +235,54 @@
       "type": "text",
       "text": "?null safe variable",
       "styleAttributes": {},
-      "x": -1675,
-      "y": 1020,
+      "x": -1975,
+      "y": 567,
       "width": 260,
       "height": 60
     },
     {
-      "id": "4fa9b5722205bdb9",
+      "id": "2531086920234b9b",
       "type": "text",
-      "text": "global variable",
-      "styleAttributes": {
-        "shape": "pill"
-      },
-      "x": -2020,
-      "y": 1020,
-      "width": 260,
+      "text": "wall type",
+      "styleAttributes": {},
+      "x": -900,
+      "y": 110,
+      "width": 250,
       "height": 60
+    },
+    {
+      "id": "7598335de85de360",
+      "type": "text",
+      "text": "When the marble falls through",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -900,
+      "y": 398,
+      "width": 250,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "3f95e6a2b4df60e7",
+      "type": "text",
+      "text": "Fall sound",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -900,
+      "y": 478,
+      "width": 250,
+      "height": 60,
+      "color": "3"
     },
     {
       "id": "0e65b9f7b2d60711",
       "type": "text",
       "text": "position",
       "styleAttributes": {},
-      "x": -1340,
-      "y": 180,
+      "x": -1480,
+      "y": 398,
       "width": 250,
       "height": 60
     },
@@ -381,88 +291,28 @@
       "type": "text",
       "text": "?texture Texture",
       "styleAttributes": {},
-      "x": -1340,
-      "y": 260,
+      "x": -1480,
+      "y": 478,
       "width": 250,
       "height": 60
     },
     {
-      "id": "a28a2b2301ac7597",
+      "id": "e58597ea69e9b62d",
       "type": "text",
-      "text": "",
+      "text": "velocity",
       "styleAttributes": {},
-      "x": 35,
-      "y": -90,
-      "width": 250,
-      "height": 50
-    },
-    {
-      "id": "56b3f18a71b646f0",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 35,
-      "y": -30,
-      "width": 250,
-      "height": 50
-    },
-    {
-      "id": "af4fd01eb5343581",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -40,
-      "y": 400,
+      "x": -900,
+      "y": 667,
       "width": 250,
       "height": 60
     },
     {
-      "id": "a2721a2cd02d34de",
+      "id": "1ac91a330c1b5327",
       "type": "text",
-      "text": "",
+      "text": "acceleration",
       "styleAttributes": {},
-      "x": -40,
-      "y": 460,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "5f8c408f33bbb2f5",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 35,
-      "y": 140,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "fceb3095654add5f",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 35,
-      "y": 200,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "4040e2c5639dd8ab",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 35,
-      "y": -320,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "e988fbcb42fe11c9",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 35,
-      "y": -260,
+      "x": -900,
+      "y": 747,
       "width": 250,
       "height": 60
     }
