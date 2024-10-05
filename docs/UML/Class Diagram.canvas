@@ -1,23 +1,43 @@
 {
   "nodes": [
     {
-      "id": "76abe046ead5b3b1",
+      "id": "0d760d73869b79cf",
+      "x": -2060,
+      "y": 480,
+      "width": 740,
+      "height": 660,
       "type": "group",
-      "styleAttributes": {},
-      "x": -940,
-      "y": -480,
-      "width": 705,
-      "height": 920,
-      "label": "Objects"
+      "label": "Legend"
+    },
+    {
+      "id": "2e9681f5f96effcc",
+      "type": "group",
+      "x": -1695,
+      "y": 840,
+      "width": 300,
+      "height": 260,
+      "label": "Class"
+    },
+    {
+      "id": "0d69f67ed4dedf90",
+      "type": "group",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -2040,
+      "y": 570,
+      "width": 300,
+      "height": 260,
+      "label": "Abstract Class"
     },
     {
       "id": "ee6a9a6fb63d7e78",
       "type": "group",
       "styleAttributes": {},
-      "x": -720,
-      "y": -160,
+      "x": -920,
+      "y": -200,
       "width": 290,
-      "height": 160,
+      "height": 180,
       "label": "Marble"
     },
     {
@@ -27,126 +47,150 @@
       "x": -920,
       "y": 40,
       "width": 290,
-      "height": 160,
+      "height": 180,
       "label": "Wall"
-    },
-    {
-      "id": "835c797015bab1dd",
-      "type": "group",
-      "styleAttributes": {},
-      "x": -545,
-      "y": 40,
-      "width": 290,
-      "height": 160,
-      "label": "Goal"
     },
     {
       "id": "47d727b0371afe0c",
       "type": "group",
-      "styleAttributes": {},
-      "x": 595,
-      "y": -200,
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -920,
+      "y": 280,
       "width": 290,
-      "height": 160,
+      "height": 180,
       "label": "Hole"
     },
     {
       "id": "893e83616164954a",
       "type": "group",
       "styleAttributes": {},
-      "x": -545,
-      "y": 260,
+      "x": -920,
+      "y": 520,
       "width": 290,
-      "height": 160,
-      "label": "Start Position"
+      "height": 180,
+      "label": "StartPos"
+    },
+    {
+      "id": "66b325f7179e003e",
+      "type": "group",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -1360,
+      "y": 160,
+      "width": 290,
+      "height": 180,
+      "label": "GameElement"
+    },
+    {
+      "id": "7a7d35d52d0fe9f9",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -520,
+      "y": 280,
+      "width": 290,
+      "height": 180,
+      "label": "Goal"
+    },
+    {
+      "id": "0c36f6af6b33a24e",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -520,
+      "y": 520,
+      "width": 290,
+      "height": 180,
+      "label": "BadHole"
     },
     {
       "id": "373af5bbe045da7e",
       "type": "group",
       "styleAttributes": {},
-      "x": 260,
-      "y": 320,
+      "x": -60,
+      "y": 380,
       "width": 290,
       "height": 160,
       "label": "Timer"
     },
     {
-      "id": "36e2cfa9de2d5c6e",
-      "type": "group",
-      "styleAttributes": {},
-      "x": -920,
-      "y": 260,
-      "width": 290,
-      "height": 160,
-      "label": "Power-ups"
-    },
-    {
       "id": "9bbf197fa3d6e8d6",
       "type": "group",
       "styleAttributes": {},
-      "x": 740,
-      "y": 340,
+      "x": 15,
+      "y": 120,
       "width": 290,
       "height": 160,
-      "label": "Sounds"
+      "label": "Sound"
     },
     {
       "id": "638f5ecefc982f44",
       "type": "group",
       "styleAttributes": {},
-      "x": 0,
-      "y": -120,
+      "x": 15,
+      "y": -340,
       "width": 290,
       "height": 160,
-      "label": "Achievements"
-    },
-    {
-      "id": "66b325f7179e003e",
-      "type": "group",
-      "styleAttributes": {},
-      "x": -720,
-      "y": -460,
-      "width": 290,
-      "height": 160,
-      "label": "Object"
+      "label": "Achievement"
     },
     {
       "id": "72a353f76c3084ee",
       "type": "group",
       "styleAttributes": {},
-      "x": 260,
-      "y": 110,
+      "x": 15,
+      "y": -110,
       "width": 290,
-      "height": 150,
+      "height": 160,
       "label": "Texture"
     },
     {
-      "id": "b41b725623735c0f",
-      "type": "group",
-      "styleAttributes": {},
-      "x": 450,
-      "y": 560,
-      "width": 290,
-      "height": 160,
-      "label": "Levels"
-    },
-    {
-      "id": "42ce50cf888b81b7",
+      "id": "e58597ea69e9b62d",
       "type": "text",
       "text": "",
       "styleAttributes": {},
-      "x": 470,
-      "y": 580,
+      "x": -900,
+      "y": -180,
       "width": 250,
       "height": 60
     },
     {
-      "id": "29627b980cd0dbe3",
+      "id": "55cc2075fec4ca9a",
       "type": "text",
       "text": "",
       "styleAttributes": {},
-      "x": 470,
-      "y": 640,
+      "x": -500,
+      "y": 300,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "0aa26cab458f2b17",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -500,
+      "y": 380,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "97754fc55956e1d2",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -500,
+      "y": 540,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "f1ec7c0e1cc77efb",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -500,
+      "y": 620,
       "width": 250,
       "height": 60
     },
@@ -166,187 +210,7 @@
       "text": "",
       "styleAttributes": {},
       "x": -900,
-      "y": 120,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "7598335de85de360",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 615,
-      "y": -180,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "3f95e6a2b4df60e7",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 615,
-      "y": -120,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "4040e2c5639dd8ab",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 20,
-      "y": -100,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "e988fbcb42fe11c9",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 20,
-      "y": -40,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "f84d15ed2bf3c02f",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -525,
-      "y": 60,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "f262ffe80f635b7f",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -525,
-      "y": 120,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "1e4def958b32e195",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": 280,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "90fb2ca009020310",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -900,
-      "y": 340,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "c7f8497145ec78f0",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -525,
-      "y": 280,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "3f19ff402456d6ba",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -525,
-      "y": 340,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "5f8c408f33bbb2f5",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 760,
-      "y": 360,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "0e65b9f7b2d60711",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -700,
-      "y": -440,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "56b3f18a71b646f0",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 280,
-      "y": 180,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "a28a2b2301ac7597",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 280,
-      "y": 130,
-      "width": 250,
-      "height": 50
-    },
-    {
-      "id": "af4fd01eb5343581",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 280,
-      "y": 340,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "a2721a2cd02d34de",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 280,
-      "y": 400,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "fceb3095654add5f",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": 760,
-      "y": 420,
-      "width": 250,
-      "height": 60
-    },
-    {
-      "id": "e58597ea69e9b62d",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {},
-      "x": -700,
-      "y": -140,
+      "y": 140,
       "width": 250,
       "height": 60
     },
@@ -355,22 +219,307 @@
       "type": "text",
       "text": "",
       "styleAttributes": {},
-      "x": -700,
-      "y": -80,
+      "x": -900,
+      "y": -100,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "3f95e6a2b4df60e7",
+      "type": "text",
+      "text": "fall_sound",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -900,
+      "y": 380,
+      "width": 250,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "7598335de85de360",
+      "type": "text",
+      "text": "on_marble_fall",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -900,
+      "y": 300,
+      "width": 250,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "c7f8497145ec78f0",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -900,
+      "y": 540,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "3f19ff402456d6ba",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -900,
+      "y": 620,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "503c796828911549",
+      "type": "text",
+      "text": "abstract_function",
+      "styleAttributes": {
+        "border": "dashed",
+        "shape": null
+      },
+      "x": -2020,
+      "y": 590,
+      "width": 260,
+      "height": 51,
+      "color": "3"
+    },
+    {
+      "id": "57505dd31391fb89",
+      "type": "text",
+      "text": "class method",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -2020,
+      "y": 670,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "25ef3a5a710cbe20",
+      "type": "text",
+      "text": "class variable",
+      "styleAttributes": {
+        "border": null,
+        "shape": "pill"
+      },
+      "x": -2020,
+      "y": 750,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "8f0a174e933ad5b0",
+      "type": "text",
+      "text": "Example code\n```dart\nvoid main() => runApp(MyApp());\n```",
+      "styleAttributes": {},
+      "x": -1710,
+      "y": 580,
+      "width": 360,
+      "height": 120
+    },
+    {
+      "id": "f730b72e817d5e83",
+      "type": "text",
+      "text": "method",
+      "styleAttributes": {
+        "shape": null,
+        "border": null
+      },
+      "x": -1675,
+      "y": 860,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "c54d4b9712536dec",
+      "type": "text",
+      "text": "variable",
+      "styleAttributes": {},
+      "x": -1675,
+      "y": 940,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "b163e2d0ca79ebbb",
+      "type": "text",
+      "text": "?null safe variable",
+      "styleAttributes": {},
+      "x": -1675,
+      "y": 1020,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "4fa9b5722205bdb9",
+      "type": "text",
+      "text": "global variable",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -2020,
+      "y": 1020,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "0e65b9f7b2d60711",
+      "type": "text",
+      "text": "position",
+      "styleAttributes": {},
+      "x": -1340,
+      "y": 180,
       "width": 250,
       "height": 60
     },
     {
       "id": "719e9df4cccc45ac",
       "type": "text",
+      "text": "?texture Texture",
+      "styleAttributes": {},
+      "x": -1340,
+      "y": 260,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "a28a2b2301ac7597",
+      "type": "text",
       "text": "",
       "styleAttributes": {},
-      "x": -700,
-      "y": -380,
+      "x": 35,
+      "y": -90,
+      "width": 250,
+      "height": 50
+    },
+    {
+      "id": "56b3f18a71b646f0",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": 35,
+      "y": -30,
+      "width": 250,
+      "height": 50
+    },
+    {
+      "id": "af4fd01eb5343581",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -40,
+      "y": 400,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "a2721a2cd02d34de",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": -40,
+      "y": 460,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "5f8c408f33bbb2f5",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": 35,
+      "y": 140,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "fceb3095654add5f",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": 35,
+      "y": 200,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "4040e2c5639dd8ab",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": 35,
+      "y": -320,
+      "width": 250,
+      "height": 60
+    },
+    {
+      "id": "e988fbcb42fe11c9",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {},
+      "x": 35,
+      "y": -260,
       "width": 250,
       "height": 60
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "id": "b4b942d4463ed545",
+      "fromNode": "66b325f7179e003e",
+      "fromSide": "right",
+      "toNode": "ee6a9a6fb63d7e78",
+      "toSide": "left"
+    },
+    {
+      "id": "40df1acdd74ae834",
+      "fromNode": "66b325f7179e003e",
+      "fromSide": "right",
+      "toNode": "d754581a165465ea",
+      "toSide": "left"
+    },
+    {
+      "id": "bd79f1cbee54de6d",
+      "fromNode": "66b325f7179e003e",
+      "fromSide": "right",
+      "toNode": "47d727b0371afe0c",
+      "toSide": "left"
+    },
+    {
+      "id": "80ab840c3917fa1b",
+      "fromNode": "47d727b0371afe0c",
+      "fromSide": "right",
+      "toNode": "7a7d35d52d0fe9f9",
+      "toSide": "left"
+    },
+    {
+      "id": "7a1f1ea4778923e3",
+      "fromNode": "47d727b0371afe0c",
+      "fromSide": "right",
+      "toNode": "0c36f6af6b33a24e",
+      "toSide": "left"
+    },
+    {
+      "id": "2d74a664cfdc890f",
+      "styleAttributes": {},
+      "fromNode": "0d69f67ed4dedf90",
+      "fromSide": "bottom",
+      "toNode": "2e9681f5f96effcc",
+      "toSide": "left",
+      "label": "Inheritance"
+    },
+    {
+      "id": "f0e50d467d54f745",
+      "styleAttributes": {},
+      "fromNode": "66b325f7179e003e",
+      "fromSide": "right",
+      "toNode": "893e83616164954a",
+      "toSide": "left"
+    }
+  ],
   "metadata": {}
 }

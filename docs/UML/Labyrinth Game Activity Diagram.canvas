@@ -49,18 +49,6 @@
       "height": 80
     },
     {
-      "id": "10902457cf6fb28f",
-      "type": "text",
-      "text": "The player can continue to move that direction",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -185,
-      "y": 60,
-      "width": 260,
-      "height": 60
-    },
-    {
       "id": "c5a3745555116d37",
       "type": "text",
       "text": "",
@@ -94,6 +82,18 @@
       "x": -280,
       "y": 720,
       "width": 60,
+      "height": 60
+    },
+    {
+      "id": "10902457cf6fb28f",
+      "type": "text",
+      "text": "The player can continue to move that direction",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -80,
+      "y": 70,
+      "width": 260,
       "height": 60
     }
   ],
@@ -158,6 +158,14 @@
       "toSide": "top"
     },
     {
+      "id": "21c34cee323ac432",
+      "styleAttributes": {},
+      "fromNode": "8db333d793c48bf3",
+      "fromSide": "bottom",
+      "toNode": "36c4c2996539321d",
+      "toSide": "top"
+    },
+    {
       "id": "7b00afa51158f300",
       "styleAttributes": {},
       "fromNode": "c5a3745555116d37",
@@ -165,14 +173,6 @@
       "toNode": "93649bfe9a7e0759",
       "toSide": "right",
       "label": "Continue to move around"
-    },
-    {
-      "id": "21c34cee323ac432",
-      "styleAttributes": {},
-      "fromNode": "8db333d793c48bf3",
-      "fromSide": "bottom",
-      "toNode": "36c4c2996539321d",
-      "toSide": "top"
     }
   ],
   "metadata": {}
