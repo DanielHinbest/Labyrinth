@@ -4,20 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "e63773b25bff7589",
+        "id": "a024decf1a2c0b02",
         "type": "tabs",
         "children": [
           {
-            "id": "857c5f1cdc4e06e5",
+            "id": "acde24348d555045",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
-                "file": "UML/View Scoreboard Activity Diagram.canvas",
+                "file": "UML/Use Case Diagram.canvas",
                 "viewState": {
-                  "x": -264.3058651682164,
-                  "y": 1257.881405421079,
-                  "zoom": -0.6666666666666667
+                  "x": -120,
+                  "y": -295,
+                  "zoom": -0.8849614917337835
                 }
               }
             }
@@ -88,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "UML/View Scoreboard Activity Diagram.canvas",
+                "file": "UML/Use Case Diagram.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +105,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "UML/View Scoreboard Activity Diagram.canvas",
+                "file": "UML/Use Case Diagram.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UML/View Scoreboard Activity Diagram.canvas"
+                "file": "UML/Use Case Diagram.canvas"
               }
             }
           }
@@ -149,16 +149,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "857c5f1cdc4e06e5",
+  "active": "acde24348d555045",
   "lastOpenFiles": [
-    "Untitled.md",
-    "UML/View Scoreboard Activity Diagram.canvas",
     "UML/Class Diagram.canvas",
-    "UML/View Scoreboard Activity Diagram.canvas",
-    "UML/Untitled.md",
+    "UML/Use Case Diagram.canvas",
     "Mobile Course Project.pdf",
     "Proposal.md",
-    "Untitled",
+    "UML/Labyrinth Game Activity Diagram.canvas",
+    "UML/Open Settings Activity Diagram.canvas",
+    "UML/View Scoreboard Activity Diagram.canvas",
+    "media/use_case_actor.png",
+    "media",
+    "Untitled.md",
+    "UML/Untitled.md",
     "UML",
     "Welcome.md"
   ]

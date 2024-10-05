@@ -1,0 +1,488 @@
+{
+  "nodes": [
+    {
+      "id": "1604155966acd4ef",
+      "type": "group",
+      "styleAttributes": {},
+      "x": -640,
+      "y": -700,
+      "width": 1440,
+      "height": 810,
+      "label": "Labyrinth Game"
+    },
+    {
+      "id": "2833c24975044025",
+      "type": "group",
+      "styleAttributes": {
+        "border": "invisible"
+      },
+      "x": -1040,
+      "y": -636,
+      "width": 340,
+      "height": 352,
+      "label": "Player"
+    },
+    {
+      "id": "ea9e33fbdd67f10f",
+      "type": "group",
+      "styleAttributes": {
+        "border": "dashed"
+      },
+      "x": -1020,
+      "y": -200,
+      "width": 300,
+      "height": 270,
+      "label": "Color Legend"
+    },
+    {
+      "id": "f5de927c6e50c8c6",
+      "type": "file",
+      "file": "media/use_case_actor.png",
+      "styleAttributes": {
+        "border": "invisible"
+      },
+      "x": -1020,
+      "y": -600,
+      "width": 300,
+      "height": 300
+    },
+    {
+      "id": "1c36bf9a62a5bbdc",
+      "type": "text",
+      "text": "Tentative",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -1000,
+      "y": -170,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "08aa3c70113cfe6c",
+      "type": "text",
+      "text": "MVP",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -1000,
+      "y": -90,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "fdfb8fcea0a52d74",
+      "type": "text",
+      "text": "Additional Feature",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -1000,
+      "y": -10,
+      "width": 260,
+      "height": 60,
+      "color": "2"
+    },
+    {
+      "id": "10fe994df2623b25",
+      "type": "text",
+      "text": "Level Select",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -580,
+      "y": -560,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "73431b0f32aab27b",
+      "type": "text",
+      "text": "Level Editor",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -580,
+      "y": -480,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "75624cdec2348914",
+      "type": "text",
+      "text": "Settings",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -580,
+      "y": -400,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "075af0ac974f049f",
+      "type": "text",
+      "text": "Play Level",
+      "styleAttributes": {},
+      "x": 428,
+      "y": -666,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "d6a031a10997b5a2",
+      "type": "text",
+      "text": "Select Difficulty",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -240,
+      "y": -666,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "89f15f11fdbe9e00",
+      "type": "text",
+      "text": "Select Level",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": 107,
+      "y": -666,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "6b1512b076842c8f",
+      "type": "text",
+      "text": "View Leaderboard",
+      "styleAttributes": {},
+      "x": 428,
+      "y": -586,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "7fb972aee8878ed5",
+      "type": "text",
+      "text": "View Level Information ",
+      "styleAttributes": {},
+      "x": 428,
+      "y": -506,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "6dff80544bf3e487",
+      "type": "text",
+      "text": "Sort Levels",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -586,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "f655424d330579b6",
+      "type": "text",
+      "text": "Create Level",
+      "styleAttributes": {},
+      "x": -240,
+      "y": -530,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "edd7466122d7e4b8",
+      "type": "text",
+      "text": "Toggle Timer Visibility",
+      "styleAttributes": {},
+      "x": -240,
+      "y": -71,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "948041e591d9b919",
+      "type": "text",
+      "text": "Reset Scores/Achievements",
+      "styleAttributes": {},
+      "x": -240,
+      "y": 9,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "bcbe85b0be5fa0e2",
+      "type": "text",
+      "text": "Mute Music",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -340,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "3874d84f64055f64",
+      "type": "text",
+      "text": "Change/Upload User Photo",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -47,
+      "width": 260,
+      "height": 60,
+      "color": "2"
+    },
+    {
+      "id": "76936cf2c71dcd27",
+      "type": "text",
+      "text": "Mute Sound Effects",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -260,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "f864ae4a4f83043d",
+      "type": "text",
+      "text": "View Created Levels",
+      "styleAttributes": {},
+      "x": -240,
+      "y": -437,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "f06f4eb5e9257bbf",
+      "type": "text",
+      "text": "Change User Name",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -127,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "d8d0cca38c977bcf",
+      "type": "text",
+      "text": "Edit User Profile",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -240,
+      "y": -231,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "658a7ba007f2487d",
+      "type": "text",
+      "text": "Change Language",
+      "styleAttributes": {
+        "shape": null
+      },
+      "x": -240,
+      "y": -151,
+      "width": 260,
+      "height": 60,
+      "color": "2"
+    },
+    {
+      "id": "06ac7542844c15b6",
+      "type": "text",
+      "text": "Adjust Volume",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -240,
+      "y": -311,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    }
+  ],
+  "edges": [
+    {
+      "id": "9e8a0cda87927207",
+      "styleAttributes": {},
+      "fromNode": "10fe994df2623b25",
+      "fromSide": "right",
+      "toNode": "d6a031a10997b5a2",
+      "toSide": "left"
+    },
+    {
+      "id": "6b62be17bf3d4be1",
+      "styleAttributes": {},
+      "fromNode": "f5de927c6e50c8c6",
+      "fromSide": "right",
+      "toNode": "73431b0f32aab27b",
+      "toSide": "left"
+    },
+    {
+      "id": "1a7de39f16edc12a",
+      "styleAttributes": {},
+      "fromNode": "f5de927c6e50c8c6",
+      "fromSide": "right",
+      "toNode": "75624cdec2348914",
+      "toSide": "left"
+    },
+    {
+      "id": "417b742e0e641eed",
+      "styleAttributes": {},
+      "fromNode": "f5de927c6e50c8c6",
+      "fromSide": "right",
+      "toNode": "10fe994df2623b25",
+      "toSide": "left"
+    },
+    {
+      "id": "3561c877ddb5f216",
+      "styleAttributes": {},
+      "fromNode": "75624cdec2348914",
+      "fromSide": "right",
+      "toNode": "06ac7542844c15b6",
+      "toSide": "left"
+    },
+    {
+      "id": "9144ab5fa3379b9e",
+      "styleAttributes": {},
+      "fromNode": "75624cdec2348914",
+      "fromSide": "right",
+      "toNode": "658a7ba007f2487d",
+      "toSide": "left"
+    },
+    {
+      "id": "35013e52063f47e7",
+      "styleAttributes": {},
+      "fromNode": "75624cdec2348914",
+      "fromSide": "right",
+      "toNode": "948041e591d9b919",
+      "toSide": "left"
+    },
+    {
+      "id": "f64d8041a15eedf2",
+      "styleAttributes": {},
+      "fromNode": "75624cdec2348914",
+      "fromSide": "right",
+      "toNode": "edd7466122d7e4b8",
+      "toSide": "left"
+    },
+    {
+      "id": "8172d9b12e3e60ac",
+      "styleAttributes": {},
+      "fromNode": "d6a031a10997b5a2",
+      "fromSide": "right",
+      "toNode": "89f15f11fdbe9e00",
+      "toSide": "left"
+    },
+    {
+      "id": "264d0040ad1d1f01",
+      "styleAttributes": {},
+      "fromNode": "75624cdec2348914",
+      "fromSide": "right",
+      "toNode": "d8d0cca38c977bcf",
+      "toSide": "left"
+    },
+    {
+      "id": "b933960d737db91c",
+      "styleAttributes": {},
+      "fromNode": "d8d0cca38c977bcf",
+      "fromSide": "right",
+      "toNode": "f06f4eb5e9257bbf",
+      "toSide": "left"
+    },
+    {
+      "id": "cde0b648f4c3d095",
+      "styleAttributes": {},
+      "fromNode": "d8d0cca38c977bcf",
+      "fromSide": "right",
+      "toNode": "3874d84f64055f64",
+      "toSide": "left"
+    },
+    {
+      "id": "c36697c72bd16a66",
+      "styleAttributes": {},
+      "fromNode": "06ac7542844c15b6",
+      "fromSide": "right",
+      "toNode": "76936cf2c71dcd27",
+      "toSide": "left"
+    },
+    {
+      "id": "e9c4c0a9e715d397",
+      "styleAttributes": {},
+      "fromNode": "06ac7542844c15b6",
+      "fromSide": "right",
+      "toNode": "bcbe85b0be5fa0e2",
+      "toSide": "left"
+    },
+    {
+      "id": "f20daa833be20aab",
+      "styleAttributes": {},
+      "fromNode": "d6a031a10997b5a2",
+      "fromSide": "right",
+      "toNode": "6dff80544bf3e487",
+      "toSide": "left"
+    },
+    {
+      "id": "fa638e088fa2a364",
+      "styleAttributes": {},
+      "fromNode": "73431b0f32aab27b",
+      "fromSide": "right",
+      "toNode": "f655424d330579b6",
+      "toSide": "left"
+    },
+    {
+      "id": "d74732429923e21c",
+      "styleAttributes": {},
+      "fromNode": "73431b0f32aab27b",
+      "fromSide": "right",
+      "toNode": "f864ae4a4f83043d",
+      "toSide": "left"
+    },
+    {
+      "id": "0d200c69e708cd05",
+      "styleAttributes": {},
+      "fromNode": "89f15f11fdbe9e00",
+      "fromSide": "right",
+      "toNode": "075af0ac974f049f",
+      "toSide": "left"
+    },
+    {
+      "id": "df9c5b289c8b4908",
+      "styleAttributes": {},
+      "fromNode": "89f15f11fdbe9e00",
+      "fromSide": "right",
+      "toNode": "7fb972aee8878ed5",
+      "toSide": "left"
+    },
+    {
+      "id": "9796895c2912e228",
+      "styleAttributes": {},
+      "fromNode": "89f15f11fdbe9e00",
+      "fromSide": "right",
+      "toNode": "6b1512b076842c8f",
+      "toSide": "left"
+    }
+  ],
+  "metadata": {}
+}
