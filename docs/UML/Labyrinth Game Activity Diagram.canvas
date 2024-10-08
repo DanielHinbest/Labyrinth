@@ -13,18 +13,6 @@
       "height": 60
     },
     {
-      "id": "cbc39f6d300c354d",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {
-        "shape": "diamond"
-      },
-      "x": -280,
-      "y": -160,
-      "width": 60,
-      "height": 60
-    },
-    {
       "id": "1a69e5b4dc763d06",
       "type": "text",
       "text": "Player moves\n",
@@ -32,8 +20,20 @@
         "textAlign": "center"
       },
       "x": -315,
-      "y": -380,
+      "y": -460,
       "width": 130,
+      "height": 60
+    },
+    {
+      "id": "cbc39f6d300c354d",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -280,
+      "y": -340,
+      "width": 60,
       "height": 60
     },
     {
@@ -44,7 +44,7 @@
         "textAlign": "center"
       },
       "x": -620,
-      "y": 60,
+      "y": -180,
       "width": 260,
       "height": 80
     },
@@ -55,8 +55,8 @@
       "styleAttributes": {
         "shape": "diamond"
       },
-      "x": -280,
-      "y": 280,
+      "x": -260,
+      "y": 0,
       "width": 60,
       "height": 60
     },
@@ -67,8 +67,8 @@
       "styleAttributes": {
         "textAlign": "center"
       },
-      "x": -380,
-      "y": 500,
+      "x": -360,
+      "y": 120,
       "width": 260,
       "height": 60
     },
@@ -79,8 +79,8 @@
       "styleAttributes": {
         "shape": "circle"
       },
-      "x": -280,
-      "y": 720,
+      "x": -260,
+      "y": 220,
       "width": 60,
       "height": 60
     },
@@ -91,8 +91,8 @@
       "styleAttributes": {
         "textAlign": "center"
       },
-      "x": -80,
-      "y": 70,
+      "x": -100,
+      "y": -160,
       "width": 260,
       "height": 60
     }
@@ -134,22 +134,6 @@
       "label": "If there is no collision"
     },
     {
-      "id": "0c9bf4ba98696f4d",
-      "styleAttributes": {},
-      "fromNode": "10902457cf6fb28f",
-      "fromSide": "bottom",
-      "toNode": "c5a3745555116d37",
-      "toSide": "top"
-    },
-    {
-      "id": "ec77205d9a9a6cc5",
-      "styleAttributes": {},
-      "fromNode": "272b55ad3fe9a36c",
-      "fromSide": "bottom",
-      "toNode": "c5a3745555116d37",
-      "toSide": "top"
-    },
-    {
       "id": "b1e978b7151db3ae",
       "styleAttributes": {},
       "fromNode": "c5a3745555116d37",
@@ -173,6 +157,22 @@
       "toNode": "93649bfe9a7e0759",
       "toSide": "right",
       "label": "Continue to move around"
+    },
+    {
+      "id": "982379096c571b04",
+      "styleAttributes": {},
+      "fromNode": "10902457cf6fb28f",
+      "fromSide": "left",
+      "toNode": "c5a3745555116d37",
+      "toSide": "top"
+    },
+    {
+      "id": "af225d7ca455f215",
+      "styleAttributes": {},
+      "fromNode": "272b55ad3fe9a36c",
+      "fromSide": "right",
+      "toNode": "c5a3745555116d37",
+      "toSide": "top"
     }
   ],
   "metadata": {}

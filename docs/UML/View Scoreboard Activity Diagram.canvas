@@ -21,7 +21,7 @@
         "textAlign": "center"
       },
       "x": -407,
-      "y": -80,
+      "y": -180,
       "width": 215,
       "height": 60
     },
@@ -32,21 +32,21 @@
       "styleAttributes": {
         "shape": "diamond"
       },
-      "x": -334,
-      "y": 200,
+      "x": -340,
+      "y": -80,
       "width": 70,
       "height": 60
     },
     {
-      "id": "5c953b743c41a6a9",
+      "id": "d9678756f3882aa2",
       "type": "text",
-      "text": "",
+      "text": "Retrieve the scoreboard data from the database",
       "styleAttributes": {
-        "shape": "diamond"
+        "textAlign": "center"
       },
-      "x": -689,
-      "y": 670,
-      "width": 69,
+      "x": -620,
+      "y": 60,
+      "width": 260,
       "height": 60
     },
     {
@@ -56,8 +56,8 @@
       "styleAttributes": {
         "textAlign": "center"
       },
-      "x": -995,
-      "y": 950,
+      "x": -941,
+      "y": 500,
       "width": 260,
       "height": 50
     },
@@ -68,8 +68,8 @@
       "styleAttributes": {
         "textAlign": "center"
       },
-      "x": -524,
-      "y": 950,
+      "x": -470,
+      "y": 500,
       "width": 260,
       "height": 50
     },
@@ -80,8 +80,20 @@
       "styleAttributes": {
         "shape": "diamond"
       },
-      "x": -688,
-      "y": 1190,
+      "x": -634,
+      "y": 740,
+      "width": 69,
+      "height": 60
+    },
+    {
+      "id": "5c953b743c41a6a9",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -635,
+      "y": 220,
       "width": 69,
       "height": 60
     },
@@ -92,20 +104,8 @@
       "styleAttributes": {
         "textAlign": "center"
       },
-      "x": -783,
-      "y": 1490,
-      "width": 260,
-      "height": 60
-    },
-    {
-      "id": "d9678756f3882aa2",
-      "type": "text",
-      "text": "Retrieve the scoreboard data from the database",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -784,
-      "y": 450,
+      "x": -729,
+      "y": 920,
       "width": 260,
       "height": 60
     },
@@ -116,21 +116,9 @@
       "styleAttributes": {
         "shape": "diamond"
       },
-      "x": -330,
-      "y": 1660,
+      "x": -226,
+      "y": 920,
       "width": 63,
-      "height": 60
-    },
-    {
-      "id": "c2c16dc618adc8e3",
-      "type": "text",
-      "text": "Menu closes",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": 80,
-      "y": 940,
-      "width": 260,
       "height": 60
     },
     {
@@ -140,9 +128,21 @@
       "styleAttributes": {
         "shape": "circle"
       },
-      "x": -335,
-      "y": 2040,
+      "x": -228,
+      "y": 1100,
       "width": 68,
+      "height": 60
+    },
+    {
+      "id": "c2c16dc618adc8e3",
+      "type": "text",
+      "text": "Menu closes",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -194,
+      "y": 360,
+      "width": 260,
       "height": 60
     }
   ],
@@ -242,20 +242,20 @@
       "toSide": "right"
     },
     {
-      "id": "c43b0b8b063fadca",
-      "styleAttributes": {},
-      "fromNode": "65d41ad871dcd917",
-      "fromSide": "bottom",
-      "toNode": "8656d6804e09133a",
-      "toSide": "left"
-    },
-    {
       "id": "dc93e6f4795f5243",
       "styleAttributes": {},
       "fromNode": "8656d6804e09133a",
       "fromSide": "bottom",
       "toNode": "0a286155c1b737da",
       "toSide": "top"
+    },
+    {
+      "id": "6da93a752e73e581",
+      "styleAttributes": {},
+      "fromNode": "65d41ad871dcd917",
+      "fromSide": "right",
+      "toNode": "8656d6804e09133a",
+      "toSide": "left"
     }
   ],
   "metadata": {}
