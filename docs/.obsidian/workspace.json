@@ -11,14 +11,11 @@
             "id": "acde24348d555045",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "UML/Use Case Diagram.canvas",
-                "viewState": {
-                  "x": -120,
-                  "y": -295,
-                  "zoom": -0.8849614917337835
-                }
+                "file": "Proposal.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -88,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "UML/Use Case Diagram.canvas",
+                "file": "Proposal.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "UML/Use Case Diagram.canvas",
+                "file": "Proposal.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UML/Use Case Diagram.canvas"
+                "file": "Proposal.md"
               }
             }
           }
@@ -151,8 +148,8 @@
   },
   "active": "acde24348d555045",
   "lastOpenFiles": [
-    "UML/Class Diagram.canvas",
     "UML/Use Case Diagram.canvas",
+    "UML/Class Diagram.canvas",
     "Mobile Course Project.pdf",
     "Proposal.md",
     "UML/Labyrinth Game Activity Diagram.canvas",

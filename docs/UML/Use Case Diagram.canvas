@@ -35,30 +35,68 @@
       "label": "Color Legend"
     },
     {
-      "id": "10fe994df2623b25",
+      "id": "06ac7542844c15b6",
       "type": "text",
-      "text": "Level Select",
+      "text": "Adjust Volume",
       "styleAttributes": {
         "shape": "pill"
       },
-      "x": -580,
-      "y": -560,
+      "x": -240,
+      "y": -311,
       "width": 260,
       "height": 60,
       "color": "4"
     },
     {
-      "id": "73431b0f32aab27b",
-      "type": "text",
-      "text": "Level Editor",
+      "id": "f5de927c6e50c8c6",
+      "type": "file",
+      "file": "media/use_case_actor.png",
       "styleAttributes": {
-        "shape": "pill"
+        "border": "invisible"
       },
-      "x": -580,
-      "y": -480,
+      "x": -1020,
+      "y": -600,
+      "width": 300,
+      "height": 300
+    },
+    {
+      "id": "1c36bf9a62a5bbdc",
+      "type": "text",
+      "text": "Tentative",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -1000,
+      "y": -170,
       "width": 260,
       "height": 60,
       "color": "3"
+    },
+    {
+      "id": "08aa3c70113cfe6c",
+      "type": "text",
+      "text": "MVP",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -1000,
+      "y": -90,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "fdfb8fcea0a52d74",
+      "type": "text",
+      "text": "Additional Feature",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -1000,
+      "y": -10,
+      "width": 260,
+      "height": 60,
+      "color": "2"
     },
     {
       "id": "075af0ac974f049f",
@@ -109,41 +147,6 @@
       "color": "4"
     },
     {
-      "id": "6dff80544bf3e487",
-      "type": "text",
-      "text": "Sort Levels",
-      "styleAttributes": {},
-      "x": 107,
-      "y": -586,
-      "width": 260,
-      "height": 60,
-      "color": "3"
-    },
-    {
-      "id": "75624cdec2348914",
-      "type": "text",
-      "text": "Settings",
-      "styleAttributes": {
-        "shape": "pill"
-      },
-      "x": -580,
-      "y": -400,
-      "width": 260,
-      "height": 60,
-      "color": "4"
-    },
-    {
-      "id": "7fb972aee8878ed5",
-      "type": "text",
-      "text": "View Level Information ",
-      "styleAttributes": {},
-      "x": 428,
-      "y": -506,
-      "width": 260,
-      "height": 60,
-      "color": "4"
-    },
-    {
       "id": "bcbe85b0be5fa0e2",
       "type": "text",
       "text": "Mute Music",
@@ -166,17 +169,6 @@
       "color": "2"
     },
     {
-      "id": "76936cf2c71dcd27",
-      "type": "text",
-      "text": "Mute Sound Effects",
-      "styleAttributes": {},
-      "x": 107,
-      "y": -260,
-      "width": 260,
-      "height": 60,
-      "color": "4"
-    },
-    {
       "id": "f06f4eb5e9257bbf",
       "type": "text",
       "text": "Change User Name",
@@ -188,109 +180,12 @@
       "color": "4"
     },
     {
-      "id": "f5de927c6e50c8c6",
-      "type": "file",
-      "file": "docs/media/use_case_actor.png",
-      "styleAttributes": {
-        "border": "invisible"
-      },
-      "x": -1020,
-      "y": -600,
-      "width": 300,
-      "height": 300
-    },
-    {
-      "id": "1c36bf9a62a5bbdc",
-      "type": "text",
-      "text": "Tentative",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -1000,
-      "y": -170,
-      "width": 260,
-      "height": 60,
-      "color": "3"
-    },
-    {
-      "id": "08aa3c70113cfe6c",
-      "type": "text",
-      "text": "MVP",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -1000,
-      "y": -90,
-      "width": 260,
-      "height": 60,
-      "color": "4"
-    },
-    {
-      "id": "fdfb8fcea0a52d74",
-      "type": "text",
-      "text": "Additional Feature",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -1000,
-      "y": -10,
-      "width": 260,
-      "height": 60,
-      "color": "2"
-    },
-    {
-      "id": "06ac7542844c15b6",
-      "type": "text",
-      "text": "Adjust Volume",
-      "styleAttributes": {
-        "shape": "pill"
-      },
-      "x": -240,
-      "y": -311,
-      "width": 260,
-      "height": 60,
-      "color": "4"
-    },
-    {
-      "id": "f655424d330579b6",
-      "type": "text",
-      "text": "Create Level",
-      "styleAttributes": {},
-      "x": -240,
-      "y": -530,
-      "width": 260,
-      "height": 60,
-      "color": "3"
-    },
-    {
       "id": "edd7466122d7e4b8",
       "type": "text",
       "text": "Toggle Timer Visibility",
       "styleAttributes": {},
       "x": -240,
       "y": -71,
-      "width": 260,
-      "height": 60,
-      "color": "3"
-    },
-    {
-      "id": "948041e591d9b919",
-      "type": "text",
-      "text": "Reset Scores/Achievements",
-      "styleAttributes": {},
-      "x": -240,
-      "y": 9,
-      "width": 260,
-      "height": 60,
-      "color": "3"
-    },
-    {
-      "id": "f864ae4a4f83043d",
-      "type": "text",
-      "text": "View Created Levels",
-      "styleAttributes": {},
-      "x": -240,
-      "y": -437,
       "width": 260,
       "height": 60,
       "color": "3"
@@ -320,6 +215,111 @@
       "width": 260,
       "height": 60,
       "color": "2"
+    },
+    {
+      "id": "948041e591d9b919",
+      "type": "text",
+      "text": "Reset Scores/Achievements",
+      "styleAttributes": {},
+      "x": -240,
+      "y": 9,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "10fe994df2623b25",
+      "type": "text",
+      "text": "Level Select",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -580,
+      "y": -560,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "6dff80544bf3e487",
+      "type": "text",
+      "text": "Sort Levels",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -586,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "7fb972aee8878ed5",
+      "type": "text",
+      "text": "View Level Information ",
+      "styleAttributes": {},
+      "x": 428,
+      "y": -506,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "76936cf2c71dcd27",
+      "type": "text",
+      "text": "Mute Sound Effects",
+      "styleAttributes": {},
+      "x": 107,
+      "y": -260,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "73431b0f32aab27b",
+      "type": "text",
+      "text": "Level Editor",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -580,
+      "y": -480,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "75624cdec2348914",
+      "type": "text",
+      "text": "Settings",
+      "styleAttributes": {
+        "shape": "pill"
+      },
+      "x": -580,
+      "y": -400,
+      "width": 260,
+      "height": 60,
+      "color": "4"
+    },
+    {
+      "id": "f655424d330579b6",
+      "type": "text",
+      "text": "Create Level",
+      "styleAttributes": {},
+      "x": -240,
+      "y": -530,
+      "width": 260,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "f864ae4a4f83043d",
+      "type": "text",
+      "text": "View Created Levels",
+      "styleAttributes": {},
+      "x": -240,
+      "y": -437,
+      "width": 260,
+      "height": 60,
+      "color": "3"
     }
   ],
   "edges": [
