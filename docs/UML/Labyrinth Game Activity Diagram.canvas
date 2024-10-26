@@ -1,179 +1,163 @@
 {
-  "nodes": [
-    {
-      "id": "93649bfe9a7e0759",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {
-        "shape": "circle"
-      },
-      "x": -280,
-      "y": -560,
-      "width": 60,
-      "height": 60
-    },
-    {
-      "id": "1a69e5b4dc763d06",
-      "type": "text",
-      "text": "Player moves\n",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -315,
-      "y": -460,
-      "width": 130,
-      "height": 60
-    },
-    {
-      "id": "cbc39f6d300c354d",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {
-        "shape": "diamond"
-      },
-      "x": -280,
-      "y": -340,
-      "width": 60,
-      "height": 60
-    },
-    {
-      "id": "272b55ad3fe9a36c",
-      "type": "text",
-      "text": "The player can't move that direction and must go another way",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -620,
-      "y": -180,
-      "width": 260,
-      "height": 80
-    },
-    {
-      "id": "c5a3745555116d37",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {
-        "shape": "diamond"
-      },
-      "x": -260,
-      "y": 0,
-      "width": 60,
-      "height": 60
-    },
-    {
-      "id": "8db333d793c48bf3",
-      "type": "text",
-      "text": "User finds the exit",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -360,
-      "y": 120,
-      "width": 260,
-      "height": 60
-    },
-    {
-      "id": "36c4c2996539321d",
-      "type": "text",
-      "text": "",
-      "styleAttributes": {
-        "shape": "circle"
-      },
-      "x": -260,
-      "y": 220,
-      "width": 60,
-      "height": 60
-    },
-    {
-      "id": "10902457cf6fb28f",
-      "type": "text",
-      "text": "The player can continue to move that direction",
-      "styleAttributes": {
-        "textAlign": "center"
-      },
-      "x": -100,
-      "y": -160,
-      "width": 260,
-      "height": 60
-    }
-  ],
-  "edges": [
-    {
-      "id": "cbe7728d3429437a",
-      "styleAttributes": {},
-      "fromNode": "93649bfe9a7e0759",
-      "fromSide": "bottom",
-      "toNode": "1a69e5b4dc763d06",
-      "toSide": "top"
-    },
-    {
-      "id": "2952f22763688a44",
-      "styleAttributes": {},
-      "fromNode": "1a69e5b4dc763d06",
-      "fromSide": "bottom",
-      "toNode": "cbc39f6d300c354d",
-      "toSide": "top",
-      "label": "Game checks for a collision"
-    },
-    {
-      "id": "098a1b955b458e89",
-      "styleAttributes": {},
-      "fromNode": "cbc39f6d300c354d",
-      "fromSide": "bottom",
-      "toNode": "272b55ad3fe9a36c",
-      "toSide": "top",
-      "label": "If there is a collision"
-    },
-    {
-      "id": "ea9745220f617181",
-      "styleAttributes": {},
-      "fromNode": "cbc39f6d300c354d",
-      "fromSide": "bottom",
-      "toNode": "10902457cf6fb28f",
-      "toSide": "top",
-      "label": "If there is no collision"
-    },
-    {
-      "id": "b1e978b7151db3ae",
-      "styleAttributes": {},
-      "fromNode": "c5a3745555116d37",
-      "fromSide": "bottom",
-      "toNode": "8db333d793c48bf3",
-      "toSide": "top"
-    },
-    {
-      "id": "21c34cee323ac432",
-      "styleAttributes": {},
-      "fromNode": "8db333d793c48bf3",
-      "fromSide": "bottom",
-      "toNode": "36c4c2996539321d",
-      "toSide": "top"
-    },
-    {
-      "id": "7b00afa51158f300",
-      "styleAttributes": {},
-      "fromNode": "c5a3745555116d37",
-      "fromSide": "right",
-      "toNode": "93649bfe9a7e0759",
-      "toSide": "right",
-      "label": "Continue to move around"
-    },
-    {
-      "id": "982379096c571b04",
-      "styleAttributes": {},
-      "fromNode": "10902457cf6fb28f",
-      "fromSide": "left",
-      "toNode": "c5a3745555116d37",
-      "toSide": "top"
-    },
-    {
-      "id": "af225d7ca455f215",
-      "styleAttributes": {},
-      "fromNode": "272b55ad3fe9a36c",
-      "fromSide": "right",
-      "toNode": "c5a3745555116d37",
-      "toSide": "top"
-    }
-  ],
-  "metadata": {}
+	"nodes":[
+		{
+			"id":"93649bfe9a7e0759",
+			"type":"text",
+			"text":"",
+			"styleAttributes":{"shape":"circle"},
+			"x":-280,
+			"y":-560,
+			"width":60,
+			"height":60
+		},
+		{
+			"id":"1a69e5b4dc763d06",
+			"type":"text",
+			"text":"Player moves\n",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-315,
+			"y":-460,
+			"width":130,
+			"height":60
+		},
+		{
+			"id":"cbc39f6d300c354d",
+			"type":"text",
+			"text":"",
+			"styleAttributes":{"shape":"diamond"},
+			"x":-280,
+			"y":-340,
+			"width":60,
+			"height":60
+		},
+		{
+			"id":"272b55ad3fe9a36c",
+			"type":"text",
+			"text":"The player can't move that direction and must go another way",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-620,
+			"y":-180,
+			"width":260,
+			"height":80
+		},
+		{
+			"id":"c5a3745555116d37",
+			"type":"text",
+			"text":"",
+			"styleAttributes":{"shape":"diamond"},
+			"x":-260,
+			"y":0,
+			"width":60,
+			"height":60
+		},
+		{
+			"id":"8db333d793c48bf3",
+			"type":"text",
+			"text":"User finds the exit",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-360,
+			"y":120,
+			"width":260,
+			"height":60
+		},
+		{
+			"id":"36c4c2996539321d",
+			"type":"text",
+			"text":"",
+			"styleAttributes":{"shape":"circle"},
+			"x":-260,
+			"y":220,
+			"width":60,
+			"height":60
+		},
+		{
+			"id":"10902457cf6fb28f",
+			"type":"text",
+			"text":"The player can continue to move that direction",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-100,
+			"y":-160,
+			"width":260,
+			"height":60
+		}
+	],
+	"edges":[
+		{
+			"id":"cbe7728d3429437a",
+			"styleAttributes":{},
+			"fromNode":"93649bfe9a7e0759",
+			"fromSide":"bottom",
+			"toNode":"1a69e5b4dc763d06",
+			"toSide":"top"
+		},
+		{
+			"id":"2952f22763688a44",
+			"styleAttributes":{},
+			"fromNode":"1a69e5b4dc763d06",
+			"fromSide":"bottom",
+			"toNode":"cbc39f6d300c354d",
+			"toSide":"top",
+			"label":"Game checks for a collision"
+		},
+		{
+			"id":"098a1b955b458e89",
+			"styleAttributes":{},
+			"fromNode":"cbc39f6d300c354d",
+			"fromSide":"bottom",
+			"toNode":"272b55ad3fe9a36c",
+			"toSide":"top",
+			"label":"If there is a collision"
+		},
+		{
+			"id":"ea9745220f617181",
+			"styleAttributes":{},
+			"fromNode":"cbc39f6d300c354d",
+			"fromSide":"bottom",
+			"toNode":"10902457cf6fb28f",
+			"toSide":"top",
+			"label":"If there is no collision"
+		},
+		{
+			"id":"b1e978b7151db3ae",
+			"styleAttributes":{},
+			"fromNode":"c5a3745555116d37",
+			"fromSide":"bottom",
+			"toNode":"8db333d793c48bf3",
+			"toSide":"top"
+		},
+		{
+			"id":"21c34cee323ac432",
+			"styleAttributes":{},
+			"fromNode":"8db333d793c48bf3",
+			"fromSide":"bottom",
+			"toNode":"36c4c2996539321d",
+			"toSide":"top"
+		},
+		{
+			"id":"7b00afa51158f300",
+			"styleAttributes":{},
+			"fromNode":"c5a3745555116d37",
+			"fromSide":"right",
+			"toNode":"93649bfe9a7e0759",
+			"toSide":"right",
+			"label":"Continue to move around"
+		},
+		{
+			"id":"982379096c571b04",
+			"styleAttributes":{},
+			"fromNode":"10902457cf6fb28f",
+			"fromSide":"left",
+			"toNode":"c5a3745555116d37",
+			"toSide":"top"
+		},
+		{
+			"id":"af225d7ca455f215",
+			"styleAttributes":{},
+			"fromNode":"272b55ad3fe9a36c",
+			"fromSide":"right",
+			"toNode":"c5a3745555116d37",
+			"toSide":"top"
+		}
+	],
+	"metadata":{}
 }
