@@ -1,240 +1,262 @@
 {
-	"nodes":[
-		{
-			"id":"72da3f41303c901c",
-			"type":"text",
-			"text":"",
-			"styleAttributes":{"shape":"circle"},
-			"x":-340,
-			"y":-300,
-			"width":80,
-			"height":80
-		},
-		{
-			"id":"a88fc6e7a4bb041c",
-			"type":"text",
-			"text":"User opens the menu",
-			"styleAttributes":{
-				"shape":null,
-				"textAlign":"center"
-			},
-			"x":-407,
-			"y":-180,
-			"width":215,
-			"height":60
-		},
-		{
-			"id":"957818ed8b2d05e3",
-			"type":"text",
-			"text":"",
-			"styleAttributes":{"shape":"diamond"},
-			"x":-340,
-			"y":-80,
-			"width":70,
-			"height":60
-		},
-		{
-			"id":"d9678756f3882aa2",
-			"type":"text",
-			"text":"Retrieve the scoreboard data from the database",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-620,
-			"y":60,
-			"width":260,
-			"height":60
-		},
-		{
-			"id":"7a39f7eec4c3094a",
-			"type":"text",
-			"text":"Display the scoreboard data",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-941,
-			"y":500,
-			"width":260,
-			"height":50
-		},
-		{
-			"id":"d5ce1e8356990aec",
-			"type":"text",
-			"text":"Display an error message",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-470,
-			"y":500,
-			"width":260,
-			"height":50
-		},
-		{
-			"id":"1a45680756e4eaa3",
-			"type":"text",
-			"text":"",
-			"styleAttributes":{"shape":"diamond"},
-			"x":-634,
-			"y":740,
-			"width":69,
-			"height":60
-		},
-		{
-			"id":"5c953b743c41a6a9",
-			"type":"text",
-			"text":"",
-			"styleAttributes":{"shape":"diamond"},
-			"x":-635,
-			"y":220,
-			"width":69,
-			"height":60
-		},
-		{
-			"id":"65d41ad871dcd917",
-			"type":"text",
-			"text":"User closes the scoreboard",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-729,
-			"y":920,
-			"width":260,
-			"height":60
-		},
-		{
-			"id":"8656d6804e09133a",
-			"type":"text",
-			"text":"",
-			"styleAttributes":{"shape":"diamond"},
-			"x":-226,
-			"y":920,
-			"width":63,
-			"height":60
-		},
-		{
-			"id":"0a286155c1b737da",
-			"type":"text",
-			"text":"",
-			"styleAttributes":{"shape":"circle"},
-			"x":-228,
-			"y":1100,
-			"width":68,
-			"height":60
-		},
-		{
-			"id":"c2c16dc618adc8e3",
-			"type":"text",
-			"text":"Menu closes",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-194,
-			"y":360,
-			"width":260,
-			"height":60
-		}
-	],
-	"edges":[
-		{
-			"id":"16e14e74aeda655e",
-			"styleAttributes":{},
-			"fromNode":"72da3f41303c901c",
-			"fromSide":"bottom",
-			"toNode":"a88fc6e7a4bb041c",
-			"toSide":"top"
-		},
-		{
-			"id":"32460d748e3bc065",
-			"styleAttributes":{},
-			"fromNode":"a88fc6e7a4bb041c",
-			"fromSide":"bottom",
-			"toNode":"957818ed8b2d05e3",
-			"toSide":"top",
-			"label":"User selects a menu option"
-		},
-		{
-			"id":"ec01114c5056d7de",
-			"styleAttributes":{},
-			"fromNode":"957818ed8b2d05e3",
-			"fromSide":"bottom",
-			"toNode":"d9678756f3882aa2",
-			"toSide":"top",
-			"label":"User selects scoreboard"
-		},
-		{
-			"id":"4be44c42ee392cee",
-			"styleAttributes":{},
-			"fromNode":"d9678756f3882aa2",
-			"fromSide":"bottom",
-			"toNode":"5c953b743c41a6a9",
-			"toSide":"top",
-			"label":"Did the data load?"
-		},
-		{
-			"id":"2235c124feae5d6d",
-			"styleAttributes":{},
-			"fromNode":"5c953b743c41a6a9",
-			"fromSide":"left",
-			"toNode":"7a39f7eec4c3094a",
-			"toSide":"top",
-			"label":"Yes"
-		},
-		{
-			"id":"f88c5e43109aaffd",
-			"styleAttributes":{},
-			"fromNode":"5c953b743c41a6a9",
-			"fromSide":"right",
-			"toNode":"d5ce1e8356990aec",
-			"toSide":"top",
-			"label":"No"
-		},
-		{
-			"id":"a4fb326bdc786c0e",
-			"styleAttributes":{},
-			"fromNode":"7a39f7eec4c3094a",
-			"fromSide":"bottom",
-			"toNode":"1a45680756e4eaa3",
-			"toSide":"left"
-		},
-		{
-			"id":"9053c90e9ad0d447",
-			"styleAttributes":{},
-			"fromNode":"1a45680756e4eaa3",
-			"fromSide":"bottom",
-			"toNode":"65d41ad871dcd917",
-			"toSide":"top"
-		},
-		{
-			"id":"6503072d0c29581e",
-			"styleAttributes":{},
-			"fromNode":"d5ce1e8356990aec",
-			"fromSide":"bottom",
-			"toNode":"1a45680756e4eaa3",
-			"toSide":"right"
-		},
-		{
-			"id":"4550a881be29889c",
-			"styleAttributes":{},
-			"fromNode":"957818ed8b2d05e3",
-			"fromSide":"right",
-			"toNode":"c2c16dc618adc8e3",
-			"toSide":"top",
-			"label":"User closes the menu"
-		},
-		{
-			"id":"9d2ec32dbd1857fb",
-			"styleAttributes":{},
-			"fromNode":"c2c16dc618adc8e3",
-			"fromSide":"bottom",
-			"toNode":"8656d6804e09133a",
-			"toSide":"right"
-		},
-		{
-			"id":"dc93e6f4795f5243",
-			"styleAttributes":{},
-			"fromNode":"8656d6804e09133a",
-			"fromSide":"bottom",
-			"toNode":"0a286155c1b737da",
-			"toSide":"top"
-		},
-		{
-			"id":"6da93a752e73e581",
-			"styleAttributes":{},
-			"fromNode":"65d41ad871dcd917",
-			"fromSide":"right",
-			"toNode":"8656d6804e09133a",
-			"toSide":"left"
-		}
-	],
-	"metadata":{}
+  "nodes": [
+    {
+      "id": "72da3f41303c901c",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "circle"
+      },
+      "x": -340,
+      "y": -300,
+      "width": 80,
+      "height": 80
+    },
+    {
+      "id": "a88fc6e7a4bb041c",
+      "type": "text",
+      "text": "User opens the menu",
+      "styleAttributes": {
+        "shape": null,
+        "textAlign": "center"
+      },
+      "x": -407,
+      "y": -180,
+      "width": 215,
+      "height": 60
+    },
+    {
+      "id": "957818ed8b2d05e3",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -340,
+      "y": -80,
+      "width": 70,
+      "height": 60
+    },
+    {
+      "id": "d9678756f3882aa2",
+      "type": "text",
+      "text": "Retrieve the scoreboard data from the database",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -620,
+      "y": 60,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "7a39f7eec4c3094a",
+      "type": "text",
+      "text": "Display the scoreboard data",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -941,
+      "y": 500,
+      "width": 260,
+      "height": 50
+    },
+    {
+      "id": "d5ce1e8356990aec",
+      "type": "text",
+      "text": "Display an error message",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -470,
+      "y": 500,
+      "width": 260,
+      "height": 50
+    },
+    {
+      "id": "1a45680756e4eaa3",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -634,
+      "y": 740,
+      "width": 69,
+      "height": 60
+    },
+    {
+      "id": "5c953b743c41a6a9",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -635,
+      "y": 220,
+      "width": 69,
+      "height": 60
+    },
+    {
+      "id": "65d41ad871dcd917",
+      "type": "text",
+      "text": "User closes the scoreboard",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -729,
+      "y": 920,
+      "width": 260,
+      "height": 60
+    },
+    {
+      "id": "8656d6804e09133a",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "diamond"
+      },
+      "x": -226,
+      "y": 920,
+      "width": 63,
+      "height": 60
+    },
+    {
+      "id": "0a286155c1b737da",
+      "type": "text",
+      "text": "",
+      "styleAttributes": {
+        "shape": "circle"
+      },
+      "x": -228,
+      "y": 1100,
+      "width": 68,
+      "height": 60
+    },
+    {
+      "id": "c2c16dc618adc8e3",
+      "type": "text",
+      "text": "Menu closes",
+      "styleAttributes": {
+        "textAlign": "center"
+      },
+      "x": -194,
+      "y": 360,
+      "width": 260,
+      "height": 60
+    }
+  ],
+  "edges": [
+    {
+      "id": "16e14e74aeda655e",
+      "styleAttributes": {},
+      "fromNode": "72da3f41303c901c",
+      "fromSide": "bottom",
+      "toNode": "a88fc6e7a4bb041c",
+      "toSide": "top"
+    },
+    {
+      "id": "32460d748e3bc065",
+      "styleAttributes": {},
+      "fromNode": "a88fc6e7a4bb041c",
+      "fromSide": "bottom",
+      "toNode": "957818ed8b2d05e3",
+      "toSide": "top",
+      "label": "User selects a menu option"
+    },
+    {
+      "id": "ec01114c5056d7de",
+      "styleAttributes": {},
+      "fromNode": "957818ed8b2d05e3",
+      "fromSide": "bottom",
+      "toNode": "d9678756f3882aa2",
+      "toSide": "top",
+      "label": "User selects scoreboard"
+    },
+    {
+      "id": "4be44c42ee392cee",
+      "styleAttributes": {},
+      "fromNode": "d9678756f3882aa2",
+      "fromSide": "bottom",
+      "toNode": "5c953b743c41a6a9",
+      "toSide": "top",
+      "label": "Did the data load?"
+    },
+    {
+      "id": "2235c124feae5d6d",
+      "styleAttributes": {},
+      "fromNode": "5c953b743c41a6a9",
+      "fromSide": "left",
+      "toNode": "7a39f7eec4c3094a",
+      "toSide": "top",
+      "label": "Yes"
+    },
+    {
+      "id": "f88c5e43109aaffd",
+      "styleAttributes": {},
+      "fromNode": "5c953b743c41a6a9",
+      "fromSide": "right",
+      "toNode": "d5ce1e8356990aec",
+      "toSide": "top",
+      "label": "No"
+    },
+    {
+      "id": "a4fb326bdc786c0e",
+      "styleAttributes": {},
+      "fromNode": "7a39f7eec4c3094a",
+      "fromSide": "bottom",
+      "toNode": "1a45680756e4eaa3",
+      "toSide": "left"
+    },
+    {
+      "id": "9053c90e9ad0d447",
+      "styleAttributes": {},
+      "fromNode": "1a45680756e4eaa3",
+      "fromSide": "bottom",
+      "toNode": "65d41ad871dcd917",
+      "toSide": "top"
+    },
+    {
+      "id": "6503072d0c29581e",
+      "styleAttributes": {},
+      "fromNode": "d5ce1e8356990aec",
+      "fromSide": "bottom",
+      "toNode": "1a45680756e4eaa3",
+      "toSide": "right"
+    },
+    {
+      "id": "4550a881be29889c",
+      "styleAttributes": {},
+      "fromNode": "957818ed8b2d05e3",
+      "fromSide": "right",
+      "toNode": "c2c16dc618adc8e3",
+      "toSide": "top",
+      "label": "User closes the menu"
+    },
+    {
+      "id": "9d2ec32dbd1857fb",
+      "styleAttributes": {},
+      "fromNode": "c2c16dc618adc8e3",
+      "fromSide": "bottom",
+      "toNode": "8656d6804e09133a",
+      "toSide": "right"
+    },
+    {
+      "id": "dc93e6f4795f5243",
+      "styleAttributes": {},
+      "fromNode": "8656d6804e09133a",
+      "fromSide": "bottom",
+      "toNode": "0a286155c1b737da",
+      "toSide": "top"
+    },
+    {
+      "id": "6da93a752e73e581",
+      "styleAttributes": {},
+      "fromNode": "65d41ad871dcd917",
+      "fromSide": "right",
+      "toNode": "8656d6804e09133a",
+      "toSide": "left"
+    }
+  ],
+  "metadata": {}
 }
