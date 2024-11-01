@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 import 'package:labyrinth/tilt_test.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft, // TODO: Remove one of these lines in favor of user selection via settings.
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
