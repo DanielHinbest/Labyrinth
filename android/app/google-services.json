@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965553059350",
+    "project_id": "labyrinth-leaderboard",
+    "storage_bucket": "labyrinth-leaderboard.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965553059350:android:edc88bc162e7bf66a62737",
+        "android_client_info": {
+          "package_name": "com.example.labyrinth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy2JSSrCKeRm9mTCDG-u2HxRw2NJuXRHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
