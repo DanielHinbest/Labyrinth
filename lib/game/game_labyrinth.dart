@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
-import 'package:labyrinth/game/maze_data.dart';
+import 'package:labyrinth/game/maze.dart';
+import 'dart:ui';
 
 class GameLabyrinth extends FlameGame {
-  final MazeData? mazeData;
+  final Maze maze;
 
-  GameLabyrinth({this.mazeData});
+  GameLabyrinth(this.maze);
 
   @override
   Future<void> onLoad() async {
+    for (var wall in maze.walls) {
+      wall.loadHitbox();
+    }
   }
 
   @override

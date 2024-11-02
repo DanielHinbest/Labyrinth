@@ -1,10 +1,13 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:labyrinth/game/level.dart';
 
 import '../game/game_labyrinth.dart';
 
 class ScreenGame extends StatelessWidget {
-  const ScreenGame({super.key});
+  final Level level;
+
+  const ScreenGame({super.key, required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class ScreenGame extends StatelessWidget {
         ),
       ),
       body: GameWidget(
-        game: GameLabyrinth(),
+        game: GameLabyrinth(level.maze),
       ),
     );
   }

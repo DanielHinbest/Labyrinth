@@ -1,0 +1,22 @@
+{
+    'name': 'Test Level',
+    'desc': 'This level is for testing the loading of the level file',
+    'diff': 0,
+    'maze':
+    {
+        'start': [0, 0],
+        'goal': [10, 20],
+        'holes': [
+            [1, 1],
+            [2, 2],
+            [3, 1],
+            [4, 2],
+            [9, 1],
+            [10,2],
+        ],
+        'walls': [
+            [[0, 0], 'M300 150h100v20H300Z'],
+            [[1, 0], 'M60 50a20 20 0 1 0 40 0a20 20 0 1 0 -40 0'],
+        ]
+    }
+}

@@ -1,17 +1,19 @@
-import 'package:labyrinth/game/maze_data.dart';
+import 'package:labyrinth/game/maze.dart';
 
 class Level {
   final String name;
   final String description;
-  final MazeData mazeData;
+  final String difficulty;
+  final Maze maze;
 
-  Level._(this.name, this.description, this.mazeData);
+  Level._(this.name, this.description, this.difficulty, this.maze);
 
   factory Level.fromJson(Map<String, dynamic> json) {
     return Level._(
       json['name'] as String,
-      json['description'] as String,
-      json['mazeData'] as MazeData
+      json['desc'] as String,
+      json['diff'] as String,
+      json['maze'] as Maze
     );
   }
 }
