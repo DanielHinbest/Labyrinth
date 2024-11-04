@@ -18,13 +18,19 @@ class ScreenLevels extends StatelessWidget {
         await rootBundle.loadString('assets/levels/levels.json');
     List<dynamic> levelFiles = jsonDecode(manifestContent);
 
+    appLogger.d('Loading levels: $levelFiles');
+
     // Load each level file listed in the manifest
     for (String path in levelFiles) {
+      appLogger.d('Loading level: $path');
       String content = await rootBundle.loadString(path);
       Map<String, dynamic> jsonData = jsonDecode(content);
+      appLogger.d('Data for $path: $jsonData');
       levels.add(Level.fromJson(
           jsonData)); // Assuming Level has a fromJson constructor
     }
+
+    appLogger.d('Loaded ${levels.length} levels');
 
     return levels;
   }
@@ -46,7 +52,7 @@ class ScreenLevels extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             appLogger.e('Error Loading Levels', error: snapshot.error);
-            return Center(child: Text('Error loading levels')); // TODO: FIX
+            return Center(child: Text('Error loading levels'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No levels found'));
           } else {

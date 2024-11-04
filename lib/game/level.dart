@@ -13,7 +13,7 @@ class Level {
       json['name'] as String,
       json['desc'] as String,
       json['diff'] as String,
-      json['maze'] as Maze
+      Maze.fromJson(json['maze'])
     );
   }
 }
