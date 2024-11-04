@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  svg_path_parser: ^1.1.1
+  svg_path_parser: ^1.1.1 # TODO: Consider using flame_svg instead?
   cupertino_icons: ^1.0.8
   flame: ^1.21.0
   firebase_core: ^3.6.0
@@ -23,7 +23,6 @@ dependencies:
   logger: ^2.4.0
   sqflite: ^2.4.0
   path: ^1.9.0
-
 
 dev_dependencies:
   flutter_test:
