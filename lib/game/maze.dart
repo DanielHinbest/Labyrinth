@@ -30,4 +30,11 @@ class Maze {
 
     return Maze._(start, goal, holes, walls);
   }
+
+  /// Only call on GameLabyrinth.onLoad()
+  onLoad() {
+    for (var wall in walls) {
+      wall.loadHitbox();
+    }
+  }
 }

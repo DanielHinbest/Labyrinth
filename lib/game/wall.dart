@@ -5,7 +5,7 @@ import 'package:svg_path_parser/svg_path_parser.dart';
 
 class Wall extends PositionComponent with CollisionCallbacks {
   final Path path;
-  late final PolygonHitbox hitbox;
+  PolygonHitbox? hitbox;
 
   Wall({required this.path});
 
@@ -13,8 +13,10 @@ class Wall extends PositionComponent with CollisionCallbacks {
     return Wall(path: parseSvgPath(path));
   }
 
-  /// Only call on GameLabyrinth.onLoad()
   void loadHitbox() {
+    /// Test if the hitbox has already been loaded, no need to load it again
+    if (hitbox != null) return;
+
     final points = <Vector2>[];
     path.computeMetrics().forEach((metric) {
       for (var i = 0; i < metric.length; i++) {
