@@ -11,12 +11,14 @@ plugins {
 android {
     namespace = "com.example.labyrinth"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    
+    // Commenterd ndkVersion and compileOptions for better compatibility -- something to watch if builds fail
+    // ndkVersion = flutter.ndkVersion
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+    // compileOptions {
+    //     sourceCompatibility = JavaVersion.VERSION_1_8
+    //     targetCompatibility = JavaVersion.VERSION_1_8
+    // }
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
