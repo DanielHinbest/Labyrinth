@@ -3,19 +3,18 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_path_parser/svg_path_parser.dart';
 
-class Wall extends PositionComponent {
+class Wall extends PositionComponent with CollisionCallbacks {
   final Path path;
   late final PolygonHitbox hitbox;
 
-  Wall({required Vector2 position, required this.path})
-      : super(position: position);
+  Wall({required this.path});
 
   static Wall fromString(String path) {
-    return Wall(path: parseSvgPath(path), position: Vector2.zero());
+    return Wall(path: parseSvgPath(path));
   }
 
+  /// Only call on GameLabyrinth.onLoad()
   void loadHitbox() {
-    // Warning: This might explode if stared at for too long
     final points = <Vector2>[];
     path.computeMetrics().forEach((metric) {
       for (var i = 0; i < metric.length; i++) {

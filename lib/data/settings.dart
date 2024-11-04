@@ -5,21 +5,27 @@
 library;
 
 class Settings {
-  int? id; // ID of the settings record
-  String? theme; // Theme setting
-  int? sound; // Sound setting (this data type might need to be changed later)
+  int? id;
 
-  // Constructor for the Settings class
+  /// ID of the settings record
+  String? theme;
+
+  /// Theme setting
+  int? sound;
+
+  /// Sound setting (this data type might need to be changed later)
+
+  /// Constructor for the Settings class
   Settings({this.id, this.theme, this.sound});
 
-  // Create a Settings object from a map
+  /// Create a Settings object from a map
   Settings.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     theme = map['theme'];
     sound = map['sound'];
   }
 
-  // Convert a Settings object to a map
+  /// Convert a Settings object to a map
   Map<String, dynamic> toMap() {
     return {
       'id': id,

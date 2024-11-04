@@ -13,21 +13,22 @@ class ScreenLevels extends StatelessWidget {
   Future<List<Level>> loadLevels() async {
     List<Level> levels = [];
 
-    // Load the manifest file
+    /// Load the manifest file
     String manifestContent =
         await rootBundle.loadString('assets/levels/levels.json');
     List<dynamic> levelFiles = jsonDecode(manifestContent);
 
     appLogger.d('Loading levels: $levelFiles');
 
-    // Load each level file listed in the manifest
+    /// Load each level file listed in the manifest
     for (String path in levelFiles) {
       appLogger.d('Loading level: $path');
       String content = await rootBundle.loadString(path);
       Map<String, dynamic> jsonData = jsonDecode(content);
       appLogger.d('Data for $path: $jsonData');
-      levels.add(Level.fromJson(
-          jsonData)); // Assuming Level has a fromJson constructor
+      levels.add(Level.fromJson(jsonData));
+
+      /// Assuming Level has a fromJson constructor
     }
 
     appLogger.d('Loaded ${levels.length} levels');
@@ -62,7 +63,9 @@ class ScreenLevels extends StatelessWidget {
               itemBuilder: (context, index) {
                 Level level = levels[index];
                 return ListTile(
-                  title: Text(level.name), // Assuming Level has a name property
+                  title: Text(level.name),
+
+                  /// Assuming Level has a name property
                   onTap: () {
                     Navigator.push(
                       context,

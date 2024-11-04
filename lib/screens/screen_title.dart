@@ -70,9 +70,11 @@ class ScreenTitle extends StatelessWidget {
     required VoidCallback onPressed,
   }) {
     return Container(
-      width: 240, // Fixed width to ensure both buttons are the same size
+      width: 240,
+
+      /// Fixed width to ensure both buttons are the same size
       decoration: BoxDecoration(
-        // Maybe combine gradients or something to get a more similar effect?
+        /// Maybe combine gradients or something to get a more similar effect?
         gradient: LinearGradient(
           colors: [
             Colors.grey[700]!,
@@ -83,15 +85,19 @@ class ScreenTitle extends StatelessWidget {
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          // stops: [0.2, 0.4, 0.6, 0.8, 1.0],
+
+          /// stops: [0.2, 0.4, 0.6, 0.8, 1.0],
         ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-              Colors.transparent, // Make button background transparent
-          shadowColor: Colors.transparent, // Remove button shadow
+          backgroundColor: Colors.transparent,
+
+          /// Make button background transparent
+          shadowColor: Colors.transparent,
+
+          /// Remove button shadow
           padding: EdgeInsets.symmetric(vertical: 20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
