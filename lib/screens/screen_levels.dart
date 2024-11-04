@@ -1,26 +1,31 @@
-import 'package:flutter/material.dart';
-import 'dart:io';
 import 'dart:convert';
-import '../game/level.dart';
-import 'screen_game.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:labyrinth/game/level.dart';
+import 'package:labyrinth/screens/screen_game.dart';
+import 'package:labyrinth/util/logging.dart';
 
 class ScreenLevels extends StatelessWidget {
   const ScreenLevels({super.key});
 
   Future<List<Level>> loadLevels() async {
     List<Level> levels = [];
-    final directory = Directory('../levels');
-    final levelFiles =
-        directory.listSync().where((file) => file.path.endsWith('.level'));
 
-    for (var file in levelFiles) {
-      if (file is File) {
-        String content = await file.readAsString();
-        Map<String, dynamic> jsonData = jsonDecode(content);
-        levels.add(Level.fromJson(
-            jsonData)); // Assuming Level has a fromJson constructor
-      }
+    // Load the manifest file
+    String manifestContent =
+        await rootBundle.loadString('assets/levels/levels.json');
+    List<dynamic> levelFiles = jsonDecode(manifestContent);
+
+    // Load each level file listed in the manifest
+    for (String path in levelFiles) {
+      String content = await rootBundle.loadString(path);
+      Map<String, dynamic> jsonData = jsonDecode(content);
+      levels.add(Level.fromJson(
+          jsonData)); // Assuming Level has a fromJson constructor
     }
+
     return levels;
   }
 
@@ -40,7 +45,7 @@ class ScreenLevels extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            print('snapshot.error: ${snapshot.error}');
+            appLogger.e('Error Loading Levels', error: snapshot.error);
             return Center(child: Text('Error loading levels')); // TODO: FIX
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No levels found'));

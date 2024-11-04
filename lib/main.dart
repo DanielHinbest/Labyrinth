@@ -5,14 +5,17 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:labyrinth/screens/screen_title.dart';
 import 'package:flutter/services.dart';
-import 'data/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:logger/logger.dart';
+
+import 'package:labyrinth/screens/screen_title.dart';
+import 'package:labyrinth/data/firebase_options.dart';
+import 'package:labyrinth/util/logging.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   // Set the preferred device orientations
   SystemChrome.setPreferredOrientations([
@@ -25,8 +28,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final Logger _logger = Logger();
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,9 @@ class MyApp extends StatelessWidget {
       ),
       builder: (context, snapshot) {
         // NOTE: widget gets built twice in debug mode
-        _logger.d('Initializing Firebase');
+        appLogger.d('Initializing Firebase');
         if (snapshot.hasError) {
-          _logger.e('Error initializing Firebase', error: snapshot.error);
+          appLogger.e('Error initializing Firebase', error: snapshot.error);
           return const MaterialApp(
             home: Scaffold(
               body: Center(
