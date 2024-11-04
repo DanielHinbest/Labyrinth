@@ -2,28 +2,31 @@
 /// Author: Daniel Hinbest
 /// Date: 2024-11-02
 /// Description: This file contains the main entry point for the application, initializing Firebase and setting up the main widget.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:labyrinth/screens/screen_title.dart';
-import 'package:labyrinth/tilt_test.dart';
 import 'package:flutter/services.dart';
 import 'data/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:logger/logger.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Set the preferred device orientations
   SystemChrome.setPreferredOrientations([
+    // TODO: Remove one of these lines in favor of user selection via settings.
     DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft, // TODO: Remove one of these lines in favor of user selection via settings.
+    DeviceOrientation.landscapeLeft,
   ]).then((_) {
     runApp(MyApp());
   });
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final Logger _logger = Logger();
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +35,10 @@ class MyApp extends StatelessWidget {
         options: DefaultFirebaseOptions.currentPlatform,
       ),
       builder: (context, snapshot) {
-        print(snapshot.error);
+        // NOTE: widget gets built twice in debug mode
+        _logger.d('Initializing Firebase');
         if (snapshot.hasError) {
-          print('Error initializing Firebase');
+          _logger.e('Error initializing Firebase', error: snapshot.error);
           return const MaterialApp(
             home: Scaffold(
               body: Center(
@@ -58,7 +62,8 @@ class MyApp extends StatelessWidget {
         return const MaterialApp(
           home: Scaffold(
             body: Center(
-              child: CircularProgressIndicator(), // Show a loading indicator while initializing Firebase
+              child:
+                  CircularProgressIndicator(), // Show a loading indicator while initializing Firebase
             ),
           ),
         );

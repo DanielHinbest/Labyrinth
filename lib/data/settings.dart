@@ -2,8 +2,7 @@
 /// Author: Daniel Hinbest
 /// Date: 2024-11-02
 /// Description: This file contains the implementation of the Settings class, which represents the settings data model.
-
-import 'package:flutter/material.dart';
+library;
 
 class Settings {
   int? id; // ID of the settings record
