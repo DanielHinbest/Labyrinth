@@ -17,9 +17,9 @@ void main() {
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-  // Set the preferred device orientations
+  /// Set the preferred device orientations
   SystemChrome.setPreferredOrientations([
-    // TODO: Remove one of these lines in favor of user selection via settings.
+    /// TODO: Remove one of these lines in favor of user selection via settings.
     DeviceOrientation.landscapeRight,
     DeviceOrientation.landscapeLeft,
   ]).then((_) {
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         options: DefaultFirebaseOptions.currentPlatform,
       ),
       builder: (context, snapshot) {
-        // NOTE: widget gets built twice in debug mode
+        /// NOTE: widget gets built twice in debug mode
         appLogger.d('Initializing Firebase');
         if (snapshot.hasError) {
           appLogger.e('Error initializing Firebase', error: snapshot.error);
@@ -56,7 +56,9 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: ScreenTitle(), // Main screen of the application
+            home: ScreenTitle(),
+
+            /// Main screen of the application
             /* home: const TiltTest(), */
           );
         }
@@ -64,8 +66,9 @@ class MyApp extends StatelessWidget {
         return const MaterialApp(
           home: Scaffold(
             body: Center(
-              child:
-                  CircularProgressIndicator(), // Show a loading indicator while initializing Firebase
+              child: CircularProgressIndicator(),
+
+              /// Show a loading indicator while initializing Firebase
             ),
           ),
         );

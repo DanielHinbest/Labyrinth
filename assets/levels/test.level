@@ -1,6 +1,7 @@
 {
-    "name": "Test Level",
+    "name": "test",
     "desc": "This level is for testing the loading of the level file",
+    "auth": "Unknown",
     "diff": "0",
     "maze":
     {
@@ -15,8 +16,8 @@
             [10,2]
         ],
         "walls": [
-            [[0, 0], "M300 150h100v20H300Z"],
-            [[1, 0], "M60 50a20 20 0 1 0 40 0a20 20 0 1 0 -40 0"]
+            "M0 0 h100 v20 H300 Z",
+            "M1 0 a20 20 0 1 0 40 0 a20 20 0 1 0 -40 0"
         ]
     }
 }

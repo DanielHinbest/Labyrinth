@@ -10,9 +10,7 @@ class GameLabyrinth extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    for (var wall in maze.walls) {
-      wall.loadHitbox();
-    }
+    maze.onLoad();
   }
 
   @override
