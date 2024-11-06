@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:labyrinth/game/wall.dart';
 
 class Maze {
@@ -34,7 +37,17 @@ class Maze {
   /// Only call on GameLabyrinth.onLoad()
   onLoad() {
     for (var wall in walls) {
+<<<<<<< HEAD
       wall.loadHitbox();
+=======
+      wall.onLoad();
+    }
+  }
+
+  void render(Canvas canvas) {
+    for (var wall in walls) {
+      wall.render(canvas);
+>>>>>>> main
     }
   }
 }
