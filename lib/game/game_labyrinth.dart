@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
-import 'package:labyrinth/game/maze.dart';
-import 'dart:ui';
+import 'maze.dart';
+import 'marble.dart';
 
 class GameLabyrinth extends FlameGame {
   final Maze maze;
+  final Marble marble = Marble();
 
   GameLabyrinth(this.maze);
 
   @override
   Future<void> onLoad() async {
-    maze.onLoad();
+    await maze.onLoad();
+    await marble.onLoad();
   }
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+    maze.render(canvas);
+    marble.render(canvas);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
+    marble.update(dt);
   }
 }

@@ -13,17 +13,24 @@ class Wall extends PositionComponent with CollisionCallbacks {
     return Wall(path: parseSvgPath(path));
   }
 
+  @override
+  Future<void> onLoad() async {
+    loadHitbox();
+    if (hitbox != null) {
+      add(hitbox!);
+    }
+  }
+
   void loadHitbox() {
-    /// Test if the hitbox has already been loaded, no need to load it again
     if (hitbox != null) return;
 
     final points = <Vector2>[];
-    path.computeMetrics().forEach((metric) {
-      for (var i = 0; i < metric.length; i++) {
-        final pos = metric.getTangentForOffset(i.toDouble())!.position;
+    for (var metric in path.computeMetrics()) {
+      for (double i = 0; i < metric.length; i += 5) {
+        final pos = metric.getTangentForOffset(i)!.position;
         points.add(Vector2(pos.dx, pos.dy));
       }
-    });
+    }
     hitbox = PolygonHitbox(points);
   }
 
@@ -32,8 +39,7 @@ class Wall extends PositionComponent with CollisionCallbacks {
     super.render(canvas);
 
     final paint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
+      ..color = Colors.white
       ..strokeWidth = 4.0;
     canvas.drawPath(path, paint);
   }
