@@ -1,15 +1,22 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:labyrinth/components/gui_common.dart';
 
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/screens/screen_game.dart';
 import 'package:labyrinth/util/logging.dart';
 
-class ScreenLevels extends StatelessWidget {
+class ScreenLevels extends StatefulWidget {
   const ScreenLevels({super.key});
 
-  Future<List<Level>> loadLevels() async {
+  @override
+  State<ScreenLevels> createState() => _ScreenLevelsState();
+}
+
+class _ScreenLevelsState extends State<ScreenLevels> {
+  // TODO: Move all asset loading to a bootstrapping function called on app startup (firebase init, level loading, etc.)
+  Future<List<Level>> _loadLevels() async {
     List<Level> levels = [];
 
     String manifestContent =
@@ -34,15 +41,8 @@ class ScreenLevels extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: Text('Level Selection'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       body: FutureBuilder<List<Level>>(
-        future: loadLevels(),
+        future: _loadLevels(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -53,7 +53,7 @@ class ScreenLevels extends StatelessWidget {
             return Center(child: Text('No levels found'));
           } else {
             List<Level> levels = snapshot.data!;
-            return Row(
+            return backgroundStack(Row(
               children: [
                 /// Side navigation menu
                 NavigationSidebar(),
@@ -61,15 +61,10 @@ class ScreenLevels extends StatelessWidget {
                 /// Main content
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Easy Does It',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
                         Expanded(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,55 +84,72 @@ class ScreenLevels extends StatelessWidget {
                               /// Right Panel for selected level's details
                               Expanded(
                                 flex: 2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      color: Colors.grey,
-                                      height: 200,
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: Text(
-                                          'Maze Preview',
-                                          style: TextStyle(color: Colors.white),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(15.00),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Easy Does It',
+                                          style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Level Description here!',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    Text('Your Time: Fast'),
-                                    Text('Author Time: Slow'),
-                                    Spacer(),
-                                    Center(
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 60, vertical: 20),
-                                          backgroundColor: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
+                                        Container(
+                                          color: Colors.grey,
+                                          height: 200,
+                                          width: double.infinity,
+                                          child: Center(
+                                            child: Text(
+                                              'Maze Preview',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                           ),
                                         ),
-                                        onPressed: () {
-                                          /// Begin button action
-                                        },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text('Begin',
-                                                style: TextStyle(fontSize: 18)),
-                                            SizedBox(width: 10),
-                                            Icon(Icons.play_arrow),
-                                          ],
+                                        SizedBox(height: 20),
+                                        Text(
+                                          'Level Description here!',
+                                          style: TextStyle(fontSize: 16),
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                        Text('Your Time: Fast'),
+                                        Text('Author Time: Slow'),
+                                        Spacer(),
+                                        Center(
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 60,
+                                                    vertical: 15),
+                                                backgroundColor: Colors.black,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                /// Begin button action
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Icon(
+                                                    Icons.play_arrow,
+                                                    color: Colors.white,
+                                                  ),
+                                                  Text('Play',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18)),
+                                                ],
+                                              )),
+                                        ),
+                                      ],
+                                    )),
                               ),
                             ],
                           ),
@@ -147,7 +159,7 @@ class ScreenLevels extends StatelessWidget {
                   ),
                 ),
               ],
-            );
+            ));
           }
         },
       ),
@@ -161,16 +173,19 @@ class NavigationSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 80,
-      color: Colors.grey[300],
+      color: Colors.transparent,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          IconButton(
+              icon: Icon(Icons.arrow_back, size: 40),
+              onPressed: () => Navigator.pop(context)),
           Icon(Icons.menu, size: 40),
-          Divider(),
-          Icon(Icons.settings, size: 40),
-          Divider(),
+          Divider(color: Colors.transparent),
+          Icon(Icons.leaderboard, size: 40),
+          Divider(color: Colors.transparent),
           Icon(Icons.info, size: 40),
-          Divider(),
+          Divider(color: Colors.transparent),
           Icon(Icons.help, size: 40),
         ],
       ),

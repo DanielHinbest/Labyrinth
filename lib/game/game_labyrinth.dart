@@ -11,12 +11,8 @@ class GameLabyrinth extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-<<<<<<< HEAD
-    maze.onLoad();
-=======
     await maze.onLoad();
     await marble.onLoad();
->>>>>>> main
   }
 
   @override

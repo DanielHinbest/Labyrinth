@@ -25,14 +25,9 @@ class Marble extends PositionComponent with CollisionCallbacks {
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
-<<<<<<< HEAD
-    if (other is Wall) {
-      /// TODO: Add collision logic
-=======
     if (other is Wall && !hasCollided) {
       hasCollided = true;
       velocity = -velocity * 0.9;
->>>>>>> main
     }
   }
 

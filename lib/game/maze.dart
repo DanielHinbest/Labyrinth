@@ -37,9 +37,6 @@ class Maze {
   /// Only call on GameLabyrinth.onLoad()
   onLoad() {
     for (var wall in walls) {
-<<<<<<< HEAD
-      wall.loadHitbox();
-=======
       wall.onLoad();
     }
   }
@@ -47,7 +44,6 @@ class Maze {
   void render(Canvas canvas) {
     for (var wall in walls) {
       wall.render(canvas);
->>>>>>> main
     }
   }
 }

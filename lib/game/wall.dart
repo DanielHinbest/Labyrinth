@@ -11,12 +11,6 @@ class Wall extends PositionComponent with CollisionCallbacks {
 
   static Wall fromString(String path) {
     return Wall(path: parseSvgPath(path));
-<<<<<<< HEAD
-  }
-
-  void loadHitbox() {
-    /// Test if the hitbox has already been loaded, no need to load it again
-=======
   }
 
   @override
@@ -28,7 +22,6 @@ class Wall extends PositionComponent with CollisionCallbacks {
   }
 
   void loadHitbox() {
->>>>>>> main
     if (hitbox != null) return;
 
     final points = <Vector2>[];
