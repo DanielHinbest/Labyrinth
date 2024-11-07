@@ -43,7 +43,9 @@ class Maze {
 
   void render(Canvas canvas) {
     for (var wall in walls) {
-      wall.render(canvas);
+      wall.render(
+        canvas,
+      );
     }
   }
 }

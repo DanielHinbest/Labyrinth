@@ -36,11 +36,20 @@ class Wall extends PositionComponent with CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    super.render(canvas);
+    double ox = 10, oy = 10; // 3D-effect
 
-    final paint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 4.0;
-    canvas.drawPath(path, paint);
+    Color color_side = Color(0xFF6D6D6D);
+    Color color_top = Colors.white;
+
+    Path path_side = path;
+    Path path_top = path.shift(Offset(ox, oy));
+
+    super.render(canvas);
+    var paint = Paint()..strokeWidth = 4.0;
+
+    paint.color = color_side;
+    canvas.drawPath(path_side, paint);
+    paint.color = color_top;
+    canvas.drawPath(path_top, paint);
   }
 }

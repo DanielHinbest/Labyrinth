@@ -1,48 +1,22 @@
-import 'dart:ui';
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
-import 'wall.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 
-class Marble extends PositionComponent with CollisionCallbacks {
-  Vector2 velocity = Vector2(50, 50);
-  bool hasCollided = false; // Flag to manage collision response timing
+class Marble extends BodyComponent {
+  final Vector2 position;
+
+  Marble(this.position);
 
   @override
-  Future<void> onLoad() async {
-    add(CircleHitbox());
-  }
+  Body createBody() {
+    final shape = CircleShape()..radius = 10.0;
+    final fixtureDef = FixtureDef(shape)
+      ..density = 1.0
+      ..restitution = 0.0
+      ..friction = 0.0;
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (!hasCollided) {
-      position.add(velocity * dt);
-    }
-  }
+    final bodyDef = BodyDef()
+      ..position = position
+      ..type = BodyType.dynamic;
 
-  @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(intersectionPoints, other);
-    if (other is Wall && !hasCollided) {
-      hasCollided = true;
-      velocity = -velocity * 0.9;
-    }
-  }
-
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    super.onCollisionEnd(other);
-    if (other is Wall) {
-      hasCollided = false;
-    }
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    canvas.drawCircle(
-        Offset(position.x, position.y), 10, Paint()..color = Colors.white);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }

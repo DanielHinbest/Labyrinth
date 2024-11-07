@@ -1,30 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame_forge2d/forge2d_game.dart';
 import 'maze.dart';
 import 'marble.dart';
 
-class GameLabyrinth extends FlameGame {
+class GameLabyrinth extends Forge2DGame {
   final Maze maze;
-  final Marble marble = Marble();
 
-  GameLabyrinth(this.maze);
+  GameLabyrinth(this.maze)
+      : super(gravity: Vector2(0, 10), camera: CameraComponent());
 
   @override
   Future<void> onLoad() async {
-    await maze.onLoad();
-    await marble.onLoad();
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    maze.render(canvas);
-    marble.render(canvas);
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    marble.update(dt);
+    await super.onLoad();
+    add(Marble(Vector2(100, 100)));
   }
 }
