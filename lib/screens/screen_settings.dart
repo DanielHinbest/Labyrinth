@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:labyrinth/components/gradient_button.dart';
 import 'package:labyrinth/components/gui_common.dart';
-import 'package:labyrinth/components/toggle_button.dart';
 
 class ScreenSettings extends StatelessWidget {
   const ScreenSettings({super.key});
@@ -16,8 +14,8 @@ class ScreenSettings extends StatelessWidget {
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
         ),
-        body: backgroundStack(
-          Center(
+        body: AppBackground(
+          child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

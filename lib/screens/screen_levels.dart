@@ -15,6 +15,15 @@ class ScreenLevels extends StatefulWidget {
 }
 
 class _ScreenLevelsState extends State<ScreenLevels> {
+  bool _showLeaderboard = false;
+
+  // Function to switch views
+  void _resetViews() {
+    setState(() {
+      _showLeaderboard = false;
+    });
+  }
+
   // TODO: Move all asset loading to a bootstrapping function called on app startup (firebase init, level loading, etc.)
   Future<List<Level>> _loadLevels() async {
     List<Level> levels = [];
@@ -53,10 +62,50 @@ class _ScreenLevelsState extends State<ScreenLevels> {
             return Center(child: Text('No levels found'));
           } else {
             List<Level> levels = snapshot.data!;
-            return backgroundStack(Row(
+            // TODO: Game resets on every state update, fix this. Maybe just use animated_background package
+            return AppBackground(
+                child: Row(
               children: [
                 /// Side navigation menu
-                NavigationSidebar(),
+                Container(
+                  width: 80,
+                  color: Colors.transparent,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.arrow_back, size: 40),
+                          onPressed: () => Navigator.pop(context)),
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.menu, size: 40),
+                          onPressed: () => _resetViews()),
+                      Divider(color: Colors.transparent),
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.list, size: 40),
+                          onPressed: () => _resetViews()),
+                      Divider(color: Colors.transparent),
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.leaderboard, size: 40),
+                          onPressed: () => setState(() {
+                                _showLeaderboard = true;
+                              })),
+                      Divider(color: Colors.transparent),
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.info, size: 40),
+                          onPressed: () => _resetViews()),
+                      Divider(color: Colors.transparent),
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.help, size: 40),
+                          onPressed: () => _resetViews()),
+                    ],
+                  ),
+                ),
 
                 /// Main content
                 Expanded(
@@ -69,16 +118,18 @@ class _ScreenLevelsState extends State<ScreenLevels> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              /// Level List
+                              // Content based on selected view
                               Expanded(
                                 flex: 3,
-                                child: ListView.builder(
-                                  itemCount: levels.length,
-                                  itemBuilder: (context, index) {
-                                    Level level = levels[index];
-                                    return LevelTile(level: level);
-                                  },
-                                ),
+                                child: _showLeaderboard
+                                    ? Expanded(child: LeaderboardWidget())
+                                    : ListView.builder(
+                                        itemCount: levels.length,
+                                        itemBuilder: (context, index) {
+                                          Level level = levels[index];
+                                          return LevelTile(level: level);
+                                        },
+                                      ),
                               ),
 
                               /// Right Panel for selected level's details
@@ -167,32 +218,6 @@ class _ScreenLevelsState extends State<ScreenLevels> {
   }
 }
 
-class NavigationSidebar extends StatelessWidget {
-  const NavigationSidebar({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      color: Colors.transparent,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-              icon: Icon(Icons.arrow_back, size: 40),
-              onPressed: () => Navigator.pop(context)),
-          Icon(Icons.menu, size: 40),
-          Divider(color: Colors.transparent),
-          Icon(Icons.leaderboard, size: 40),
-          Divider(color: Colors.transparent),
-          Icon(Icons.info, size: 40),
-          Divider(color: Colors.transparent),
-          Icon(Icons.help, size: 40),
-        ],
-      ),
-    );
-  }
-}
-
 class LevelTile extends StatelessWidget {
   final Level level;
 
@@ -229,5 +254,42 @@ class LevelTile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class LeaderboardWidget extends StatelessWidget {
+  const LeaderboardWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10, // 10 leaderboard entries
+      itemBuilder: (context, index) {
+        // Generate a mock time in seconds
+        final timeInSeconds = (index + 1) * 15 + index * 3;
+        final duration = Duration(seconds: timeInSeconds);
+
+        // Format the duration as mm:ss.SSS
+        final formattedTime = _formatDuration(duration);
+
+        return ListTile(
+          leading: Text(
+            "#${index + 1}",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          title: Text("Player ${index + 1}"),
+          trailing: Text(formattedTime),
+        );
+      },
+    );
+  }
+
+  // Helper function to format the duration as mm:ss.SSS
+  String _formatDuration(Duration duration) {
+    String minutes = duration.inMinutes.toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    String milliseconds =
+        (duration.inMilliseconds % 1000).toString().padLeft(3, '0');
+    return "$minutes:$seconds.$milliseconds";
   }
 }

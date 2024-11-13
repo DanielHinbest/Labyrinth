@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/screens/screen_levels.dart';
 import 'package:labyrinth/screens/screen_settings.dart';
-import 'package:labyrinth/components/gradient_button.dart';
 
 class ScreenTitle extends StatelessWidget {
   const ScreenTitle({super.key});
@@ -12,8 +11,8 @@ class ScreenTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        body: backgroundStack(
-          Center(
+        body: AppBackground(
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
