@@ -5,26 +5,12 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:labyrinth/bootstrap.dart';
 
 import 'package:labyrinth/screens/screen_title.dart';
-import 'package:labyrinth/data/firebase_options.dart';
-import 'package:labyrinth/util/logging.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-  /// Set the preferred device orientations
-  SystemChrome.setPreferredOrientations([
-    /// TODO: Remove one of these lines in favor of user selection via settings.
-    DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft,
-  ]).then((_) {
-    runApp(MyApp());
-  });
+  AppLoader.bootstrap(() => const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,47 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
+    return MaterialApp(
+      title: 'Labyrinth',
+      theme: ThemeData(
+        //  [see this issue: https://github.com/flutter/flutter/issues/145894]
+        // Because of how the default transitions work for MaterialPageRoutes the background animation froze when switching routes
+        // Using cupertino transitions fixes this [https://stackoverflow.com/questions/50196913/how-to-change-navigation-animation-using-flutter]
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }), // TODO: Proper theme data and handling
       ),
-      builder: (context, snapshot) {
-        /// NOTE: widget gets built twice in debug mode
-        appLogger.d('Initializing Firebase');
-        if (snapshot.hasError) {
-          appLogger.e('Error initializing Firebase', error: snapshot.error);
-          return const MaterialApp(
-            home: Scaffold(
-              body: Center(
-                child: Text('Error initializing Firebase'),
-              ),
-            ),
-          );
-        }
+      home: ScreenTitle(),
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-            title: 'Sensor Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: ScreenTitle(),
-
-            /// Main screen of the application
-            /* home: const TiltTest(), */
-          );
-        }
-
-        return const MaterialApp(
-          home: Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-
-              /// Show a loading indicator while initializing Firebase
-            ),
-          ),
-        );
-      },
+      /// Main screen of the application
+      /* home: const TiltTest(), */
     );
   }
 }
