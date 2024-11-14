@@ -21,7 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Labyrinth',
       theme: ThemeData(
-        primarySwatch: Colors.blue, // TODO: Proper theme data and handling
+        //  [see this issue: https://github.com/flutter/flutter/issues/145894]
+        // Because of how the default transitions work for MaterialPageRoutes the background animation froze when switching routes
+        // Using cupertino transitions fixes this [https://stackoverflow.com/questions/50196913/how-to-change-navigation-animation-using-flutter]
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }), // TODO: Proper theme data and handling
       ),
       home: ScreenTitle(),
 

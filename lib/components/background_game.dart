@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
+/// Keeping this for now but this is not used in the current implementation
 class BackgroundGame extends FlameGame {
   final Random random = Random();
   bool _loadedOnce =
