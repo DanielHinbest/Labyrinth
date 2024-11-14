@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:labyrinth/data/firebase_options.dart';
+import 'package:labyrinth/data/settings.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/util/logging.dart';
 
@@ -20,6 +21,7 @@ class AppLoader {
     await initSystemChrome();
     await initFirebase();
     await loadLevels();
+    await Settings.init();
     runApp(await builder());
   }
 
