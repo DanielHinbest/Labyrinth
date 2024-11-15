@@ -4,7 +4,8 @@ import 'package:labyrinth/game/level.dart';
 
 import '../game/game_labyrinth.dart';
 
-class ScreenGame extends StatefulWidget {
+class ScreenGame extends StatefulWidget
+{
   final Level level;
 
   const ScreenGame({super.key, required this.level});
@@ -13,44 +14,48 @@ class ScreenGame extends StatefulWidget {
   State<ScreenGame> createState() => _ScreenGameState();
 }
 
-class _ScreenGameState extends State<ScreenGame> {
+class _ScreenGameState extends State<ScreenGame>
+{
   bool isPaused = false;
-  bool isPauseButtonVisible = false; // Initially hidden
+  bool isPauseButtonVisible = false;
 
-  // Method to show the pause button on the first tap
-  void showPauseButton() {
+  void showPauseButton()
+  {
     setState(() {
       isPauseButtonVisible = true;
     });
   }
 
-  // Method to open the pause menu when the pause button is tapped
-  void pause() {
-    setState(() {
+  void pause()
+  {
+    setState(()
+    {
       isPaused = true;
     });
   }
 
-  // Method to resume the game from the pause menu
-  void resumeGame() {
+  void resumeGame()
+  {
     setState(() {
       isPaused = false;
-      isPauseButtonVisible = false; // Hide the pause button after resuming
+      isPauseButtonVisible = false;
     });
   }
 
   // TODO: Add logic to restart the game or level but embed it later if time permits.
-  void restartGame() {
-    // Implement restart functionality here if needed
+  void restartGame()
+  {
+
   }
 
-  // Method to go back to the main menu
-  void mainMenu() {
+  void mainMenu()
+  {
     Navigator.pop(context);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Scaffold(
       body: Stack(
         children: [
@@ -58,17 +63,17 @@ class _ScreenGameState extends State<ScreenGame> {
           GameWidget(
             game: GameLabyrinth(widget.level.maze),
           ),
-          // First tap anywhere to show the pause button
+
           if (!isPauseButtonVisible)
             GestureDetector(
               onTap: showPauseButton,
               child: Container(
-                color: Colors.transparent, // Invisible area to detect the first tap
+                color: Colors.transparent,
                 width: double.infinity,
                 height: double.infinity,
               ),
             ),
-          // Pause button positioned in the bottom-right corner, visible after the first tap
+
           if (isPauseButtonVisible)
             Positioned(
               bottom: 20,
@@ -78,7 +83,7 @@ class _ScreenGameState extends State<ScreenGame> {
                 child: Icon(Icons.pause),
               ),
             ),
-          // Pause menu overlay when the game is paused
+
           if (isPaused)
             Center(
               child: Container(
