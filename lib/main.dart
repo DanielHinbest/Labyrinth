@@ -6,10 +6,13 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:labyrinth/bootstrap.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:labyrinth/screens/screen_title.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   AppLoader.bootstrap(() => const MyApp());
 }
 

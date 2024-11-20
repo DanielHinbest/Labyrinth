@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../game/game_labyrinth.dart';
 import 'package:labyrinth/data/db_connect.dart';
@@ -66,6 +67,12 @@ class _ScreenGameState extends State<ScreenGame> {
       date: DateTime.now().toIso8601String(),
     );
     await dbConnect.insertScore(score);
+
+    await FirebaseFirestore.instance.collection('leaderboard').add({
+      'name': 'Player', // Replace with actual player name
+      'time': finalScore,
+    });
+
     Navigator.pushNamed(context, '/game_over');
   }
 
