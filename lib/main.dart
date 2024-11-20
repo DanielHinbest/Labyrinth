@@ -11,8 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   AppLoader.bootstrap(() => const MyApp());
 }
 
