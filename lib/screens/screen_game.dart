@@ -1,8 +1,10 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/game/level.dart';
+import 'package:labyrinth/data/score.dart';
 
 import '../game/game_labyrinth.dart';
+import 'package:labyrinth/data/db_connect.dart';
 
 class ScreenGame extends StatefulWidget {
   final Level level;
@@ -16,6 +18,14 @@ class ScreenGame extends StatefulWidget {
 class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
   bool isPauseButtonVisible = false; // Initially hidden
+  late DBConnect dbConnect;
+
+  @override
+  void initState() {
+    super.initState();
+    dbConnect = DBConnect();
+    dbConnect.initDatabase();
+  }
 
   // Method to show the pause button on the first tap
   void showPauseButton() {
@@ -47,6 +57,16 @@ class _ScreenGameState extends State<ScreenGame> {
   // Method to go back to the main menu
   void mainMenu() {
     Navigator.pop(context);
+  }
+
+  void endGame(int finalScore) async {
+    Score score = Score(
+      id: DateTime.now().millisecondsSinceEpoch,
+      score: finalScore,
+      date: DateTime.now().toIso8601String(),
+    );
+    await dbConnect.insertScore(score);
+    Navigator.pushNamed(context, '/game_over');
   }
 
   @override
