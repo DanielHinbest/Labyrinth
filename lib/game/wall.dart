@@ -19,13 +19,14 @@ class Wall extends BodyComponent {
 
     for (final metric in path.computeMetrics()) {
       final points = <Vector2>[];
-      for (double i = 0; i < metric.length; i += 0) {
+      for (double i = 0; i < metric.length; i += 2) {
         final pos = metric.getTangentForOffset(i)!.position;
         points.add(Vector2(pos.dx, pos.dy));
       }
-      if (points.length > 1) {
+
+      for (int j = 0; j < points.length - 1; j++) {
         final edgeShape = EdgeShape()
-          ..set(points.first, points.last); // Define each segment as an edge.
+          ..set(points[j], points[j + 1]);
         body.createFixture(FixtureDef(edgeShape)
           ..density = 1.0
           ..friction = 0.5

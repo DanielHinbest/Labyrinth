@@ -14,7 +14,7 @@ class GameLabyrinth extends Forge2DGame {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    world.add(Marble(Vector2(100, 100)));
+    world.add(Marble(Vector2(0, -30)));
     world.addAll(maze.walls);
   }
 }
