@@ -3,8 +3,14 @@ import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
+/// Keeping this for now but this is not used in the current implementation
 class BackgroundGame extends FlameGame {
   final Random random = Random();
+  bool _loadedOnce =
+      false; // trying to stop the small pause when changing screens
+  BackgroundGame() : super() {
+    pauseWhenBackgrounded = false;
+  }
 
   @override
   Color backgroundColor() => Colors.grey[200]!;
@@ -13,6 +19,7 @@ class BackgroundGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
+    if (_loadedOnce) return;
     super.onLoad();
     final dotSize = random.nextDouble() * 10 + 5;
 
@@ -39,6 +46,7 @@ class BackgroundGame extends FlameGame {
         ),
       ));
     }
+    _loadedOnce = true;
   }
 }
 
