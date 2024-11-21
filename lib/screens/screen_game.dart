@@ -4,8 +4,7 @@ import 'package:labyrinth/game/level.dart';
 
 import '../game/game_labyrinth.dart';
 
-class ScreenGame extends StatefulWidget
-{
+class ScreenGame extends StatefulWidget {
   final Level level;
 
   const ScreenGame({super.key, required this.level});
@@ -14,48 +13,52 @@ class ScreenGame extends StatefulWidget
   State<ScreenGame> createState() => _ScreenGameState();
 }
 
-class _ScreenGameState extends State<ScreenGame>
-{
+class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
   bool isPauseButtonVisible = false;
+  Alignment? pauseButtonAlignment;
 
-  void showPauseButton()
-  {
+  void showPauseButton(TapDownDetails details, Size screenSize) {
     setState(() {
       isPauseButtonVisible = true;
+
+      // Determine the tapped corner
+      final tapX = details.globalPosition.dx;
+      final tapY = details.globalPosition.dy;
+
+      if (tapX > screenSize.width / 2 && tapY < screenSize.height / 2) {
+        pauseButtonAlignment = Alignment.topRight;
+      } else if (tapX < screenSize.width / 2 && tapY < screenSize.height / 2) {
+        pauseButtonAlignment = Alignment.topLeft;
+      } else if (tapX < screenSize.width / 2 && tapY > screenSize.height / 2) {
+        pauseButtonAlignment = Alignment.bottomLeft;
+      } else {
+        pauseButtonAlignment = Alignment.bottomRight;
+      }
     });
   }
 
-  void pause()
-  {
-    setState(()
-    {
+  void pause() {
+    setState(() {
       isPaused = true;
     });
   }
 
-  void resumeGame()
-  {
+  void resumeGame() {
     setState(() {
       isPaused = false;
       isPauseButtonVisible = false;
     });
   }
 
-  // TODO: Add logic to restart the game or level but embed it later if time permits.
-  void restartGame()
-  {
-
-  }
-
-  void mainMenu()
-  {
+  void mainMenu() {
     Navigator.pop(context);
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -64,9 +67,10 @@ class _ScreenGameState extends State<ScreenGame>
             game: GameLabyrinth(widget.level.maze),
           ),
 
+          // Capture tap to show the pause button in a corner
           if (!isPauseButtonVisible)
             GestureDetector(
-              onTap: showPauseButton,
+              onTapDown: (details) => showPauseButton(details, screenSize),
               child: Container(
                 color: Colors.transparent,
                 width: double.infinity,
@@ -74,16 +78,20 @@ class _ScreenGameState extends State<ScreenGame>
               ),
             ),
 
-          if (isPauseButtonVisible)
-            Positioned(
-              bottom: 20,
-              right: 20,
-              child: FloatingActionButton(
-                onPressed: pause,
-                child: Icon(Icons.pause),
+          // Pause button positioned in the selected corner
+          if (isPauseButtonVisible && pauseButtonAlignment != null)
+            Align(
+              alignment: pauseButtonAlignment!,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: FloatingActionButton(
+                  onPressed: pause,
+                  child: Icon(Icons.pause),
+                ),
               ),
             ),
 
+          // Pause menu
           if (isPaused)
             Center(
               child: Container(
@@ -104,7 +112,6 @@ class _ScreenGameState extends State<ScreenGame>
                       onPressed: resumeGame,
                       child: Text('Resume'),
                     ),
-                    // Keeping the TODO comment for restart functionality
                     ElevatedButton(
                       onPressed: mainMenu,
                       child: Text('Main Menu'),
