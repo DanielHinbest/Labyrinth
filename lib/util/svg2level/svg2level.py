@@ -1,6 +1,4 @@
 # Make sure the objects in the SVG file are all paths
-
-
 import os
 import json
 import xml.etree.ElementTree as ET

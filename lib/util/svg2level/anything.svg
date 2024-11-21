@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="anything.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.75811588"
+     inkscape:cx="397.03693"
+     inkscape:cy="561.91937"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 148.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="210 : 148.5 : 1"
+       inkscape:persp3d-origin="105 : 99 : 1"
+       id="perspective20" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect1"
+       style="stroke-width:0.200006"
+       d="M -0.69800037,0.3489995 H 210.09871 V 10.121027 H -0.69800037 Z" />
+    <path
+       id="rect2"
+       style="stroke-width:0.217888"
+       d="M 192.29964,10.121033 H 210.7967 V 297 h -18.49706 z" />
+    <path
+       id="rect3"
+       style="stroke-width:0.191121"
+       d="M -0.3490012,285.48294 H 192.64865 v 11.51704 H -0.3490012 Z" />
+    <path
+       id="rect4"
+       style="stroke-width:0.197043"
+       d="M -0.3490012,10.121034 H 14.65805 V 285.48294 H -0.3490012 Z" />
+    <path
+       id="rect5"
+       style="stroke-width:0.264583"
+       d="M 14.309048,23.38308 H 92.834309 V 36.645125 H 14.309048 Z" />
+    <path
+       id="rect6"
+       style="stroke-width:0.264583"
+       d="m 130.52644,22.685076 h 61.77322 v 14.309047 h -61.77322 z" />
+    <path
+       id="rect7"
+       style="stroke-width:0.364998"
+       d="M 13.960048,56.887188 H 164.72856 V 70.498233 H 13.960048 Z" />
+    <path
+       id="rect7-8"
+       style="stroke-width:0.364998"
+       d="M 41.766842,89.455826 H 192.53535 V 103.06687 H 41.766842 Z" />
+    <path
+       id="rect7-5"
+       style="stroke-width:0.341876"
+       d="M 13.655253,121.75254 H 145.92671 v 13.61105 H 13.655253 Z" />
+    <path
+       id="rect7-5-1"
+       style="stroke-width:0.313649"
+       d="M 14.456335,158.70868 H 125.78772 v 13.61104 H 14.456335 Z" />
+    <path
+       id="path10"
+       style="stroke-width:0.264583"
+       d="m 192.64864,183.9236 a 21.114571,19.544065 0 0 1 -21.11457,19.54406 21.114571,19.544065 0 0 1 -21.11457,-19.54406 21.114571,19.544065 0 0 1 21.11457,-19.54407 21.114571,19.544065 0 0 1 21.11457,19.54407 z" />
+    <path
+       id="path11"
+       style="stroke-width:0.264583"
+       d="m 181.13161,191.25266 a 2.7920096,0.3490012 0 0 1 -2.79201,0.349 2.7920096,0.3490012 0 0 1 -2.79201,-0.349 2.7920096,0.3490012 0 0 1 2.79201,-0.34901 2.7920096,0.3490012 0 0 1 2.79201,0.34901 z" />
+    <path
+       id="path12"
+       style="stroke-width:0.264583"
+       d="m 172.05759,186.36661 a 2.2685075,0.3490012 0 0 1 -2.26851,0.349 2.2685075,0.3490012 0 0 1 -2.26851,-0.349 2.2685075,0.3490012 0 0 1 2.26851,-0.349 2.2685075,0.3490012 0 0 1 2.26851,0.349 z" />
+    <path
+       id="rect13"
+       style="stroke-width:0.373245"
+       d="M 53.048187,219.52174 H 192.64867 v 12.91305 H 53.048187 Z" />
+    <path
+       id="path14"
+       style="fill:#1a1a1a;stroke-width:0.264583"
+       inkscape:transform-center-x="2.0491203"
+       inkscape:transform-center-y="0.6053761"
+       transform="matrix(0.56024302,0,0,0.59140102,100.47205,116.05697)"
+       d="m 165.77556,266.98589 -32.11371,-3.27609 -20.90452,24.59724 -6.80793,-31.55431 -29.853219,-12.28041 27.906169,-16.22556 2.45422,-32.18695 24.0549,21.52638 31.37,-7.61223 -13.03943,29.52959 z" />
+  </g>
+</svg>
