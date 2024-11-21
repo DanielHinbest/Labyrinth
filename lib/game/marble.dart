@@ -11,7 +11,7 @@ class Marble extends BodyComponent {
 
   @override
   Body createBody() {
-    final shape = CircleShape()..radius = 10.0;
+    final shape = CircleShape()..radius = 1.0;
     final fixtureDef = FixtureDef(shape)
       ..density = 1.0
       ..restitution = 0.0
