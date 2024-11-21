@@ -1,11 +1,10 @@
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
+import 'dart:ui';
+
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:svg_path_parser/svg_path_parser.dart';
 
-class Wall extends PositionComponent with CollisionCallbacks {
+class Wall extends BodyComponent {
   final Path path;
-  PolygonHitbox? hitbox;
 
   Wall({required this.path});
 
@@ -14,42 +13,33 @@ class Wall extends PositionComponent with CollisionCallbacks {
   }
 
   @override
-  Future<void> onLoad() async {
-    loadHitbox();
-    if (hitbox != null) {
-      add(hitbox!);
-    }
-  }
+  Body createBody() {
+    final bodyDef = BodyDef()..type = BodyType.static;
+    final body = world.createBody(bodyDef);
 
-  void loadHitbox() {
-    if (hitbox != null) return;
-
-    final points = <Vector2>[];
-    for (var metric in path.computeMetrics()) {
-      for (double i = 0; i < metric.length; i += 5) {
+    for (final metric in path.computeMetrics()) {
+      final points = <Vector2>[];
+      for (double i = 0; i < metric.length; i += 0) {
         final pos = metric.getTangentForOffset(i)!.position;
         points.add(Vector2(pos.dx, pos.dy));
       }
+      if (points.length > 1) {
+        final edgeShape = EdgeShape()
+          ..set(points.first, points.last); // Define each segment as an edge.
+        body.createFixture(FixtureDef(edgeShape)
+          ..density = 1.0
+          ..friction = 0.5
+          ..restitution = 0.2);
+      }
     }
-    hitbox = PolygonHitbox(points);
+    return body;
   }
 
   @override
   void render(Canvas canvas) {
-    double ox = 10, oy = 10; // 3D-effect
-
-    Color color_side = Color(0xFF6D6D6D);
-    Color color_top = Colors.white;
-
-    Path path_side = path;
-    Path path_top = path.shift(Offset(ox, oy));
-
-    super.render(canvas);
-    var paint = Paint()..strokeWidth = 4.0;
-
-    paint.color = color_side;
-    canvas.drawPath(path_side, paint);
-    paint.color = color_top;
-    canvas.drawPath(path_top, paint);
+    final paint = Paint()
+      ..color = const Color(0xFFAAAAAA)
+      ..style = PaintingStyle.fill;
+    canvas.drawPath(path, paint);
   }
 }
