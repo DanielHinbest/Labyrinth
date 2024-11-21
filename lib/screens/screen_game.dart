@@ -1,8 +1,11 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/game/level.dart';
+import 'package:labyrinth/data/score.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../game/game_labyrinth.dart';
+import 'package:labyrinth/data/db_connect.dart';
 
 class ScreenGame extends StatefulWidget {
   final Level level;
@@ -15,8 +18,16 @@ class ScreenGame extends StatefulWidget {
 
 class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
-  bool isPauseButtonVisible = false;
+  bool isPauseButtonVisible = false; // Initially hidden
+  late DBConnect dbConnect;
   Alignment? pauseButtonAlignment;
+
+  @override
+  void initState() {
+    super.initState();
+    dbConnect = DBConnect();
+    dbConnect.initDatabase();
+  }
 
   void showPauseButton(TapDownDetails details, Size screenSize) {
     setState(() {
@@ -38,21 +49,45 @@ class _ScreenGameState extends State<ScreenGame> {
     });
   }
 
+  // Method to open the pause menu when the pause button is tapped
   void pause() {
     setState(() {
       isPaused = true;
     });
   }
 
+  // Method to resume the game from the pause menu
   void resumeGame() {
     setState(() {
       isPaused = false;
-      isPauseButtonVisible = false;
+      isPauseButtonVisible = false; // Hide the pause button after resuming
     });
   }
 
+  // TODO: Add logic to restart the game or level but embed it later if time permits.
+  void restartGame() {
+    // Implement restart functionality here if needed
+  }
+
+  // Method to go back to the main menu
   void mainMenu() {
     Navigator.pop(context);
+  }
+
+  void endGame(int finalScore) async {
+    Score score = Score(
+      id: DateTime.now().millisecondsSinceEpoch,
+      score: finalScore,
+      date: DateTime.now().toIso8601String(),
+    );
+    await dbConnect.insertScore(score);
+
+    await FirebaseFirestore.instance.collection('leaderboard').add({
+      'name': 'Player', // Replace with actual player name
+      'time': finalScore,
+    });
+
+    Navigator.pushNamed(context, '/game_over');
   }
 
   @override
@@ -112,6 +147,7 @@ class _ScreenGameState extends State<ScreenGame> {
                       onPressed: resumeGame,
                       child: Text('Resume'),
                     ),
+                    // Keeping the TODO comment for restart functionality
                     ElevatedButton(
                       onPressed: mainMenu,
                       child: Text('Main Menu'),
