@@ -26,19 +26,31 @@ class ScreenSettings extends StatelessWidget {
                       text: 'Music',
                       onIcon: Icons.music_note,
                       offIcon: Icons.music_off,
-                      onPressed: () => {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Music setting clicked')),
+                        );
+                      },
                     ),
                     SizedBox(height: 20),
                     GradientButton(
                       text: 'Language',
                       icon: Icons.language,
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Language setting clicked')),
+                        );
+                      },
                     ),
                     SizedBox(height: 20),
                     GradientButton(
                       text: 'Scores',
                       icon: Icons.star,
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Scores setting clicked')),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -50,19 +62,31 @@ class ScreenSettings extends StatelessWidget {
                       text: 'SFX',
                       onIcon: Icons.volume_up,
                       offIcon: Icons.volume_off,
-                      onPressed: () => {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('SFX setting clicked')),
+                        );
+                      },
                     ),
                     SizedBox(height: 20),
                     GradientButton(
                       text: 'Reset Progress',
                       icon: Icons.refresh,
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Reset Progress setting clicked')),
+                        );
+                      },
                     ),
                     SizedBox(height: 20),
                     GradientButton(
                       text: 'Credits',
                       icon: Icons.info_outline,
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Credits setting clicked')),
+                        );
+                      },
                     ),
                   ],
                 ),
