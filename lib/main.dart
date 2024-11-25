@@ -9,7 +9,7 @@ import 'package:labyrinth/bootstrap.dart';
 
 import 'package:labyrinth/screens/screen_title.dart';
 
-void main() {
+void main() async {
   AppLoader.bootstrap(() => const MyApp());
 }
 
