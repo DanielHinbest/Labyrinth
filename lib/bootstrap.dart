@@ -43,7 +43,6 @@ class AppLoader {
       appLogger.d('Loading level: $path');
       String content = await rootBundle.loadString(path);
       Map<String, dynamic> jsonData = jsonDecode(content);
-      appLogger.d('Data for $path: $jsonData');
       levels.add(Level.fromJson(jsonData));
     }
 
