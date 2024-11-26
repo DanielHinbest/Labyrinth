@@ -1,0 +1,12 @@
+{
+  "name": "level_template",
+  "desc": "level_template",
+  "auth": "Unknown",
+  "diff": 0,
+  "maze": {
+    "start": "start",
+    "goal": "goal",
+    "holes": "holes",
+    "walls": "paths"
+  }
+}
