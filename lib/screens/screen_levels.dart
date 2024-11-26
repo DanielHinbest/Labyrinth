@@ -9,8 +9,8 @@ import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/components/leaderboard.dart';
 import 'package:labyrinth/components/level_info.dart';
 import 'package:labyrinth/components/search_overlay.dart';
+import 'package:labyrinth/components/level_filter_modal.dart';
 
-// TODO: Change to accept levels as a parameter, so the AppLoader levels are passed down tree (maybe)
 class ScreenLevels extends StatefulWidget {
   const ScreenLevels({super.key});
 
@@ -27,7 +27,9 @@ class _ScreenLevelsState extends State<ScreenLevels> {
   int _selectedLevelIndex = 0;
   Set<int> _selectedDifficulties = {};
   Set<String?> _selectedAuthors = {};
-  bool _filtersApplied = false;
+  bool get _filtersApplied {
+    return _selectedDifficulties.isNotEmpty || _selectedAuthors.isNotEmpty;
+  }
 
   // Search-related states
   bool _isSearching = false; // Tracks if the search overlay is active
@@ -36,235 +38,6 @@ class _ScreenLevelsState extends State<ScreenLevels> {
   void initState() {
     super.initState();
     _filteredLevels = _levels; // Start with the full list
-  }
-
-  // TODO: Extract to a separate file
-  void _showFilterBottomSheet() {
-    final screenSize = MediaQuery.of(context).size;
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // Allows content to take more space
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        // Temporary selections to allow canceling
-        Set<int> tempSelectedDifficulties = {..._selectedDifficulties};
-        Set<String?> tempSelectedAuthors = {..._selectedAuthors};
-
-        // Recalculate valid filters based on current selections
-        Set<int> availableDifficulties = _getAvailableDifficulties(
-          tempSelectedAuthors,
-        );
-        Set<String?> availableAuthors = _getAvailableAuthors(
-          tempSelectedDifficulties,
-        );
-
-        final ScrollController difficultyController = ScrollController();
-        final ScrollController authorController = ScrollController();
-
-        return StatefulBuilder(builder: (context, setModalState) {
-          // Helper to update options dynamically as user selects filters
-          void updateAvailableFilters() {
-            setModalState(() {
-              availableDifficulties =
-                  _getAvailableDifficulties(tempSelectedAuthors);
-              availableAuthors = _getAvailableAuthors(tempSelectedDifficulties);
-
-              // Remove invalid selections
-              tempSelectedDifficulties.removeWhere(
-                  (difficulty) => !availableDifficulties.contains(difficulty));
-              tempSelectedAuthors
-                  .removeWhere((author) => !availableAuthors.contains(author));
-            });
-          }
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Title
-                const Text(
-                  "Filter Levels",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-
-                // Filter content in two columns
-                Row(
-                  children: [
-                    // Difficulty column
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Difficulty",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                              height: screenSize.height * 0.5,
-                              child: Scrollbar(
-                                  controller: difficultyController,
-                                  child: ListView(children: [
-                                    ...[0, 1, 2].map((difficulty) {
-                                      return CheckboxListTile(
-                                        title: Text(
-                                          getDifficultyLabel(difficulty),
-                                          style: TextStyle(
-                                            color: availableDifficulties
-                                                    .contains(difficulty)
-                                                ? Colors.black
-                                                : Colors.grey,
-                                          ),
-                                        ),
-                                        value: tempSelectedDifficulties
-                                            .contains(difficulty),
-                                        onChanged: availableDifficulties
-                                                .contains(difficulty)
-                                            ? (value) {
-                                                setModalState(() {
-                                                  if (value == true) {
-                                                    tempSelectedDifficulties
-                                                        .add(difficulty);
-                                                  } else {
-                                                    tempSelectedDifficulties
-                                                        .remove(difficulty);
-                                                  }
-                                                  updateAvailableFilters();
-                                                });
-                                              }
-                                            : null, // Disable if no levels match this difficulty
-                                      );
-                                    })
-                                  ]))),
-                        ],
-                      ),
-                    ),
-
-                    // Author column
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Authors",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                              height: screenSize.height * 0.5,
-                              child: Scrollbar(
-                                  controller: authorController,
-                                  child: ListView(children: [
-                                    ..._levels
-                                        .map((level) => level.author)
-                                        .toSet()
-                                        .map((author) {
-                                      return CheckboxListTile(
-                                        title: Text(
-                                          author,
-                                          style: TextStyle(
-                                            color: availableAuthors
-                                                    .contains(author)
-                                                ? Colors.black
-                                                : Colors.grey,
-                                          ),
-                                        ),
-                                        value: tempSelectedAuthors
-                                            .contains(author),
-                                        onChanged: availableAuthors
-                                                .contains(author)
-                                            ? (value) {
-                                                setModalState(() {
-                                                  if (value == true) {
-                                                    tempSelectedAuthors
-                                                        .add(author);
-                                                  } else {
-                                                    tempSelectedAuthors
-                                                        .remove(author);
-                                                  }
-                                                  updateAvailableFilters();
-                                                });
-                                              }
-                                            : null, // Disable if no levels match this author
-                                      );
-                                    })
-                                  ]))),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 20),
-
-                // Action buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(
-                            context); // Close without applying filters
-                      },
-                      child: const Text("Cancel"),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          setModalState(() {
-                            tempSelectedDifficulties.clear();
-                            tempSelectedAuthors.clear();
-                            _filtersApplied = false;
-                            updateAvailableFilters(); // Reset options
-                          });
-                        },
-                        child: const Text("Clear")),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _selectedDifficulties = tempSelectedDifficulties;
-                          _selectedAuthors = tempSelectedAuthors;
-                          _filtersApplied = _selectedDifficulties.isNotEmpty ||
-                              _selectedAuthors.isNotEmpty;
-                          _applyFilters();
-                        });
-                        Navigator.pop(context); // Apply filters and close
-                      },
-                      child: const Text("Apply"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
-      },
-    );
-  }
-
-  /// Helper to calculate available difficulties based on levels
-  /// Dynamically calculate available difficulties based on selected authors
-  Set<int> _getAvailableDifficulties(Set<String?> selectedAuthors) {
-    if (selectedAuthors.isEmpty) {
-      return _levels.map((level) => level.difficulty).toSet();
-    }
-    return _levels
-        .where((level) => selectedAuthors.contains(level.author))
-        .map((level) => level.difficulty)
-        .toSet();
-  }
-
-  /// Helper to calculate available authors based on levels
-  /// Dynamically calculate available authors based on selected difficulties
-  Set<String?> _getAvailableAuthors(Set<int> selectedDifficulties) {
-    if (selectedDifficulties.isEmpty) {
-      return _levels.map((level) => level.author).toSet();
-    }
-    return _levels
-        .where((level) => selectedDifficulties.contains(level.difficulty))
-        .map((level) => level.author)
-        .toSet();
   }
 
   /// Apply the selected filters
@@ -282,6 +55,30 @@ class _ScreenLevelsState extends State<ScreenLevels> {
 
       _selectedLevelIndex = 0; // Reset selected level index
     });
+  }
+
+  void _showFilterBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allows content to take more space
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return LevelFilterModal(
+          selectedDifficulties: _selectedDifficulties,
+          selectedAuthors: _selectedAuthors,
+          levels: _levels,
+          onApplyFilters: (difficulties, authors) {
+            setState(() {
+              _selectedDifficulties = difficulties;
+              _selectedAuthors = authors;
+              _applyFilters();
+            });
+          },
+        );
+      },
+    );
   }
 
   @override
