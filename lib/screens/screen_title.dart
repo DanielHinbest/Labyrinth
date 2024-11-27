@@ -49,12 +49,13 @@ class ScreenTitle extends StatelessWidget {
                   text: 'OPTIONS',
                   icon: Icons.menu,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ScreenSettings(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => ScreenSettings(),
+                    //   ),
+                    // );
+                    showSettingsOverlay(context);
                   },
                 ),
               ],
