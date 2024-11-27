@@ -1,8 +1,6 @@
-# Make sure the objects in the SVG file are all paths
 import os
 import json
 import xml.etree.ElementTree as ET
-import re
 
 this_dir = os.path.abspath(__file__).rsplit('\\', 1)[0]
 
@@ -16,15 +14,21 @@ def get_level_metadata(level_name):
     return desc, diff
 
 def parse_svg_file(svg_path):
-    """Extract all path 'd' attributes from the SVG file."""
+    """Extract all path 'd' attributes and ellipse coordinates from the SVG file."""
     tree = ET.parse(svg_path)
     root = tree.getroot()
     paths = []
-    for elem in root.iter('{http://www.w3.org/2000/svg}path'):
-        d_attr = elem.get('d')
-        if d_attr:
-            paths.append(d_attr)
-    return paths
+    holes = []
+    for elem in root.iter():
+        if elem.tag == '{http://www.w3.org/2000/svg}path':
+            d_attr = elem.get('d')
+            if d_attr:
+                paths.append(d_attr)
+        elif elem.tag == '{http://www.w3.org/2000/svg}ellipse':
+            cx = float(elem.get('cx', 0))
+            cy = float(elem.get('cy', 0))
+            holes.append([cx, cy])
+    return paths, holes
 
 def generate_level_file(level_name, author_name, desc, diff, start, goal, holes, walls):
     """Generate and save a level file as a JSON dictionary."""
@@ -62,9 +66,7 @@ def main():
 
         start = [0, 0]
         goal = [100, 100]
-        holes = []
-        level_path = f"{level_name}.level"
-        walls = parse_svg_file(this_dir + f"/{level_name}.svg")
+        walls, holes = parse_svg_file(this_dir + f"/{level_name}.svg")
         desc, diff = get_level_metadata(level_name)
 
         generate_level_file(level_name, author_name, desc, diff, start, goal, holes, walls)

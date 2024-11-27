@@ -1,7 +1,7 @@
 {
     "name": "hole",
     "desc": "",
-    "auth": "Daniel",
+    "auth": "Ahmed",
     "diff": 0,
     "maze": {
         "start": [
@@ -12,7 +12,12 @@
             100,
             100
         ],
-        "holes": [],
+        "holes": [
+            [
+                105.0,
+                148.5
+            ]
+        ],
         "walls": []
     }
 }
