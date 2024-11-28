@@ -67,16 +67,9 @@ def parse_svg_file(svg_path):
             elif 'marker_start' in label_attr.lower():
                 start = position
 
-    d = {
-        'paths': paths,
-        'start': start,
-        'goal': goal,
-        'holes': holes
-    }
-
     print(holes, start, goal, sep='\n')
 
-    return d
+    return paths, start, goal, holes
 
 
 def generate_level_file(level_name, author_name, desc, diff, start, goal, holes, walls):
