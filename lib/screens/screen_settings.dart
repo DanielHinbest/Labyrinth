@@ -11,11 +11,104 @@ class SettingsOverlay extends StatefulWidget {
 class _SettingsOverlayState extends State<SettingsOverlay> {
   bool isMusicOn = true; // State for Music toggle
   bool isSfxOn = true; // State for SFX toggle
+  bool isTimerVisible = true; // State for Timer Visibility toggle
+  bool isTiltControlsEnabled = false; // State for Tilt Controls toggle
   String selectedLanguage = 'English'; // State for Language dropdown
   String selectedTheme = 'Light'; // State for Theme dropdown
 
   final List<String> languages = ['English', 'Spanish', 'French', 'German'];
   final List<String> themes = ['Light', 'Dark', 'System'];
+
+  void _showCredits() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Credits clicked')),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              'Credits',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // List of placeholder names
+                Text('Daniel Hinbest', style: TextStyle(fontSize: 16)),
+                Text('Jugal Patel', style: TextStyle(fontSize: 16)),
+                Text('Syed Rizvi', style: TextStyle(fontSize: 16)),
+                Text('Raje Singh', style: TextStyle(fontSize: 16)),
+                Text('Zachary Wayne', style: TextStyle(fontSize: 16)),
+                SizedBox(height: 20), // Space between names and footer
+                // Footer text
+                Text(
+                  'Mobile Devices Final Project',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          contentPadding: EdgeInsets.all(5),
+          actionsPadding: EdgeInsets.all(0),
+          actions: [
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('Close'),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showResetProgress() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure?'),
+          content: Text('This will remove all your score data!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Add logic to reset progress here
+                Navigator.of(context).pop(); // Close the dialog
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Progress reset successfully!')),
+                );
+              },
+              child: Text(
+                'Reset',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +139,15 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                   children: [
                     // Back button
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.black),
-                          onPressed: () =>
+                        GestureDetector(
+                          child: Padding(
+                              padding:
+                                  EdgeInsets.only(left: 10, right: 10, top: 5),
+                              child: Icon(Icons.close, color: Colors.black)),
+                          onTap: () =>
                               Navigator.of(context).pop(), // Close overlay
-                        ),
-                        Text(
-                          'Settings',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
                         ),
                       ],
                     ),
@@ -169,7 +257,41 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [Text('Pain')],
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Timer Visibility',
+                                        style: TextStyle(fontSize: 16)),
+                                    Switch(
+                                      value: isTimerVisible,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isTimerVisible = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Tilt Controls',
+                                        style: TextStyle(fontSize: 16)),
+                                    Switch(
+                                      value: isTiltControlsEnabled,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isTiltControlsEnabled = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                           // Tab 3 - Other Settings
@@ -181,24 +303,13 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                 GradientButton(
                                   text: 'Credits',
                                   icon: Icons.info_outline,
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text('Credits clicked')),
-                                    );
-                                  },
+                                  onPressed: _showCredits,
                                 ),
                                 SizedBox(height: 20),
                                 GradientButton(
                                   text: 'Reset Progress',
                                   icon: Icons.refresh,
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text('Reset Progress clicked')),
-                                    );
-                                  },
+                                  onPressed: _showResetProgress,
                                 ),
                               ],
                             ),
@@ -222,6 +333,8 @@ void showSettingsOverlay(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: true, // Dismiss the overlay by tapping outside
-    builder: (context) => const SettingsOverlay(),
+    builder: (context) => ScaffoldMessenger(child: Builder(builder: (context) {
+      return Scaffold(body: AppBackground(child: const SettingsOverlay()));
+    })),
   );
 }
