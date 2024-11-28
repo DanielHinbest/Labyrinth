@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labyrinth/components/gui_common.dart';
+import 'package:labyrinth/data/settings.dart';
 
 class SettingsOverlay extends StatefulWidget {
   const SettingsOverlay({super.key});
@@ -19,11 +20,31 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
   final List<String> languages = ['English', 'Spanish', 'French', 'German'];
   final List<String> themes = ['Light', 'Dark', 'System'];
 
-  void _showCredits() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Credits clicked')),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
 
+  /// Load settings
+  void _loadSettings() {
+    setState(() {
+      isMusicOn = Settings.musicOn;
+      isSfxOn = Settings.sfxOn;
+      isTimerVisible = Settings.timerVisible;
+      isTiltControlsEnabled = Settings.tiltControls;
+      selectedLanguage = Settings.language;
+      selectedTheme = Settings.theme;
+    });
+  }
+
+  /// Save a specific setting using the provided setter function
+  Future<void> _updateSetting(Future<void> Function() updateFn) async {
+    await updateFn();
+    setState(() {});
+  }
+
+  void _showCredits() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -41,7 +62,6 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // List of placeholder names
                 Text('Daniel Hinbest', style: TextStyle(fontSize: 16)),
                 Text('Jugal Patel', style: TextStyle(fontSize: 16)),
                 Text('Syed Rizvi', style: TextStyle(fontSize: 16)),
@@ -83,7 +103,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Are you sure?'),
-          content: Text('This will remove all your score data!'),
+          content: Text(
+              'This will remove all your score data! This cannot be undone.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -110,14 +131,42 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
     );
   }
 
+  Future<void> _restoreDefaults() async {
+    final tempMusic = isMusicOn;
+    final tempSfx = isSfxOn;
+    final tempTimerVis = isTimerVisible;
+    final tempTiltControls = isTiltControlsEnabled;
+    final tempLang = selectedLanguage;
+    final tempTheme = selectedTheme;
+    await Settings.clear();
+    _loadSettings();
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Settings restored to default!'),
+          action: SnackBarAction(
+              label: "Undo",
+              onPressed: () {
+                Settings.setMusic(tempMusic);
+                Settings.setSfx(tempSfx);
+                Settings.setTimerVisible(tempTimerVis);
+                Settings.setTiltControls(tempTiltControls);
+                Settings.setLanguage(tempLang);
+                Settings.setTheme(tempTheme);
+                _loadSettings();
+              }),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         // Semi-transparent background
         GestureDetector(
-          onTap: () => Navigator.of(context)
-              .pop(), // Dismiss overlay when background is tapped
+          onTap: () => Navigator.of(context).pop(),
           child: Container(
             color: Colors.black.withOpacity(0.5),
           ),
@@ -137,17 +186,17 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                 length: 3, // Reduced to 3 tabs
                 child: Column(
                   children: [
-                    // Back button
+                    // Close button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
                           child: Padding(
-                              padding:
-                                  EdgeInsets.only(left: 10, right: 10, top: 5),
-                              child: Icon(Icons.close, color: Colors.black)),
-                          onTap: () =>
-                              Navigator.of(context).pop(), // Close overlay
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 5),
+                            child: Icon(Icons.close, color: Colors.black),
+                          ),
+                          onTap: () => Navigator.of(context).pop(),
                         ),
                       ],
                     ),
@@ -156,7 +205,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                       indicatorColor: Colors.black,
                       labelColor: Colors.black,
                       unselectedLabelColor: Colors.grey,
-                      tabs: [
+                      tabs: const [
                         Tab(icon: Icon(Icons.settings)),
                         Tab(icon: Icon(Icons.gamepad_outlined)),
                         Tab(icon: Icon(Icons.info)),
@@ -169,127 +218,71 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                           // Tab 1 - General Settings
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('SFX',
-                                          style: TextStyle(fontSize: 16)),
-                                      Switch(
-                                        value: isSfxOn,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isSfxOn = value;
-                                          });
-                                        },
-                                      ),
-                                      Text('Music',
-                                          style: TextStyle(fontSize: 16)),
-                                      Switch(
-                                        value: isMusicOn,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isMusicOn = value;
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 20),
-                                  Row(
-                                    // mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('Language',
-                                          style: TextStyle(fontSize: 16)),
-                                      SizedBox(
-                                          width: 150,
-                                          child: DropdownButton<String>(
-                                            value: selectedLanguage,
-                                            isExpanded: true,
-                                            items: languages
-                                                .map((String language) {
-                                              return DropdownMenuItem<String>(
-                                                value: language,
-                                                child: Text(language),
-                                              );
-                                            }).toList(),
-                                            onChanged: (String? newValue) {
-                                              setState(() {
-                                                selectedLanguage = newValue!;
-                                              });
-                                            },
-                                          )),
-                                      Text('Theme',
-                                          style: TextStyle(fontSize: 16)),
-                                      SizedBox(
-                                        width: 150,
-                                        child: DropdownButton<String>(
-                                          value: selectedTheme,
-                                          isExpanded: true,
-                                          items: themes.map((String theme) {
-                                            return DropdownMenuItem<String>(
-                                              value: theme,
-                                              child: Text(theme),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              selectedTheme = newValue!;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            child: Column(
+                              children: [
+                                _buildSwitch(
+                                  label: 'Music',
+                                  value: isMusicOn,
+                                  onChanged: (value) =>
+                                      _updateSetting(() async {
+                                    await Settings.setMusic(value);
+                                    isMusicOn = value;
+                                  }),
+                                ),
+                                _buildSwitch(
+                                  label: 'SFX',
+                                  value: isSfxOn,
+                                  onChanged: (value) =>
+                                      _updateSetting(() async {
+                                    await Settings.setSfx(value);
+                                    isSfxOn = value;
+                                  }),
+                                ),
+                                _buildDropdown(
+                                  label: 'Language',
+                                  value: selectedLanguage,
+                                  items: languages,
+                                  onChanged: (value) =>
+                                      _updateSetting(() async {
+                                    await Settings.setLanguage(value);
+                                    selectedLanguage = value;
+                                  }),
+                                ),
+                                _buildDropdown(
+                                  label: 'Theme',
+                                  value: selectedTheme,
+                                  items: themes,
+                                  onChanged: (value) =>
+                                      _updateSetting(() async {
+                                    await Settings.setTheme(value);
+                                    selectedTheme = value;
+                                  }),
+                                ),
+                              ],
                             ),
                           ),
-                          // Tab 2 - Language Settings
+                          // Tab 2 - Game Settings
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Timer Visibility',
-                                        style: TextStyle(fontSize: 16)),
-                                    Switch(
-                                      value: isTimerVisible,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isTimerVisible = value;
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                _buildSwitch(
+                                  label: 'Timer Visibility',
+                                  value: isTimerVisible,
+                                  onChanged: (value) =>
+                                      _updateSetting(() async {
+                                    await Settings.setTimerVisible(value);
+                                    isTimerVisible = value;
+                                  }),
                                 ),
-                                SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Tilt Controls',
-                                        style: TextStyle(fontSize: 16)),
-                                    Switch(
-                                      value: isTiltControlsEnabled,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isTiltControlsEnabled = value;
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                _buildSwitch(
+                                  label: 'Tilt Controls',
+                                  value: isTiltControlsEnabled,
+                                  onChanged: (value) =>
+                                      _updateSetting(() async {
+                                    await Settings.setTiltControls(value);
+                                    isTiltControlsEnabled = value;
+                                  }),
                                 ),
                               ],
                             ),
@@ -298,18 +291,28 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GradientButton(
+                                      text: 'Restore Defaults',
+                                      icon: Icons.restore,
+                                      onPressed: _restoreDefaults,
+                                    ),
+                                    GradientButton(
+                                      text: 'Reset Progress',
+                                      icon: Icons.refresh,
+                                      onPressed: _showResetProgress,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
                                 GradientButton(
                                   text: 'Credits',
                                   icon: Icons.info_outline,
                                   onPressed: _showCredits,
-                                ),
-                                SizedBox(height: 20),
-                                GradientButton(
-                                  text: 'Reset Progress',
-                                  icon: Icons.refresh,
-                                  onPressed: _showResetProgress,
                                 ),
                               ],
                             ),
@@ -326,15 +329,64 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
       ],
     );
   }
+
+  Widget _buildSwitch({
+    required String label,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 16)),
+        Switch(
+          value: value,
+          onChanged: onChanged,
+          activeColor: Colors.black,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDropdown({
+    required String label,
+    required String value,
+    required List<String> items,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 16)),
+        DropdownButton<String>(
+          value: value,
+          items: items.map((item) {
+            return DropdownMenuItem<String>(
+              value: item,
+              child: Text(item),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            if (newValue != null) {
+              onChanged(newValue);
+            }
+          },
+        ),
+      ],
+    );
+  }
 }
 
-// To show the overlay, call this method
+// To show the overlay
 void showSettingsOverlay(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: true, // Dismiss the overlay by tapping outside
-    builder: (context) => ScaffoldMessenger(child: Builder(builder: (context) {
-      return Scaffold(body: AppBackground(child: const SettingsOverlay()));
-    })),
+    builder: (context) => ScaffoldMessenger(
+      child: Builder(
+        builder: (context) {
+          return Scaffold(body: AppBackground(child: const SettingsOverlay()));
+        },
+      ),
+    ),
   );
 }

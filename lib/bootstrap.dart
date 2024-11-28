@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,21 @@ class AppLoader {
     await initFirebase();
     await loadLevels();
     await Settings.init();
+
+    // TODO: some work required to get system default language and theme to work (localization and themes setup)
+    // Get the system language, set if there is not already a value
+    String systemLanguage = PlatformDispatcher.instance.locale.languageCode;
+    appLogger.d('System language: $systemLanguage');
+    // if (!Settings.containsKey('lang')) {
+    //   await Settings.setLanguage(systemLanguage);
+    // }
+
+    // Get system theme
+    Brightness brightness = PlatformDispatcher.instance.platformBrightness;
+    appLogger.d('System theme: $brightness');
+    // if (!Settings.containsKey('theme')) {
+    //   await Settings.setTheme(brightness == Brightness.light ? 'Light' : 'Dark');\
+    // }
     runApp(await builder());
   }
 
@@ -40,7 +56,6 @@ class AppLoader {
     appLogger.d('Loading levels: $levelFiles');
 
     for (String path in levelFiles) {
-      appLogger.d('Loading level: $path');
       String content = await rootBundle.loadString(path);
       Map<String, dynamic> jsonData = jsonDecode(content);
       levels.add(Level.fromJson(jsonData));
