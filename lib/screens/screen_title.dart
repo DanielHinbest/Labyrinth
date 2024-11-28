@@ -47,7 +47,7 @@ class ScreenTitle extends StatelessWidget {
                 SizedBox(height: 20),
                 GradientButton(
                   text: 'OPTIONS',
-                  icon: Icons.menu,
+                  icon: Icons.settings,
                   onPressed: () {
                     // Navigator.push(
                     //   context,
