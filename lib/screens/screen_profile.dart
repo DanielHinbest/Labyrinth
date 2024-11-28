@@ -114,8 +114,14 @@ class UserProfileOverlay extends StatelessWidget {
 void showUserProfileOverlay(BuildContext context, User currentUser) {
   showDialog(
     context: context,
-    builder: (context) {
-      return UserProfileOverlay(currentUser: currentUser);
-    },
+    builder: (context) => ScaffoldMessenger(
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: UserProfileOverlay(currentUser: currentUser));
+        },
+      ),
+    ),
   );
 }

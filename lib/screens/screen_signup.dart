@@ -147,8 +147,13 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
 void showSignUpOverlay(BuildContext context) {
   showDialog(
     context: context,
-    builder: (BuildContext context) {
-      return SignUpOverlay();
-    },
+    builder: (context) => ScaffoldMessenger(
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+              backgroundColor: Colors.transparent, body: const SignUpOverlay());
+        },
+      ),
+    ),
   );
 }

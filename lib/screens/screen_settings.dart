@@ -384,7 +384,9 @@ void showSettingsOverlay(BuildContext context) {
     builder: (context) => ScaffoldMessenger(
       child: Builder(
         builder: (context) {
-          return Scaffold(body: AppBackground(child: const SettingsOverlay()));
+          return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: const SettingsOverlay());
         },
       ),
     ),
