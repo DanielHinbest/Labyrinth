@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:labyrinth/bootstrap.dart';
-import 'package:labyrinth/components/gui_common.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/screens/screen_game.dart';
+
+import 'package:labyrinth/components/gui_common.dart';
+import 'package:labyrinth/components/leaderboard.dart';
+import 'package:labyrinth/components/level_info.dart';
+import 'package:labyrinth/components/search_overlay.dart';
+import 'package:labyrinth/components/level_filter_modal.dart';
 
 class ScreenLevels extends StatefulWidget {
   const ScreenLevels({super.key});
@@ -14,23 +19,66 @@ class ScreenLevels extends StatefulWidget {
 }
 
 class _ScreenLevelsState extends State<ScreenLevels> {
-  bool _showLeaderboard = false;
-  int _selectedNavIndex = 1;
+  final List<Level> _levels = AppLoader.levels;
+  final ScrollController _scrollController = ScrollController();
 
-  // Function to switch views
-  void _resetViews() {
+  // Filter-related states
+  List<Level> _filteredLevels = []; // Filtered levels to display
+  int _selectedLevelIndex = 0;
+  Set<int> _selectedDifficulties = {};
+  Set<String?> _selectedAuthors = {};
+  bool get _filtersApplied {
+    return _selectedDifficulties.isNotEmpty || _selectedAuthors.isNotEmpty;
+  }
+
+  // Search-related states
+  bool _isSearching = false; // Tracks if the search overlay is active
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredLevels = _levels; // Start with the full list
+  }
+
+  /// Apply the selected filters
+  void _applyFilters() {
     setState(() {
-      _showLeaderboard = false;
+      _filteredLevels = _levels.where((level) {
+        // Match difficulty
+        bool matchesDifficulty = _selectedDifficulties.isEmpty ||
+            _selectedDifficulties.contains(level.difficulty);
+        // Match author
+        bool matchesAuthor =
+            _selectedAuthors.isEmpty || _selectedAuthors.contains(level.author);
+        return matchesDifficulty && matchesAuthor;
+      }).toList();
+
+      _selectedLevelIndex = 0; // Reset selected level index
     });
   }
 
-  void _onNavigationItemSelected(int index) {
-    setState(() {
-      _selectedNavIndex = index;
-      if (index == 1) _resetViews();
-      _showLeaderboard =
-          index == 2; // Show leaderboard if leaderboard icon is selected
-    });
+  void _showFilterBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allows content to take more space
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return LevelFilterModal(
+          selectedDifficulties: _selectedDifficulties,
+          selectedAuthors: _selectedAuthors,
+          levels: _levels,
+          onApplyFilters: (difficulties, authors) {
+            setState(() {
+              _selectedDifficulties = difficulties;
+              _selectedAuthors = authors;
+              _applyFilters();
+            });
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -38,261 +86,202 @@ class _ScreenLevelsState extends State<ScreenLevels> {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body: AppBackground(
-            child: Row(
+            child: Stack(
           children: [
-            /// Side navigation menu
-            Container(
-              width: 80,
-              color: Colors.transparent,
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.arrow_back, size: 40),
-                      onPressed: () => Navigator.pop(context)),
-                  IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.menu, size: 40),
-                      onPressed: () => _onNavigationItemSelected(0),
-                      color:
-                          _selectedNavIndex == 0 ? Colors.blue : Colors.black),
-                  Divider(color: Colors.transparent),
-                  IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.list,
-                          size: 40,
-                          color: _selectedNavIndex == 1
-                              ? Colors.blue
-                              : Colors.black),
-                      onPressed: () => _onNavigationItemSelected(1)),
-                  Divider(color: Colors.transparent),
-                  IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.leaderboard,
-                          size: 40,
-                          color: _selectedNavIndex == 2
-                              ? Colors.blue
-                              : Colors.black),
-                      onPressed: () => _onNavigationItemSelected(2)),
-                  Divider(color: Colors.transparent),
-                  IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.info,
-                          size: 40,
-                          color: _selectedNavIndex == 3
-                              ? Colors.blue
-                              : Colors.black),
-                      onPressed: () => _onNavigationItemSelected(3)),
-                  Divider(color: Colors.transparent),
-                  IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.help,
-                          size: 40,
-                          color: _selectedNavIndex == 4
-                              ? Colors.blue
-                              : Colors.black),
-                      onPressed: () => _onNavigationItemSelected(4)),
-                ],
-              ),
-            ),
+            Row(
+              children: [
+                /// Side navigation menu
+                Container(
+                  width: 60,
+                  color: Colors.transparent,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.arrow_back, size: 40),
+                          onPressed: () => Navigator.pop(context)),
+                      Divider(color: Colors.transparent),
+                      IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(Icons.search, size: 40),
+                          onPressed: () {
+                            setState(() {
+                              _isSearching = true; // Show search overlay
+                            });
+                          },
+                          color: Colors.black),
+                      Divider(color: Colors.transparent),
+                      IconButton(
+                        padding: EdgeInsets.all(0),
+                        icon: Icon(
+                            _filtersApplied
+                                ? Icons.filter_alt
+                                : Icons.filter_alt_off_outlined,
+                            size: 40,
+                            color: Colors.black),
+                        onPressed: _showFilterBottomSheet,
+                      ),
+                      Divider(color: Colors.transparent),
+                    ],
+                  ),
+                ),
 
-            /// Main content
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Content based on selected view
-                          Expanded(
-                            flex: 3,
-                            child: _showLeaderboard
-                                ? Expanded(child: LeaderboardWidget())
-                                : ListView.builder(
-                                    itemCount: AppLoader.levels.length,
-                                    itemBuilder: (context, index) {
-                                      Level level = AppLoader.levels[index];
-                                      return LevelTile(level: level);
-                                    },
-                                  ),
-                          ),
-
-                          // TODO: Change levels to be selectable, this information should come from the selected level
-                          /// Right Panel for selected level's details
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                                padding: const EdgeInsets.all(15.00),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Easy Does It',
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Container(
-                                      color: Colors.grey,
-                                      height: 200,
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: Text(
-                                          'Maze Preview',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Level Description here!',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    Text('Your Time: Fast'),
-                                    Text('Author Time: Slow'),
-                                    Spacer(),
-                                    Center(
-                                      child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 60, vertical: 15),
-                                            backgroundColor: Colors.black,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
+                /// Main content
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Scrollbar(
+                                    controller: _scrollController,
+                                    child: Padding(
+                                        padding: EdgeInsets.only(right: 10),
+                                        child: ListView.builder(
+                                          itemCount: _filteredLevels.length,
+                                          itemBuilder: (context, index) {
+                                            Level level =
+                                                _filteredLevels[index];
+                                            return LevelTile(
+                                              level: level,
+                                              trailing:
+                                                  _selectedLevelIndex == index
+                                                      ? const Icon(
+                                                          Icons.arrow_forward,
+                                                          color: Colors.white)
+                                                      : null,
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedLevelIndex = index;
+                                                });
+                                              },
+                                            );
+                                          },
+                                        ))),
+                              ),
+                              // SizedBox(width: 10),
+                              /// Right Panel for selected level's details
+                              DefaultTabController(
+                                  length: 3,
+                                  child: Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            _filteredLevels[_selectedLevelIndex]
+                                                .name,
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          TabBar(
+                                            indicatorColor: Colors.blue,
+                                            labelColor: Colors.blue,
+                                            dividerColor: Colors.transparent,
+                                            tabs: [
+                                              // Tab(icon: Icon(Icons.preview_outlined)),
+                                              Tab(
+                                                  icon: Icon(
+                                                      Icons.info_outlined)),
+                                              Tab(
+                                                  icon: Icon(Icons
+                                                      .leaderboard_outlined)),
+                                              Tab(
+                                                  icon: Icon(
+                                                      Icons.archive_outlined)),
+                                            ],
+                                          ),
+                                          Expanded(
+                                            child: TabBarView(
+                                              children: [
+                                                LevelInfo(
+                                                    level: _filteredLevels[
+                                                        _selectedLevelIndex]),
+                                                Leaderboard(),
+                                                Center(
+                                                    child:
+                                                        Text('Local Scores')),
+                                              ],
                                             ),
                                           ),
-                                          onPressed: () {
-                                            /// Begin button action
-                                          },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Icon(
-                                                Icons.play_arrow,
-                                                color: Colors.white,
-                                              ),
-                                              Text('Play',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18)),
-                                            ],
-                                          )),
-                                    ),
-                                  ],
-                                )),
+                                          Center(
+                                              // width: 400,
+                                              child: Padding(
+                                                  padding: EdgeInsets.all(5),
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        // padding: EdgeInsets.symmetric(
+                                                        //     horizontal: 60, vertical: 0),
+                                                        backgroundColor:
+                                                            Colors.black,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        /// Begin button action
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ScreenGame(
+                                                                    level: _filteredLevels[
+                                                                        _selectedLevelIndex]),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.play_arrow,
+                                                            color: Colors.white,
+                                                          ),
+                                                          Text('Play',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      18)),
+                                                        ],
+                                                      )))),
+                                        ],
+                                      ))),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
+            // Search overlay (visible only when searching)
+            if (_isSearching)
+              SearchOverlay(
+                levels: _levels,
+                onClose: () {
+                  setState(() {
+                    _isSearching = false; // Hide search overlay
+                  });
+                },
+              ),
           ],
         )));
-  }
-}
-
-class LevelTile extends StatelessWidget {
-  final Level level;
-
-  const LevelTile({super.key, required this.level});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: [Colors.green, Colors.teal],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-        ),
-        child: ListTile(
-          title: Text(
-            level.name,
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          trailing: Icon(Icons.arrow_forward, color: Colors.white),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ScreenGame(level: level),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class LeaderboardWidget extends StatelessWidget {
-  const LeaderboardWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('leaderboard').orderBy('time', descending: true).snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('No leaderboard data available'));
-        }
-
-        final leaderboardEntries = snapshot.data!.docs;
-
-        return ListView.builder(
-          itemCount: leaderboardEntries.length,
-          itemBuilder: (context, index) {
-            final entry = leaderboardEntries[index];
-            final playerName = entry['name'];
-            final timeString = entry['time'];
-            final score = _parseTimeString(timeString);
-            final formattedTime = _formatDuration(Duration(seconds: score));
-
-            return ListTile(
-              leading: Text(
-                "#${index + 1}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              title: Text(playerName),
-              trailing: Text(formattedTime),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  int _parseTimeString(String timeString) {
-    final parts = timeString.split(':');
-    final minutes = int.parse(parts[0]);
-    final secondsParts = parts[1].split('.');
-    final seconds = int.parse(secondsParts[0]);
-
-    return minutes * 60 + seconds; // Convert to total seconds
-  }
-
-  String _formatDuration(Duration duration) {
-    String minutes = duration.inMinutes.toString().padLeft(2, '0');
-    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    String milliseconds = (duration.inMilliseconds % 1000).toString().padLeft(3, '0');
-    return "$minutes:$seconds.$milliseconds";
   }
 }
