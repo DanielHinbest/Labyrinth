@@ -1,7 +1,7 @@
 {
     "name": "level_template",
     "desc": "",
-    "auth": "Unknown",
+    "auth": "Ahmed",
     "diff": 0,
     "maze": {
         "start": [

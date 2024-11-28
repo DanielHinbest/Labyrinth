@@ -5,7 +5,7 @@ import 'marble.dart';
 
 class Hole extends BodyComponent {
   // CONSTANTS
-  static const double SCALE = 1.0;
+  static const double SCALE = 0.5;
   static const double TRANSLATE_X = 0.0;
   static const double TRANSLATE_Y = 0.0;
   final Vector2 center;
