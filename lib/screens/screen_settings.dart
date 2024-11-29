@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:labyrinth/components/gui_common.dart';
+import 'package:labyrinth/data/providers/settings_provider.dart';
 import 'package:labyrinth/data/settings.dart';
 import 'package:labyrinth/util/language_manager.dart';
 
@@ -11,32 +14,33 @@ class SettingsOverlay extends StatefulWidget {
 }
 
 class _SettingsOverlayState extends State<SettingsOverlay> {
-  bool isMusicOn = true; // State for Music toggle
-  bool isSfxOn = true; // State for SFX toggle
-  bool isTimerVisible = true; // State for Timer Visibility toggle
-  bool isTiltControlsEnabled = false; // State for Tilt Controls toggle
-  String selectedLanguage = 'English'; // State for Language dropdown
-  String selectedTheme = 'Light'; // State for Theme dropdown
+  // bool isMusicOn = true; // State for Music toggle
+  // bool isSfxOn = true; // State for SFX toggle
+  // bool isTimerVisible = true; // State for Timer Visibility toggle
+  // bool isTiltControlsEnabled = false; // State for Tilt Controls toggle
+  // String selectedLanguage = 'English'; // State for Language dropdown
+  // String selectedTheme = 'Light'; // State for Theme dropdown
 
   final List<String> themes = ['Light', 'Dark', 'System'];
 
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _loadSettings();
+  // }
 
   /// Load settings
-  void _loadSettings() {
-    setState(() {
-      isMusicOn = Settings.musicOn;
-      isSfxOn = Settings.sfxOn;
-      isTimerVisible = Settings.timerVisible;
-      isTiltControlsEnabled = Settings.tiltControls;
-      selectedLanguage = Settings.language;
-      selectedTheme = Settings.theme;
-    });
-  }
+  // void _loadSettings() {
+  //   final settings = context.read<SettingsProvider>();
+  //   setState(() {
+  //     isMusicOn = settings.musicOn;
+  //     isSfxOn = settings.sfxOn;
+  //     isTimerVisible = settings.timerVisible;
+  //     isTiltControlsEnabled = settings.tiltControls;
+  //     selectedLanguage = settings.language;
+  //     selectedTheme = settings.theme;
+  //   });
+  // }
 
   /// Save a specific setting using the provided setter function
   Future<void> _updateSetting(Future<void> Function() updateFn) async {
@@ -45,11 +49,11 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
   }
 
   Future<void> _saveLang(String lang) async {
-    await Settings.setLanguage(lang);
-    await LanguageManager.delegate.load(Locale(lang));
-    setState(() {
-      selectedLanguage = lang;
-    });
+    final settings = context.read<SettingsProvider>();
+    await settings.setLanguage(lang);
+    // setState(() {
+    //   selectedLanguage = lang;
+    // });
   }
 
   void _showCredits() {
@@ -144,19 +148,20 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
   }
 
   Future<void> _restoreDefaults() async {
-    final tempMusic = isMusicOn;
-    final tempSfx = isSfxOn;
-    final tempTimerVis = isTimerVisible;
-    final tempTiltControls = isTiltControlsEnabled;
-    final tempLang = selectedLanguage;
-    final tempTheme = selectedTheme;
-    await Settings.clear();
+    final settings = context.read<SettingsProvider>();
+    final tempMusic = settings.musicOn;
+    final tempSfx = settings.sfxOn;
+    final tempTimerVis = settings.timerVisible;
+    final tempTiltControls = settings.tiltControls;
+    final tempLang = settings.language;
+    final tempTheme = settings.theme;
+    await settings.reset();
 
     if (Settings.defaultLang != Settings.language) {
       await _saveLang(Settings.defaultLang);
     }
 
-    _loadSettings();
+    // _loadSettings();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -165,14 +170,14 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
           action: SnackBarAction(
               label: LanguageManager.instance.translate('btn_undo'),
               onPressed: () async {
-                Settings.setMusic(tempMusic);
-                Settings.setSfx(tempSfx);
-                Settings.setTimerVisible(tempTimerVis);
-                Settings.setTiltControls(tempTiltControls);
-                Settings.setLanguage(tempLang);
-                Settings.setTheme(tempTheme);
+                settings.setMusic(tempMusic);
+                settings.setSfx(tempSfx);
+                settings.setTimerVisible(tempTimerVis);
+                settings.setTiltControls(tempTiltControls);
+                settings.setLanguage(tempLang);
+                settings.setTheme(tempTheme);
                 await _saveLang(tempLang);
-                _loadSettings();
+                // _loadSettings();
               }),
         ),
       );
@@ -181,6 +186,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
+
     return Stack(
       children: [
         // Semi-transparent background
@@ -242,39 +249,40 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                 _buildSwitch(
                                   label: LanguageManager.instance
                                       .translate('screen_settings_music_label'),
-                                  value: isMusicOn,
+                                  value: settings.musicOn,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setMusic(value);
-                                    isMusicOn = value;
+                                    await settings.setMusic(value);
+                                    // isMusicOn = value;
                                   }),
                                 ),
                                 _buildSwitch(
                                   label: LanguageManager.instance
                                       .translate('screen_settings_sound_label'),
-                                  value: isSfxOn,
+                                  value: settings.sfxOn,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setSfx(value);
-                                    isSfxOn = value;
+                                    await settings.setSfx(value);
+                                    // isSfxOn = value;
                                   }),
                                 ),
                                 _buildLanguageDropdown(
                                   label: LanguageManager.instance.translate(
                                       'screen_settings_language_label'),
-                                  value: selectedLanguage,
+                                  value: settings.language,
                                   items: LanguageManager.availableLocales,
-                                  onChanged: (value) async => _saveLang(value),
+                                  onChanged: (value) async =>
+                                      await _saveLang(value),
                                 ),
                                 _buildDropdown(
                                   label: LanguageManager.instance
                                       .translate('screen_settings_theme_label'),
-                                  value: selectedTheme,
+                                  value: settings.theme,
                                   items: themes,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setTheme(value);
-                                    selectedTheme = value;
+                                    await settings.setTheme(value);
+                                    // selectedTheme = value;
                                   }),
                                 ),
                               ],
@@ -288,21 +296,21 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                 _buildSwitch(
                                   label: LanguageManager.instance.translate(
                                       'screen_settings_timer_visibility_label'),
-                                  value: isTimerVisible,
+                                  value: settings.timerVisible,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setTimerVisible(value);
-                                    isTimerVisible = value;
+                                    await settings.setTimerVisible(value);
+                                    // isTimerVisible = value;
                                   }),
                                 ),
                                 _buildSwitch(
                                   label: LanguageManager.instance.translate(
                                       'screen_settings_tilt_control_label'),
-                                  value: isTiltControlsEnabled,
+                                  value: settings.tiltControls,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setTiltControls(value);
-                                    isTiltControlsEnabled = value;
+                                    await settings.setTiltControls(value);
+                                    // isTiltControlsEnabled = value;
                                   }),
                                 ),
                               ],

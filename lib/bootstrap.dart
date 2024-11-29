@@ -10,7 +10,8 @@ import 'package:labyrinth/data/settings.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/util/logging.dart';
 
-late Locale locale;
+/// Locale on startup
+late Locale appLocale;
 
 // TODO: Error checking? Also consider a splash screen or some other loading alternative
 /// AppLoader is a utility class that initializes the app's environment and loads
@@ -34,8 +35,8 @@ class AppLoader {
     String systemLocale = PlatformDispatcher.instance.locale.languageCode;
     appLogger.d('System language: $systemLocale');
     await Settings.init(defaultLang: systemLocale);
-    locale = Locale(Settings.language);
-    appLogger.d('App language: $locale');
+    appLocale = Locale(Settings.language);
+    appLogger.d('App language: $appLocale');
 
     // Get system theme
     Brightness brightness = PlatformDispatcher.instance.platformBrightness;
