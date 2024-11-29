@@ -11,6 +11,7 @@ class Settings {
     'timer_visible',
     'use_tilt'
   };
+  static String defaultLang = 'en';
 
   /// Private named constructor
   Settings._internal();
@@ -24,19 +25,24 @@ class Settings {
   static String get theme => _prefs.getString('theme') ?? 'Light';
   static bool get musicOn => _prefs.getBool('music_on') ?? true;
   static bool get sfxOn => _prefs.getBool('sfx_on') ?? true;
-  static String get language => _prefs.getString('lang') ?? 'English';
+  static String get language => _prefs.getString('lang') ?? defaultLang;
   static bool get timerVisible => _prefs.getBool('timer_visible') ?? true;
   static bool get tiltControls => _prefs.getBool('use_tilt') ?? false;
 
 // TODO: some work required to get system default language and theme
 
   /// Asynchronous initialization for SharedPreferences
-  static Future<void> init() async {
+  static Future<void> init({String defaultLang = 'en'}) async {
     _prefs = await SharedPreferencesWithCache.create(
       cacheOptions: const SharedPreferencesWithCacheOptions(
         allowList: _allowList,
       ),
     );
+
+    defaultLang = defaultLang;
+    if (_prefs.getString('lang') == null) {
+      await _prefs.setString('lang', defaultLang);
+    }
   }
 
   // Example setters

@@ -25,6 +25,7 @@ dependencies:
   path: ^1.9.0
   animated_background: ^2.0.0
   shared_preferences: ^2.3.3
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/game/level.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 class LevelInfo extends StatelessWidget {
   final Level level;
@@ -28,7 +29,8 @@ class LevelInfo extends StatelessWidget {
                               height: 250,
                               child: Center(
                                 child: Text(
-                                  'Maze Preview',
+                                  LanguageManager.instance
+                                      .translate('level_info_preview'),
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -38,10 +40,15 @@ class LevelInfo extends StatelessWidget {
                             flex: 2,
                             child: Row(
                               children: [
-                                Text('Author: ${level.author}'),
+                                Text(LanguageManager.instance.translate(
+                                    'level_info_author',
+                                    {'author': level.author})),
                                 Spacer(),
-                                Text(
-                                    'Difficulty: ${getDifficultyLabel(level.difficulty)}'),
+                                Text(LanguageManager.instance.translate(
+                                    'level_info_difficulty', {
+                                  'difficulty':
+                                      getDifficultyLabel(level.difficulty)
+                                })),
                               ],
                             )),
                         Flexible(

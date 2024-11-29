@@ -7,6 +7,7 @@ import 'package:labyrinth/screens/screen_levels.dart';
 import 'package:labyrinth/screens/screen_settings.dart';
 import 'package:labyrinth/screens/screen_signup.dart';
 import 'package:labyrinth/screens/screen_profile.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 class ScreenTitle extends StatelessWidget {
   const ScreenTitle({super.key});
@@ -21,7 +22,7 @@ class ScreenTitle extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'LABYRINTH',
+                LanguageManager.instance.translate('app_title'),
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
@@ -37,7 +38,7 @@ class ScreenTitle extends StatelessWidget {
               ),
               SizedBox(height: 40),
               GradientButton(
-                text: 'LEVELS',
+                text: LanguageManager.instance.translate('screen_title_levels'),
                 icon: Icons.play_arrow,
                 onPressed: () {
                   Navigator.push(
@@ -50,7 +51,8 @@ class ScreenTitle extends StatelessWidget {
               ),
               SizedBox(height: 20),
               GradientButton(
-                text: 'OPTIONS',
+                text:
+                    LanguageManager.instance.translate('screen_title_options'),
                 icon: Icons.settings,
                 onPressed: () {
                   showSettingsOverlay(context);
