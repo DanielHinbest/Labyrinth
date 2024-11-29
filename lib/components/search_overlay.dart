@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/screens/screen_game.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 /// Search overlay for searching levels by name, difficulty, or author
 class SearchOverlay extends StatefulWidget {
@@ -61,8 +62,8 @@ class _SearchOverlayState extends State<SearchOverlay> {
                         autofocus: true,
                         onChanged: _searchLevels,
                         decoration: InputDecoration(
-                          hintText:
-                              "Search levels by name, difficulty, or author...",
+                          hintText: LanguageManager.instance
+                              .translate('search_overlay_hint'),
                           border: InputBorder.none,
                           prefixIcon: Icon(Icons.search),
                           suffixIcon: IconButton(
@@ -82,9 +83,13 @@ class _SearchOverlayState extends State<SearchOverlay> {
                         _searchQuery.isEmpty
                     ? Center(
                         child: Text(
-                        _searchQuery.isEmpty
-                            ? "Type something to search..."
-                            : "No results found for '$_searchQuery'",
+                        LanguageManager.instance.translate(
+                            _searchQuery.isEmpty
+                                ? 'search_overlay_prompt'
+                                : 'search_overlay_no_results',
+                            {
+                              'query': _searchQuery,
+                            }),
                         style: TextStyle(color: Colors.white70),
                       ))
                     : ListView.builder(
@@ -96,7 +101,13 @@ class _SearchOverlayState extends State<SearchOverlay> {
                             title: Text(level.name,
                                 style: TextStyle(color: Colors.white)),
                             subtitle: Text(
-                              "Difficulty: ${getDifficultyLabel(level.difficulty)}, Author: ${level.author}",
+                              LanguageManager.instance
+                                  .translate('search_overlay_subtitle', {
+                                'difficulty':
+                                    getDifficultyLabel(level.difficulty),
+                                'author': level.author,
+                              }),
+                              // "Difficulty: ${getDifficultyLabel(level.difficulty)}, Author: ${level.author}",
                               style: TextStyle(color: Colors.white70),
                             ),
                             onTap: () {

@@ -1,3 +1,5 @@
+import 'package:labyrinth/util/language_manager.dart';
+
 export 'package:labyrinth/components/gradient_button.dart';
 export 'package:labyrinth/components/toggle_button.dart';
 export 'package:labyrinth/components/app_background.dart';
@@ -7,12 +9,12 @@ export 'package:labyrinth/components/level_tile.dart';
 String getDifficultyLabel(int difficulty) {
   switch (difficulty) {
     case 0:
-      return "Easy";
+      return LanguageManager.instance.translate('difficulty_easy');
     case 1:
-      return "Medium";
+      return LanguageManager.instance.translate('difficulty_medium');
     case 2:
-      return "Hard";
+      return LanguageManager.instance.translate('difficulty_hard');
     default:
-      return "Unknown";
+      return "???";
   }
 }

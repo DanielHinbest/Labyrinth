@@ -10,6 +10,7 @@ import 'package:labyrinth/components/leaderboard.dart';
 import 'package:labyrinth/components/level_info.dart';
 import 'package:labyrinth/components/search_overlay.dart';
 import 'package:labyrinth/components/level_filter_modal.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 class ScreenLevels extends StatefulWidget {
   const ScreenLevels({super.key});
@@ -252,7 +253,11 @@ class _ScreenLevelsState extends State<ScreenLevels> {
                                                             Icons.play_arrow,
                                                             color: Colors.white,
                                                           ),
-                                                          Text('Play',
+                                                          Text(
+                                                              LanguageManager
+                                                                  .instance
+                                                                  .translate(
+                                                                      'btn_play'),
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white,

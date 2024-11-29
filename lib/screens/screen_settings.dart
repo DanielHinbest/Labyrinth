@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:labyrinth/components/gui_common.dart';
+import 'package:labyrinth/data/providers/settings_provider.dart';
 import 'package:labyrinth/data/settings.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 class SettingsOverlay extends StatefulWidget {
   const SettingsOverlay({super.key});
@@ -10,38 +14,46 @@ class SettingsOverlay extends StatefulWidget {
 }
 
 class _SettingsOverlayState extends State<SettingsOverlay> {
-  bool isMusicOn = true; // State for Music toggle
-  bool isSfxOn = true; // State for SFX toggle
-  bool isTimerVisible = true; // State for Timer Visibility toggle
-  bool isTiltControlsEnabled = false; // State for Tilt Controls toggle
-  String selectedLanguage = 'English'; // State for Language dropdown
-  String selectedTheme = 'Light'; // State for Theme dropdown
+  // bool isMusicOn = true; // State for Music toggle
+  // bool isSfxOn = true; // State for SFX toggle
+  // bool isTimerVisible = true; // State for Timer Visibility toggle
+  // bool isTiltControlsEnabled = false; // State for Tilt Controls toggle
+  // String selectedLanguage = 'English'; // State for Language dropdown
+  // String selectedTheme = 'Light'; // State for Theme dropdown
 
-  final List<String> languages = ['English', 'Spanish', 'French', 'German'];
   final List<String> themes = ['Light', 'Dark', 'System'];
 
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _loadSettings();
+  // }
 
   /// Load settings
-  void _loadSettings() {
-    setState(() {
-      isMusicOn = Settings.musicOn;
-      isSfxOn = Settings.sfxOn;
-      isTimerVisible = Settings.timerVisible;
-      isTiltControlsEnabled = Settings.tiltControls;
-      selectedLanguage = Settings.language;
-      selectedTheme = Settings.theme;
-    });
-  }
+  // void _loadSettings() {
+  //   final settings = context.read<SettingsProvider>();
+  //   setState(() {
+  //     isMusicOn = settings.musicOn;
+  //     isSfxOn = settings.sfxOn;
+  //     isTimerVisible = settings.timerVisible;
+  //     isTiltControlsEnabled = settings.tiltControls;
+  //     selectedLanguage = settings.language;
+  //     selectedTheme = settings.theme;
+  //   });
+  // }
 
   /// Save a specific setting using the provided setter function
   Future<void> _updateSetting(Future<void> Function() updateFn) async {
     await updateFn();
     setState(() {});
+  }
+
+  Future<void> _saveLang(String lang) async {
+    final settings = context.read<SettingsProvider>();
+    await settings.setLanguage(lang);
+    // setState(() {
+    //   selectedLanguage = lang;
+    // });
   }
 
   void _showCredits() {
@@ -51,7 +63,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
         return AlertDialog(
           title: Center(
             child: Text(
-              'Credits',
+              LanguageManager.instance
+                  .translate('screen_settings_credits_dialog_title'),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -88,7 +101,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
-                child: Text('Close'),
+                child: Text(LanguageManager.instance.translate('btn_close')),
               ),
             ),
           ],
@@ -102,26 +115,29 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Are you sure?'),
-          content: Text(
-              'This will remove all your score data! This cannot be undone.'),
+          title: Text(LanguageManager.instance
+              .translate('screen_settings_score_reset_dialog_title')),
+          content: Text(LanguageManager.instance
+              .translate('screen_settings_score_reset_dialog_title')),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Cancel'),
+              child: Text(LanguageManager.instance.translate('btn_cancel')),
             ),
             TextButton(
               onPressed: () {
                 // Add logic to reset progress here
                 Navigator.of(context).pop(); // Close the dialog
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Progress reset successfully!')),
+                  SnackBar(
+                      content: Text(LanguageManager.instance
+                          .translate('screen_settings_score_reset_snackbar'))),
                 );
               },
               child: Text(
-                'Reset',
+                LanguageManager.instance.translate('btn_reset'),
                 style: TextStyle(color: Colors.red),
               ),
             ),
@@ -132,28 +148,36 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
   }
 
   Future<void> _restoreDefaults() async {
-    final tempMusic = isMusicOn;
-    final tempSfx = isSfxOn;
-    final tempTimerVis = isTimerVisible;
-    final tempTiltControls = isTiltControlsEnabled;
-    final tempLang = selectedLanguage;
-    final tempTheme = selectedTheme;
-    await Settings.clear();
-    _loadSettings();
+    final settings = context.read<SettingsProvider>();
+    final tempMusic = settings.musicOn;
+    final tempSfx = settings.sfxOn;
+    final tempTimerVis = settings.timerVisible;
+    final tempTiltControls = settings.tiltControls;
+    final tempLang = settings.language;
+    final tempTheme = settings.theme;
+    await settings.reset();
+
+    if (Settings.defaultLang != Settings.language) {
+      await _saveLang(Settings.defaultLang);
+    }
+
+    // _loadSettings();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Settings restored to default!'),
+          content: Text(LanguageManager.instance
+              .translate('screen_settings_restore_default_snackbar')),
           action: SnackBarAction(
-              label: "Undo",
-              onPressed: () {
-                Settings.setMusic(tempMusic);
-                Settings.setSfx(tempSfx);
-                Settings.setTimerVisible(tempTimerVis);
-                Settings.setTiltControls(tempTiltControls);
-                Settings.setLanguage(tempLang);
-                Settings.setTheme(tempTheme);
-                _loadSettings();
+              label: LanguageManager.instance.translate('btn_undo'),
+              onPressed: () async {
+                settings.setMusic(tempMusic);
+                settings.setSfx(tempSfx);
+                settings.setTimerVisible(tempTimerVis);
+                settings.setTiltControls(tempTiltControls);
+                settings.setLanguage(tempLang);
+                settings.setTheme(tempTheme);
+                await _saveLang(tempLang);
+                // _loadSettings();
               }),
         ),
       );
@@ -162,6 +186,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
+
     return Stack(
       children: [
         // Semi-transparent background
@@ -221,41 +247,42 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                             child: Column(
                               children: [
                                 _buildSwitch(
-                                  label: 'Music',
-                                  value: isMusicOn,
+                                  label: LanguageManager.instance
+                                      .translate('screen_settings_music_label'),
+                                  value: settings.musicOn,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setMusic(value);
-                                    isMusicOn = value;
+                                    await settings.setMusic(value);
+                                    // isMusicOn = value;
                                   }),
                                 ),
                                 _buildSwitch(
-                                  label: 'SFX',
-                                  value: isSfxOn,
+                                  label: LanguageManager.instance
+                                      .translate('screen_settings_sound_label'),
+                                  value: settings.sfxOn,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setSfx(value);
-                                    isSfxOn = value;
+                                    await settings.setSfx(value);
+                                    // isSfxOn = value;
                                   }),
                                 ),
-                                _buildDropdown(
-                                  label: 'Language',
-                                  value: selectedLanguage,
-                                  items: languages,
-                                  onChanged: (value) =>
-                                      _updateSetting(() async {
-                                    await Settings.setLanguage(value);
-                                    selectedLanguage = value;
-                                  }),
+                                _buildLanguageDropdown(
+                                  label: LanguageManager.instance.translate(
+                                      'screen_settings_language_label'),
+                                  value: settings.language,
+                                  items: LanguageManager.availableLocales,
+                                  onChanged: (value) async =>
+                                      await _saveLang(value),
                                 ),
                                 _buildDropdown(
-                                  label: 'Theme',
-                                  value: selectedTheme,
+                                  label: LanguageManager.instance
+                                      .translate('screen_settings_theme_label'),
+                                  value: settings.theme,
                                   items: themes,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setTheme(value);
-                                    selectedTheme = value;
+                                    await settings.setTheme(value);
+                                    // selectedTheme = value;
                                   }),
                                 ),
                               ],
@@ -267,21 +294,23 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                             child: Column(
                               children: [
                                 _buildSwitch(
-                                  label: 'Timer Visibility',
-                                  value: isTimerVisible,
+                                  label: LanguageManager.instance.translate(
+                                      'screen_settings_timer_visibility_label'),
+                                  value: settings.timerVisible,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setTimerVisible(value);
-                                    isTimerVisible = value;
+                                    await settings.setTimerVisible(value);
+                                    // isTimerVisible = value;
                                   }),
                                 ),
                                 _buildSwitch(
-                                  label: 'Tilt Controls',
-                                  value: isTiltControlsEnabled,
+                                  label: LanguageManager.instance.translate(
+                                      'screen_settings_tilt_control_label'),
+                                  value: settings.tiltControls,
                                   onChanged: (value) =>
                                       _updateSetting(() async {
-                                    await Settings.setTiltControls(value);
-                                    isTiltControlsEnabled = value;
+                                    await settings.setTiltControls(value);
+                                    // isTiltControlsEnabled = value;
                                   }),
                                 ),
                               ],
@@ -297,12 +326,14 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     GradientButton(
-                                      text: 'Restore Defaults',
+                                      text: LanguageManager.instance.translate(
+                                          'screen_settings_restore_default_button'),
                                       icon: Icons.restore,
                                       onPressed: _restoreDefaults,
                                     ),
                                     GradientButton(
-                                      text: 'Reset Progress',
+                                      text: LanguageManager.instance.translate(
+                                          'screen_settings_score_reset_button'),
                                       icon: Icons.refresh,
                                       onPressed: _showResetProgress,
                                     ),
@@ -310,7 +341,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                 ),
                                 SizedBox(height: 20),
                                 GradientButton(
-                                  text: 'Credits',
+                                  text: LanguageManager.instance.translate(
+                                      'screen_settings_credits_button'),
                                   icon: Icons.info_outline,
                                   onPressed: _showCredits,
                                 ),
@@ -343,6 +375,34 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
           value: value,
           onChanged: onChanged,
           activeColor: Colors.black,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLanguageDropdown({
+    required String label,
+    required String value,
+    required Map<String, (Locale, String)> items,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(fontSize: 16)),
+        DropdownButton<String>(
+          value: value,
+          items: items.entries.map((entry) {
+            return DropdownMenuItem<String>(
+              value: entry.key,
+              child: Text(entry.value.$2), // Display the full language name
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            if (newValue != null) {
+              onChanged(newValue);
+            }
+          },
         ),
       ],
     );

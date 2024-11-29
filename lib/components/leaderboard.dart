@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 class Leaderboard extends StatelessWidget {
   const Leaderboard({super.key});
@@ -16,7 +17,9 @@ class Leaderboard extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('No leaderboard data available'));
+          return Center(
+              child: Text(
+                  LanguageManager.instance.translate('leaderboard_no_data')));
         }
 
         final leaderboardEntries = snapshot.data!.docs;

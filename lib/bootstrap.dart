@@ -10,6 +10,9 @@ import 'package:labyrinth/data/settings.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/util/logging.dart';
 
+/// Locale on startup
+late Locale appLocale;
+
 // TODO: Error checking? Also consider a splash screen or some other loading alternative
 /// AppLoader is a utility class that initializes the app's environment and loads
 /// necessary resources before running the app.
@@ -28,15 +31,12 @@ class AppLoader {
     await initSystemChrome();
     await initFirebase();
     await loadLevels();
-    await Settings.init();
 
-    // TODO: some work required to get system default language and theme to work (localization and themes setup)
-    // Get the system language, set if there is not already a value
-    String systemLanguage = PlatformDispatcher.instance.locale.languageCode;
-    appLogger.d('System language: $systemLanguage');
-    // if (!Settings.containsKey('lang')) {
-    //   await Settings.setLanguage(systemLanguage);
-    // }
+    String systemLocale = PlatformDispatcher.instance.locale.languageCode;
+    appLogger.d('System language: $systemLocale');
+    await Settings.init(defaultLang: systemLocale);
+    appLocale = Locale(Settings.language);
+    appLogger.d('App language: $appLocale');
 
     // Get system theme
     Brightness brightness = PlatformDispatcher.instance.platformBrightness;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/game/level.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 /// This widget is a modal that allows the user to filter levels by difficulty
 /// and author. It does not modify the levels directly, but instead calls a
@@ -96,8 +97,8 @@ class _LevelFilterModalState extends State<LevelFilterModal> {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Title
-          const Text(
-            "Filter Levels",
+          Text(
+            LanguageManager.instance.translate('level_filter_title'),
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
@@ -110,8 +111,9 @@ class _LevelFilterModalState extends State<LevelFilterModal> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Difficulty",
+                    Text(
+                      LanguageManager.instance
+                          .translate('level_filter_difficulty'),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -160,8 +162,8 @@ class _LevelFilterModalState extends State<LevelFilterModal> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Authors",
+                    Text(
+                      LanguageManager.instance.translate('level_filter_author'),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -214,7 +216,9 @@ class _LevelFilterModalState extends State<LevelFilterModal> {
               TextButton(
                 onPressed: () =>
                     Navigator.pop(context), // Close without applying
-                child: const Text("Cancel"),
+                child: Text(
+                  LanguageManager.instance.translate('btn_cancel'),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -224,7 +228,7 @@ class _LevelFilterModalState extends State<LevelFilterModal> {
                     updateAvailableFilters(); // Reset options
                   });
                 },
-                child: const Text("Clear"),
+                child: Text(LanguageManager.instance.translate('btn_clear')),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -232,7 +236,7 @@ class _LevelFilterModalState extends State<LevelFilterModal> {
                       tempSelectedDifficulties, tempSelectedAuthors);
                   Navigator.pop(context); // Apply filters and close
                 },
-                child: const Text("Apply"),
+                child: Text(LanguageManager.instance.translate('btn_apply')),
               ),
             ],
           ),
