@@ -1,5 +1,9 @@
-import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_background/animated_background.dart';
+import 'package:labyrinth/util/app_theme.dart';
+import 'package:provider/provider.dart';
+
+import 'package:labyrinth/data/providers/settings_provider.dart';
 
 class AppBackground extends StatefulWidget {
   final Widget child;
@@ -23,10 +27,12 @@ class _AppBackground extends State<AppBackground>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
     return AnimatedBackground(
       behaviour: RandomParticleBehaviour(
         options: ParticleOptions(
-          baseColor: Colors.grey,
+          // Change baseColor based on AppTheme
+          baseColor: getParticleColor(settings.theme),
           spawnMaxSpeed: 30.0,
           spawnMinSpeed: 10.0,
           spawnMaxRadius: 20.0,

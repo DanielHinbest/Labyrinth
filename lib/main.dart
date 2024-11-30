@@ -12,6 +12,7 @@ import 'package:labyrinth/bootstrap.dart';
 import 'package:labyrinth/data/providers/settings_provider.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 import 'package:labyrinth/util/language_manager.dart';
+import 'package:labyrinth/util/app_theme.dart';
 
 void main() async {
   AppLoader.bootstrap(() => const MyApp());
@@ -30,14 +31,7 @@ class MyApp extends StatelessWidget {
           return Consumer<SettingsProvider>(builder: (context, settings, _) {
             return MaterialApp(
               title: 'Labyrinth',
-              theme: ThemeData(
-                //  [see this issue: https://github.com/flutter/flutter/issues/145894]
-                // Because of how the default transitions work for MaterialPageRoutes the background animation froze when switching routes
-                // Using cupertino transitions fixes this [https://stackoverflow.com/questions/50196913/how-to-change-navigation-animation-using-flutter]
-                pageTransitionsTheme: PageTransitionsTheme(builders: {
-                  TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-                }), // TODO: Proper theme data and handling
-              ),
+              theme: getAppTheme(settings.theme).data,
               supportedLocales: LanguageManager.availableLocales.values.map(
                 (e) {
                   var (locale, _) = e;

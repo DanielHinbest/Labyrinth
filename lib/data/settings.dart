@@ -22,7 +22,7 @@ class Settings {
   }
 
   // Getters
-  static String get theme => _prefs.getString('theme') ?? 'Light';
+  static String get theme => _prefs.getString('theme') ?? 'System';
   static bool get musicOn => _prefs.getBool('music_on') ?? true;
   static bool get sfxOn => _prefs.getBool('sfx_on') ?? true;
   static String get language => _prefs.getString('lang') ?? defaultLang;
