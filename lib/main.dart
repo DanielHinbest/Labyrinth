@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           return Consumer<SettingsProvider>(builder: (context, settings, _) {
             return MaterialApp(
               title: 'Labyrinth',
-              theme: getAppTheme(settings.theme).data,
+              theme: getThemeColors(settings.theme).theme,
               supportedLocales: LanguageManager.availableLocales.values.map(
                 (e) {
                   var (locale, _) = e;
