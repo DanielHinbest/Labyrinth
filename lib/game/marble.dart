@@ -13,7 +13,7 @@ class Marble extends BodyComponent {
 
   @override
   Body createBody() {
-    shape = CircleShape()..radius = 1.0;
+    shape = CircleShape()..radius = 5.0;
     final fixtureDef = FixtureDef(shape)
       ..density = 1.0
       ..restitution = 0.0
@@ -39,6 +39,9 @@ class Marble extends BodyComponent {
     const int steps = 20;
     const double shrinkFactor = 0.05;
     double currentRadius = shape.radius;
+
+    // Slow down marble
+    body.linearVelocity = body.linearVelocity * 0.5;
 
     for (int i = 0; i < steps; i++) {
       Future.delayed(Duration(milliseconds: i * 50), () {

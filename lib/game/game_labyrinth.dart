@@ -11,8 +11,7 @@ class GameLabyrinth extends Forge2DGame {
   final Maze maze;
   final List<Hole> holes = [];
 
-  GameLabyrinth(this.maze)
-      : super(gravity: Vector2(0, 50), camera: CameraComponent());
+  GameLabyrinth(this.maze) : super(gravity: Vector2(0, 50));
 
   Marble? marble;
 
@@ -20,13 +19,20 @@ class GameLabyrinth extends Forge2DGame {
   Future<void> onLoad() async {
     await super.onLoad();
     print('World type: ${world.runtimeType}');
-    marble = Marble(Vector2(0, -30));
+
+    Vector2 marbleSpawnPosition = Vector2(240, 0);
+
+    marble = Marble(marbleSpawnPosition);
     await world.add(marble!);
     await Future.wait(maze.walls.map((wall) async => await world.add(wall)));
     for (final hole in maze.holes) {
       holes.add(hole);
       await world.add(hole);
     }
+
+    // Set initial camera position and zoom
+    camera.viewfinder.zoom = 1.8;
+    camera.moveTo(Vector2(230, 100));
   }
 
   @override
