@@ -51,6 +51,7 @@ class _ScreenGameState extends State<ScreenGame> {
 
   void _stopTimer() {
     _timer?.cancel();
+    endGame(_elapsedSeconds);
   }
 
   void _setupBackButtonHandler() {
@@ -117,12 +118,7 @@ class _ScreenGameState extends State<ScreenGame> {
   }
 
   void endGame(int finalScore) async {
-    Score score = Score(
-      id: DateTime.now().millisecondsSinceEpoch,
-      score: finalScore,
-      date: DateTime.now().toIso8601String(),
-    );
-    await dbConnect.insertScore(score);
+    await dbConnect.insertScore(finalScore, widget.level.name);
 
     await FirebaseFirestore.instance.collection('leaderboard').add({
       'name': 'Player', // Replace with actual player name
