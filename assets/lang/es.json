@@ -12,6 +12,7 @@
   "btn_play": "Jugar",
   "btn_reset": "Reiniciar",
   "btn_undo": "Deshacer",
+  "offline": "desconectada",
   "difficulty_easy": "Fácil",
   "difficulty_medium": "Intermedio",
   "difficulty_hard": "Difícil",

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:labyrinth/bootstrap.dart';
 import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/components/user_profile_button.dart';
-
 import 'package:labyrinth/screens/screen_levels.dart';
 import 'package:labyrinth/screens/screen_settings.dart';
 import 'package:labyrinth/screens/screen_signup.dart';
-import 'package:labyrinth/screens/screen_profile.dart';
 import 'package:labyrinth/util/language_manager.dart';
 
 class ScreenTitle extends StatelessWidget {
@@ -40,7 +38,8 @@ class ScreenTitle extends StatelessWidget {
               GradientButton(
                 text: LanguageManager.instance.translate('screen_title_levels'),
                 icon: Icons.play_arrow,
-                onPressed: () {
+                onPressed: () async {
+                  await AppLoader.reloadLevels();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -63,8 +62,6 @@ class ScreenTitle extends StatelessWidget {
         ),
       ),
       floatingActionButton: UserProfileButton(
-        username: null,
-        avatarUrl: null, // Replace with actual avatar URL
         onPressed: () {
           showSignUpOverlay(context);
         },

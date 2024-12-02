@@ -1,6 +1,5 @@
 # Make sure the objects in the SVG file are all paths
-
-
+import math
 import os
 import json
 import xml.etree.ElementTree as ET
@@ -18,15 +17,60 @@ def get_level_metadata(level_name):
     return desc, diff
 
 def parse_svg_file(svg_path):
-    """Extract all path 'd' attributes from the SVG file."""
+    """Extract all path 'd' attributes and positions of elements containing 'hole' in their label."""
     tree = ET.parse(svg_path)
     root = tree.getroot()
+
     paths = []
-    for elem in root.iter('{http://www.w3.org/2000/svg}path'):
-        d_attr = elem.get('d')
-        if d_attr:
-            paths.append(d_attr)
-    return paths
+    start = None
+    goal = None
+    holes = []
+
+    # Helper function to extract positions from a transform attribute
+    def extract_transform_position(transform):
+        if transform:
+            match = re.search(r'translate\(([\d\.\-]+),([\d\.\-]+)\)', transform)
+            if match:
+                return (float(match.group(1)), float(match.group(2)))
+        return None
+
+    # Iterate through all elements in the SVG
+    for elem in root.iter():
+        tag = elem.tag.split('}')[-1]
+        label_attr = elem.get('{http://www.inkscape.org/namespaces/inkscape}label')
+
+        # Handle <path> elements
+        if tag == 'path':
+            d_attr = elem.get('d')
+            if d_attr:
+                paths.append(d_attr)
+
+        # Position extraction attempt
+        position = None
+        transform = elem.get('transform')
+        if transform:
+            position = extract_transform_position(transform)
+
+        # If no transform attribute, attempt to extract initial position from the path data
+        if not position and tag == 'path' and d_attr:
+            match = re.match(r'[Mm]\s*([\d\.\-]+),([\d\.\-]+)', d_attr)
+            if match:
+                position = ((float(match.group(1))), float(match.group(2)))
+
+        # If position is found, categorize based on 'label'
+        if label_attr and position:
+            print(f"Found '{label_attr}' at {position}")
+            if 'hole' in label_attr.lower():
+                holes.append(position)
+            elif 'marker_goal' in label_attr.lower():
+                goal = position
+            elif 'marker_start' in label_attr.lower():
+                start = position
+
+    print(holes, start, goal, sep='\n')
+
+    return paths, start, goal, holes
+
 
 def generate_level_file(level_name, author_name, desc, diff, start, goal, holes, walls):
     """Generate and save a level file as a JSON dictionary."""
@@ -66,7 +110,7 @@ def main():
         goal = [100, 100]
         holes = []
         level_path = f"{level_name}.level"
-        walls = parse_svg_file(this_dir + f"/{level_name}.svg")
+        walls, start, goal, holes = parse_svg_file(this_dir + f"/{level_name}.svg")
         desc, diff = get_level_metadata(level_name)
 
         generate_level_file(level_name, author_name, desc, diff, start, goal, holes, walls)

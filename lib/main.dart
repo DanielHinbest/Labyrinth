@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'package:labyrinth/bootstrap.dart';
 import 'package:labyrinth/data/providers/settings_provider.dart';
+import 'package:labyrinth/data/providers/user_provider.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 import 'package:labyrinth/util/language_manager.dart';
 import 'package:labyrinth/util/app_theme.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => SettingsProvider())
+          ChangeNotifierProvider(create: (context) => SettingsProvider()),
+          ChangeNotifierProvider(create: (context) => UserProvider()),
         ],
         builder: (context, _) {
           return Consumer<SettingsProvider>(builder: (context, settings, _) {

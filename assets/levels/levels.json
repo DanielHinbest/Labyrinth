@@ -1,17 +1,9 @@
 [
-  "assets/levels/test1.level",
-  "assets/levels/test2.level",
-  "assets/levels/test3.level",
-  "assets/levels/test4.level",
-  "assets/levels/test5.level",
-  "assets/levels/test6.level",
-  "assets/levels/test7.level",
-  "assets/levels/test8.level",
-  "assets/levels/test9.level",
-  "assets/levels/test10.level",
-  "assets/levels/test11.level",
-  "assets/levels/test12.level",
-  "assets/levels/test13.level",
-  "assets/levels/test14.level",
-  "assets/levels/test15.level"
+  "assets/levels/level_test_1.level",
+  "assets/levels/level_test_2.level",
+  "assets/levels/level_1.level",
+  "assets/levels/level_2.level",
+  "assets/levels/level_3.level",
+  "assets/levels/level_4.level",
+  "assets/levels/level_5.level"
 ]

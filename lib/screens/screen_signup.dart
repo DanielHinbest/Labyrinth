@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labyrinth/util/language_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'package:labyrinth/util/app_theme.dart';
@@ -133,7 +134,8 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
                             onPressed: () {
                               Navigator.of(context).pop(); // Close overlay
                             },
-                            child: Text('Close'),
+                            child: Text(LanguageManager.instance
+                                .translate('btn_close')),
                           ),
                         ),
                       ],
