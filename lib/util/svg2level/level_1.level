@@ -1,8 +1,8 @@
 {
     "name": "level_1",
-    "desc": "A simple level 1 maze",
+    "desc": "",
     "auth": "Daniel",
-    "diff": 1,
+    "diff": 0,
     "maze": {
         "start": null,
         "goal": null,

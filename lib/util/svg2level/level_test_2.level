@@ -1,6 +1,6 @@
 {
     "name": "level_test_2",
-    "desc": "A simple maze introduction",
+    "desc": "",
     "auth": "Daniel",
     "diff": 0,
     "maze": {
