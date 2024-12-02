@@ -11,14 +11,13 @@ class Maze {
   final List<Hole> holes;
   final List<Wall> walls;
 
-  Maze._(this.start, this.goal, this.holes, this.walls);
+  Maze._(this.start, this.holes, this.walls, this.goal);
 
   factory Maze.fromJson(Map<String, dynamic> json) {
     final start = Vector2(
       json['start'][0].toDouble(),
       json['start'][1].toDouble(),
     );
-
     final goal = Vector2(
       json['goal'][0].toDouble(),
       json['goal'][1].toDouble(),
@@ -35,6 +34,6 @@ class Maze {
       return Wall.fromString(wallData);
     }).toList();
 
-    return Maze._(start, goal, holes, walls);
+    return Maze._(start, holes, walls, goal);
   }
 }

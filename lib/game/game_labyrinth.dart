@@ -6,10 +6,12 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'maze.dart';
 import 'marble.dart';
 import 'hole.dart';
+import 'goal.dart';
 
 class GameLabyrinth extends Forge2DGame {
   final Maze maze;
   final List<Hole> holes = [];
+  Goal? goal; // Change to a single goal object
 
   GameLabyrinth(this.maze) : super(gravity: Vector2.zero());
 
@@ -29,6 +31,10 @@ class GameLabyrinth extends Forge2DGame {
       holes.add(hole);
       await world.add(hole);
     }
+
+    // Create and add the goal object
+    goal = Goal(center: maze.goal, radius: 5.0);
+    await world.add(goal!);
 
     // Set initial camera position and zoom
     camera.viewfinder.zoom = 1.8;
@@ -51,23 +57,26 @@ class GameLabyrinth extends Forge2DGame {
         marble!.shrinkAndDisappear();
       }
     }
+
+    // Check for collision with the goal object
+    if (goal != null && goal!.body != null && isColliding(marble!, goal!)) {
+      print('Marble reached the goal');
+      goal!.changeMarbleColorToRainbow(
+          marble!); // Change marble color to rainbow
+    }
   }
 
-  bool isColliding(Marble marble, Hole hole) {
+  bool isColliding(Marble marble, BodyComponent component) {
     final marblePosition = marble.body?.position;
-    final holePosition = hole.body?.position;
-    if (marblePosition == null || holePosition == null) return false;
+    final componentPosition = component.body?.position;
+    if (marblePosition == null || componentPosition == null) return false;
 
-    // Debug output to print positions
-    /*
-    print('Marble position: $marblePosition');
-    print('Hole position: $holePosition');
-    */
-
-    final distance = marblePosition.distanceTo(holePosition);
+    final distance = marblePosition.distanceTo(componentPosition);
+    final collisionThreshold = marble.shape.radius +
+        (component is Hole ? component.radius : (component as Goal).radius);
     print('Distance: $distance');
-    print('Collision threshold: ${marble.shape.radius + hole.radius}');
+    print('Collision threshold: $collisionThreshold');
 
-    return distance < (marble.shape.radius + hole.radius);
+    return distance < collisionThreshold;
   }
 }
