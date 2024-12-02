@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:labyrinth/data/providers/user_provider.dart';
+import 'package:labyrinth/util/language_manager.dart';
 
 class UserProfileButton extends StatelessWidget {
-  final String? username;
-  final String? avatarUrl;
   final VoidCallback onPressed;
+  final String? avatarUrl;
 
   const UserProfileButton({
     super.key,
-    this.username,
     this.avatarUrl,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserProvider>().currentUser;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -49,7 +52,9 @@ class UserProfileButton extends StatelessWidget {
             ),
             SizedBox(width: 8),
             Text(
-              username ?? 'Offline',
+              user.isOnline
+                  ? user.username
+                  : '${user.username} [${LanguageManager.instance.translate('offline').toUpperCase()}]',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

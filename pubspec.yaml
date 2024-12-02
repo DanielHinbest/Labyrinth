@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  svg_path_parser: ^1.1.1 # TODO: Consider using flame_svg instead?
+  svg_path_parser: ^1.1.1
   cupertino_icons: ^1.0.8
   flame: ^1.21.0
   flame_forge2d: ^0.18.2+1
@@ -27,6 +27,7 @@ dependencies:
   animated_background: ^2.0.0
   shared_preferences: ^2.3.3
   provider: ^6.1.2
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:

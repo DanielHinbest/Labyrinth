@@ -15,6 +15,7 @@ class LanguageManager {
 
   static const Map<String, (Locale, String)> availableLocales = {
     'de': (Locale('de'), 'Deutsch'),
+    'fr': (Locale('fr'), 'Français'),
     'en': (Locale('en'), 'English'),
     'es': (Locale('es'), 'Español'),
   };
