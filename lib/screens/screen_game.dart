@@ -1,8 +1,10 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:labyrinth/bootstrap.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:labyrinth/screens/screen_title.dart';
 
 import '../game/game_labyrinth.dart';
 import 'package:labyrinth/data/db_connect.dart';
@@ -20,6 +22,7 @@ class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
   bool isPauseButtonVisible = false; // Initially hidden
   late DBConnect dbConnect;
+  late GameLabyrinth _gameLabyrinth;
   Alignment? pauseButtonAlignment;
 
   @override
@@ -27,6 +30,19 @@ class _ScreenGameState extends State<ScreenGame> {
     super.initState();
     dbConnect = DBConnect();
     dbConnect.initDatabase();
+    _gameLabyrinth = GameLabyrinth(widget.level.maze);
+    _setupBackButtonHandler();
+  }
+
+  void _setupBackButtonHandler() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ModalRoute.of(context)?.addScopedWillPopCallback(() async {
+        setState(() {
+          isPaused = !isPaused;
+        });
+        return false;
+      });
+    });
   }
 
   void showPauseButton(TapDownDetails details, Size screenSize) {
@@ -53,6 +69,7 @@ class _ScreenGameState extends State<ScreenGame> {
   void pause() {
     setState(() {
       isPaused = true;
+      _gameLabyrinth.pauseEngine();
     });
   }
 
@@ -61,6 +78,7 @@ class _ScreenGameState extends State<ScreenGame> {
     setState(() {
       isPaused = false;
       isPauseButtonVisible = false; // Hide the pause button after resuming
+      _gameLabyrinth.resumeEngine();
     });
   }
 
@@ -71,7 +89,12 @@ class _ScreenGameState extends State<ScreenGame> {
 
   // Method to go back to the main menu
   void mainMenu() {
-    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ScreenTitle(),
+      ),
+    );
   }
 
   void endGame(int finalScore) async {
@@ -94,72 +117,73 @@ class _ScreenGameState extends State<ScreenGame> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    return PopScope(
-        canPop: false,
-        child: Scaffold(
-          body: Stack(
-            children: [
-              // Game widget
-              GameWidget(
-                game: GameLabyrinth(widget.level.maze),
-              ),
-
-              // Capture tap to show the pause button in a corner
-              if (!isPauseButtonVisible)
-                GestureDetector(
-                  onTapDown: (details) => showPauseButton(details, screenSize),
-                  child: Container(
-                    color: Colors.transparent,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ),
-
-              // Pause button positioned in the selected corner
-              if (isPauseButtonVisible && pauseButtonAlignment != null)
-                Align(
-                  alignment: pauseButtonAlignment!,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: FloatingActionButton(
-                      onPressed: pause,
-                      child: Icon(Icons.pause),
-                    ),
-                  ),
-                ),
-
-              // Pause menu
-              if (isPaused)
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Game Paused',
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: resumeGame,
-                          child: Text('Resume'),
-                        ),
-                        // Keeping the TODO comment for restart functionality
-                        ElevatedButton(
-                          onPressed: mainMenu,
-                          child: Text('Main Menu'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-            ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Game widget
+          GameWidget(
+            game: _gameLabyrinth,
           ),
-        ));
+
+          // Capture tap to show the pause button in a corner
+          if (!isPauseButtonVisible)
+            GestureDetector(
+              onTapDown: (details) => showPauseButton(details, screenSize),
+              child: Container(
+                color: Colors.transparent,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+
+          // Pause button positioned in the selected corner
+          if (isPauseButtonVisible && pauseButtonAlignment != null)
+            Align(
+              alignment: pauseButtonAlignment!,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: FloatingActionButton(
+                  onPressed: pause,
+                  child: Icon(Icons.pause),
+                ),
+              ),
+            ),
+
+          // Pause menu
+          if (isPaused)
+            Center(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Game Paused',
+                      style: TextStyle(fontSize: 24, color: Colors.white),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: resumeGame,
+                      child: Text('Resume'),
+                    ),
+                    // Keeping the TODO comment for restart functionality
+                    ElevatedButton(
+                      onPressed: () async {
+                        await AppLoader.reloadLevels();
+                        mainMenu();
+                      },
+                      child: Text('Main Menu'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }

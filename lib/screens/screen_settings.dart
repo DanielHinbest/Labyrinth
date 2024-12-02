@@ -5,6 +5,7 @@ import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/data/providers/settings_provider.dart';
 import 'package:labyrinth/data/settings.dart';
 import 'package:labyrinth/util/language_manager.dart';
+import 'package:labyrinth/util/app_theme.dart';
 
 class SettingsOverlay extends StatefulWidget {
   const SettingsOverlay({super.key});
@@ -14,34 +15,6 @@ class SettingsOverlay extends StatefulWidget {
 }
 
 class _SettingsOverlayState extends State<SettingsOverlay> {
-  // bool isMusicOn = true; // State for Music toggle
-  // bool isSfxOn = true; // State for SFX toggle
-  // bool isTimerVisible = true; // State for Timer Visibility toggle
-  // bool isTiltControlsEnabled = false; // State for Tilt Controls toggle
-  // String selectedLanguage = 'English'; // State for Language dropdown
-  // String selectedTheme = 'Light'; // State for Theme dropdown
-
-  final List<String> themes = ['Light', 'Dark', 'System'];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // _loadSettings();
-  // }
-
-  /// Load settings
-  // void _loadSettings() {
-  //   final settings = context.read<SettingsProvider>();
-  //   setState(() {
-  //     isMusicOn = settings.musicOn;
-  //     isSfxOn = settings.sfxOn;
-  //     isTimerVisible = settings.timerVisible;
-  //     isTiltControlsEnabled = settings.tiltControls;
-  //     selectedLanguage = settings.language;
-  //     selectedTheme = settings.theme;
-  //   });
-  // }
-
   /// Save a specific setting using the provided setter function
   Future<void> _updateSetting(Future<void> Function() updateFn) async {
     await updateFn();
@@ -51,9 +24,6 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
   Future<void> _saveLang(String lang) async {
     final settings = context.read<SettingsProvider>();
     await settings.setLanguage(lang);
-    // setState(() {
-    //   selectedLanguage = lang;
-    // });
   }
 
   void _showCredits() {
@@ -75,20 +45,25 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Daniel Hinbest', style: TextStyle(fontSize: 16)),
-                Text('Jugal Patel', style: TextStyle(fontSize: 16)),
-                Text('Syed Rizvi', style: TextStyle(fontSize: 16)),
-                Text('Raje Singh', style: TextStyle(fontSize: 16)),
-                Text('Zachary Wayne', style: TextStyle(fontSize: 16)),
+                Text('Daniel Hinbest',
+                    style: TextStyle(fontSize: 16, inherit: true)),
+                Text('Jugal Patel',
+                    style: TextStyle(fontSize: 16, inherit: true)),
+                Text('Syed Rizvi',
+                    style: TextStyle(fontSize: 16, inherit: true)),
+                Text('Raje Singh',
+                    style: TextStyle(fontSize: 16, inherit: true)),
+                Text('Zachary Wayne',
+                    style: TextStyle(fontSize: 16, inherit: true)),
                 SizedBox(height: 20), // Space between names and footer
                 // Footer text
                 Text(
                   'Mobile Devices Final Project',
                   style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic,
-                  ),
+                      fontSize: 12,
+                      // color: Colors.grey,
+                      fontStyle: FontStyle.italic,
+                      inherit: true),
                 ),
               ],
             ),
@@ -118,7 +93,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
           title: Text(LanguageManager.instance
               .translate('screen_settings_score_reset_dialog_title')),
           content: Text(LanguageManager.instance
-              .translate('screen_settings_score_reset_dialog_title')),
+              .translate('screen_settings_score_reset_dialog_prompt')),
           actions: [
             TextButton(
               onPressed: () {
@@ -161,7 +136,6 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
       await _saveLang(Settings.defaultLang);
     }
 
-    // _loadSettings();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -205,7 +179,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: getDecorationColor(settings.theme),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: DefaultTabController(
@@ -220,7 +194,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, top: 5),
-                            child: Icon(Icons.close, color: Colors.black),
+                            child: Icon(Icons.close),
                           ),
                           onTap: () => Navigator.of(context).pop(),
                         ),
@@ -228,9 +202,6 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                     ),
                     // TabBar for switching sections
                     TabBar(
-                      indicatorColor: Colors.black,
-                      labelColor: Colors.black,
-                      unselectedLabelColor: Colors.grey,
                       tabs: const [
                         Tab(icon: Icon(Icons.settings)),
                         Tab(icon: Icon(Icons.gamepad_outlined)),
@@ -242,111 +213,131 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                       child: TabBarView(
                         children: [
                           // Tab 1 - General Settings
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                _buildSwitch(
-                                  label: LanguageManager.instance
-                                      .translate('screen_settings_music_label'),
-                                  value: settings.musicOn,
-                                  onChanged: (value) =>
-                                      _updateSetting(() async {
-                                    await settings.setMusic(value);
-                                    // isMusicOn = value;
-                                  }),
-                                ),
-                                _buildSwitch(
-                                  label: LanguageManager.instance
-                                      .translate('screen_settings_sound_label'),
-                                  value: settings.sfxOn,
-                                  onChanged: (value) =>
-                                      _updateSetting(() async {
-                                    await settings.setSfx(value);
-                                    // isSfxOn = value;
-                                  }),
-                                ),
-                                _buildLanguageDropdown(
-                                  label: LanguageManager.instance.translate(
-                                      'screen_settings_language_label'),
-                                  value: settings.language,
-                                  items: LanguageManager.availableLocales,
-                                  onChanged: (value) async =>
-                                      await _saveLang(value),
-                                ),
-                                _buildDropdown(
-                                  label: LanguageManager.instance
-                                      .translate('screen_settings_theme_label'),
-                                  value: settings.theme,
-                                  items: themes,
-                                  onChanged: (value) =>
-                                      _updateSetting(() async {
-                                    await settings.setTheme(value);
-                                    // selectedTheme = value;
-                                  }),
-                                ),
-                              ],
+                          SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  _buildSwitch(
+                                    label: LanguageManager.instance.translate(
+                                        'screen_settings_music_label'),
+                                    value: settings.musicOn,
+                                    onChanged: (value) =>
+                                        _updateSetting(() async {
+                                      // show snackbar
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Music is now ${value ? 'on' : 'off'}'),
+                                          action: SnackBarAction(
+                                              label: 'UNDO', onPressed: () {}),
+                                        ),
+                                      );
+
+                                      await settings.setMusic(value);
+                                      // isMusicOn = value;
+                                    }),
+                                  ),
+                                  _buildSwitch(
+                                    label: LanguageManager.instance.translate(
+                                        'screen_settings_sound_label'),
+                                    value: settings.sfxOn,
+                                    onChanged: (value) =>
+                                        _updateSetting(() async {
+                                      await settings.setSfx(value);
+                                      // isSfxOn = value;
+                                    }),
+                                  ),
+                                  _buildLanguageDropdown(
+                                    label: LanguageManager.instance.translate(
+                                        'screen_settings_language_label'),
+                                    value: settings.language,
+                                    items: LanguageManager.availableLocales,
+                                    onChanged: (value) async =>
+                                        await _saveLang(value),
+                                  ),
+                                  _buildDropdown(
+                                    label: LanguageManager.instance.translate(
+                                        'screen_settings_theme_label'),
+                                    value: settings.theme,
+                                    items: AppTheme.values
+                                        .map(
+                                            (e) => e.toString().split('.').last)
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        _updateSetting(() async {
+                                      await settings.setTheme(value);
+                                      // selectedTheme = value;
+                                    }),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           // Tab 2 - Game Settings
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                _buildSwitch(
-                                  label: LanguageManager.instance.translate(
-                                      'screen_settings_timer_visibility_label'),
-                                  value: settings.timerVisible,
-                                  onChanged: (value) =>
-                                      _updateSetting(() async {
-                                    await settings.setTimerVisible(value);
-                                    // isTimerVisible = value;
-                                  }),
-                                ),
-                                _buildSwitch(
-                                  label: LanguageManager.instance.translate(
-                                      'screen_settings_tilt_control_label'),
-                                  value: settings.tiltControls,
-                                  onChanged: (value) =>
-                                      _updateSetting(() async {
-                                    await settings.setTiltControls(value);
-                                    // isTiltControlsEnabled = value;
-                                  }),
-                                ),
-                              ],
+                          SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  _buildSwitch(
+                                    label: LanguageManager.instance.translate(
+                                        'screen_settings_timer_visibility_label'),
+                                    value: settings.timerVisible,
+                                    onChanged: (value) =>
+                                        _updateSetting(() async {
+                                      await settings.setTimerVisible(value);
+                                      // isTimerVisible = value;
+                                    }),
+                                  ),
+                                  _buildSwitch(
+                                    label: LanguageManager.instance.translate(
+                                        'screen_settings_tilt_control_label'),
+                                    value: settings.tiltControls,
+                                    onChanged: (value) =>
+                                        _updateSetting(() async {
+                                      await settings.setTiltControls(value);
+                                      // isTiltControlsEnabled = value;
+                                    }),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           // Tab 3 - Other Settings
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    GradientButton(
-                                      text: LanguageManager.instance.translate(
-                                          'screen_settings_restore_default_button'),
-                                      icon: Icons.restore,
-                                      onPressed: _restoreDefaults,
-                                    ),
-                                    GradientButton(
-                                      text: LanguageManager.instance.translate(
-                                          'screen_settings_score_reset_button'),
-                                      icon: Icons.refresh,
-                                      onPressed: _showResetProgress,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                GradientButton(
-                                  text: LanguageManager.instance.translate(
-                                      'screen_settings_credits_button'),
-                                  icon: Icons.info_outline,
-                                  onPressed: _showCredits,
-                                ),
-                              ],
+                          SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      GradientButton(
+                                        text: LanguageManager.instance.translate(
+                                            'screen_settings_restore_default_button'),
+                                        icon: Icons.restore,
+                                        onPressed: _restoreDefaults,
+                                      ),
+                                      GradientButton(
+                                        text: LanguageManager.instance.translate(
+                                            'screen_settings_score_reset_button'),
+                                        icon: Icons.refresh,
+                                        onPressed: _showResetProgress,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20),
+                                  GradientButton(
+                                    text: LanguageManager.instance.translate(
+                                        'screen_settings_credits_button'),
+                                    icon: Icons.info_outline,
+                                    onPressed: _showCredits,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -374,7 +365,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
         Switch(
           value: value,
           onChanged: onChanged,
-          activeColor: Colors.black,
+          // activeColor: Colors.black,
         ),
       ],
     );

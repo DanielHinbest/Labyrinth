@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:labyrinth/util/app_theme.dart';
+import 'package:provider/provider.dart';
 
-// TODO: Move to gui_common, really we want theme data in one place so we can switch themes easily
-final defaultGradientColors = [
-  Colors.grey[700]!,
-  Colors.grey[800]!,
-  Colors.grey[900]!,
-  Colors.black,
-];
+import 'package:labyrinth/data/providers/settings_provider.dart';
 
 class GradientButton extends StatelessWidget {
   final String text;
@@ -23,6 +19,7 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
     return Container(
       width: 240,
 
@@ -30,9 +27,9 @@ class GradientButton extends StatelessWidget {
       decoration: BoxDecoration(
         /// Maybe combine gradients or something to get a more similar effect?
         gradient: LinearGradient(
-          colors: gradientColors ?? defaultGradientColors,
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+          colors: gradientColors ?? getDefaultGradient(settings.theme),
+          // begin: Alignment.centerLeft,
+          // end: Alignment.centerRight,
 
           /// stops: [0.2, 0.4, 0.6, 0.8, 1.0],
         ),
@@ -60,9 +57,10 @@ class GradientButton extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
-                        overflow: TextOverflow.ellipsis))),
+                        overflow: TextOverflow.ellipsis,
+                        inherit: true))),
             SizedBox(width: 10),
-            Icon(icon, color: Colors.white),
+            Icon(icon),
           ],
         ),
       ),

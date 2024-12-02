@@ -25,7 +25,13 @@ class LevelTile extends StatelessWidget {
             //   begin: Alignment.centerLeft,
             //   end: Alignment.centerRight,
             // ),
-            color: Colors.green),
+
+            // Change color depending on level difficulty 0 - green, 1 - orange, 2 - red
+            color: level.difficulty == 0
+                ? Colors.green
+                : level.difficulty == 1
+                    ? Colors.orange
+                    : Colors.red),
         child: ListTile(
           title: Text(
             level.name,

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:labyrinth/util/language_manager.dart';
+import 'package:provider/provider.dart';
+
+import 'package:labyrinth/util/app_theme.dart';
 import 'package:labyrinth/util/logging.dart';
+import 'package:labyrinth/data/providers/settings_provider.dart';
 
 // TODO: Much skeleton, very bare. Wow.
 class SignUpOverlay extends StatefulWidget {
@@ -32,6 +37,7 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
     return Stack(
       children: [
         GestureDetector(
@@ -48,7 +54,7 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: getDecorationColor(settings.theme),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
@@ -128,7 +134,8 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
                             onPressed: () {
                               Navigator.of(context).pop(); // Close overlay
                             },
-                            child: Text('Close'),
+                            child: Text(LanguageManager.instance
+                                .translate('btn_close')),
                           ),
                         ),
                       ],

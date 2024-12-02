@@ -82,9 +82,14 @@ class AppLoader {
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     await SystemChrome.setPreferredOrientations([
       // TODO: Remove one of these lines in favor of user selection via settings.
-      DeviceOrientation.landscapeRight,
+      //DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
     systemChromeInitialized = true;
+  }
+
+  static Future<void> reloadLevels() async {
+    levels.clear();
+    await loadLevels();
   }
 }

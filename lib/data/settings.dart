@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:labyrinth/util/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:labyrinth/data/user.dart';
 
 class Settings {
   static final Settings _instance = Settings._internal();
@@ -9,7 +14,8 @@ class Settings {
     'sfx_on',
     'lang',
     'timer_visible',
-    'use_tilt'
+    'use_tilt',
+    'user'
   };
   static String defaultLang = 'en';
 
@@ -22,14 +28,26 @@ class Settings {
   }
 
   // Getters
-  static String get theme => _prefs.getString('theme') ?? 'Light';
+  static String get theme => _prefs.getString('theme') ?? 'System';
   static bool get musicOn => _prefs.getBool('music_on') ?? true;
   static bool get sfxOn => _prefs.getBool('sfx_on') ?? true;
   static String get language => _prefs.getString('lang') ?? defaultLang;
   static bool get timerVisible => _prefs.getBool('timer_visible') ?? true;
   static bool get tiltControls => _prefs.getBool('use_tilt') ?? false;
 
-// TODO: some work required to get system default language and theme
+  /// Get the stored User object or return null if not set
+  static User get user {
+    final userJson = _prefs.getString('user');
+    appLogger.d('User JSON: $userJson');
+    if (userJson == null) {
+      User user = User.offline();
+      setUser(user);
+      return user;
+    }
+
+    return User.fromJson(Map<String, dynamic>.from(
+        json.decode(userJson) as Map<String, dynamic>));
+  }
 
   /// Asynchronous initialization for SharedPreferences
   static Future<void> init({String defaultLang = 'en'}) async {
@@ -43,9 +61,12 @@ class Settings {
     if (_prefs.getString('lang') == null) {
       await _prefs.setString('lang', defaultLang);
     }
+
+    if (_prefs.getString('user') == null) {
+      await setUser(User.offline());
+    }
   }
 
-  // Example setters
   static Future<void> setTheme(String theme) async {
     await _prefs.setString('theme', theme);
   }
@@ -77,5 +98,16 @@ class Settings {
   // Function to check if a key is set
   static bool containsKey(String key) {
     return _prefs.containsKey(key);
+  }
+
+  /// Save the User object as a JSON string
+  static Future<void> setUser(User user) async {
+    final userJson = json.encode(user.toJson());
+    await _prefs.setString('user', userJson);
+  }
+
+  /// Remove the User object
+  static Future<void> clearUser() async {
+    await _prefs.remove('user');
   }
 }
