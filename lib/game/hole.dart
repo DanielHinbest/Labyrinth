@@ -4,10 +4,6 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'marble.dart';
 
 class Hole extends BodyComponent {
-  // CONSTANTS
-  static const double SCALE = 0.5;
-  static const double TRANSLATE_X = 0.0;
-  static const double TRANSLATE_Y = 0.0;
   final Vector2 center;
   final double radius;
 
@@ -17,15 +13,12 @@ class Hole extends BodyComponent {
   Body createBody() {
     final bodyDef = BodyDef()
       ..type = BodyType.static
-      ..position = Vector2(
-        center.x * SCALE + TRANSLATE_X,
-        center.y * SCALE + TRANSLATE_Y,
-      );
+      ..position = center;
 
     final body = world.createBody(bodyDef);
     body.userData = this; // Set userData to this Hole instance
 
-    final circleShape = CircleShape()..radius = radius * SCALE;
+    final circleShape = CircleShape()..radius = radius;
 
     body.createFixture(FixtureDef(circleShape)..isSensor = true);
 
@@ -40,17 +33,20 @@ class Hole extends BodyComponent {
 
   @override
   void render(Canvas canvas) {
-    canvas.save();
-    canvas.translate(
-      center.x * SCALE + TRANSLATE_X,
-      center.y * SCALE + TRANSLATE_Y,
-    );
-    canvas.scale(SCALE, SCALE);
-
     final paint = Paint()
       ..color = const Color(0xFFFF0000) // Changed to red for better visibility
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(Offset.zero, radius, paint);
-    canvas.restore();
+
+    // Use the body's position for rendering
+    final bodyPosition = body.position;
+    final screenPosition = worldToScreen(bodyPosition);
+
+    canvas.drawCircle(
+        Offset(screenPosition.x, screenPosition.y), radius, paint);
+  }
+
+  // Helper method to convert world coordinates to screen coordinates
+  Vector2 worldToScreen(Vector2 worldPosition) {
+    return worldPosition * 0.0; // Adjust the scaling factor as needed
   }
 }

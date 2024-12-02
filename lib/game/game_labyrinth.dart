@@ -20,7 +20,7 @@ class GameLabyrinth extends Forge2DGame {
     await super.onLoad();
     print('World type: ${world.runtimeType}');
 
-    Vector2 marbleSpawnPosition = Vector2(240, 0);
+    Vector2 marbleSpawnPosition = maze.start;
 
     marble = Marble(marbleSpawnPosition);
     await world.add(marble!);
@@ -57,7 +57,17 @@ class GameLabyrinth extends Forge2DGame {
     final marblePosition = marble.body?.position;
     final holePosition = hole.body?.position;
     if (marblePosition == null || holePosition == null) return false;
+
+    // Debug output to print positions
+    /*
+    print('Marble position: $marblePosition');
+    print('Hole position: $holePosition');
+    */
+
     final distance = marblePosition.distanceTo(holePosition);
+    print('Distance: $distance');
+    print('Collision threshold: ${marble.shape.radius + hole.radius}');
+
     return distance < (marble.shape.radius + hole.radius);
   }
 }
