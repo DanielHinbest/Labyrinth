@@ -42,5 +42,7 @@
   "screen_settings_restore_default_snackbar": "Settings reset to defaults!",
   "screen_settings_restore_default_button": "Restore Defaults",
   "screen_settings_credits_button": "Credits",
-  "screen_settings_credits_dialog_title": "Credits"
+  "screen_settings_credits_dialog_title": "Credits",
+  "screen_settings_credits_tab_contributors": "Contributors",
+  "screen_settings_credits_tab_music": "Music"
 }

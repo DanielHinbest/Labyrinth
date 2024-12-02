@@ -42,5 +42,7 @@
   "screen_settings_restore_default_snackbar": "Paramètres réinitialisés par défaut !",
   "screen_settings_restore_default_button": "Restaurer les paramètres par défaut",
   "screen_settings_credits_button": "Crédits",
-  "screen_settings_credits_dialog_title": "Crédits"
+  "screen_settings_credits_dialog_title": "Crédits",
+  "screen_settings_credits_tab_contributors": "Contributeurs",
+  "screen_settings_credits_tab_music": "Musique"
 }

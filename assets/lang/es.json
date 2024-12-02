@@ -42,5 +42,7 @@
   "screen_settings_restore_default_snackbar": "¡Configuraciones restauradas a los valores predeterminados!",
   "screen_settings_restore_default_button": "Restaurar Predeterminados",
   "screen_settings_credits_button": "Créditos",
-  "screen_settings_credits_dialog_title": "Créditos"
+  "screen_settings_credits_dialog_title": "Créditos",
+  "screen_settings_credits_tab_contributors": "Contribuyentes",
+  "screen_settings_credits_tab_music": "Música"
 }
