@@ -1,48 +1,65 @@
 import 'dart:ui';
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
+
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'wall.dart';
 
-class Marble extends PositionComponent with CollisionCallbacks {
-  Vector2 velocity = Vector2(50, 50);
-  bool hasCollided = false; // Flag to manage collision response timing
+class Marble extends BodyComponent {
+  @override
+  final Vector2 position;
+  late CircleShape shape;
+  late Fixture fixture;
+
+  Marble(this.position);
 
   @override
-  Future<void> onLoad() async {
-    add(CircleHitbox());
+  Body createBody() {
+    shape = CircleShape()..radius = 5.0;
+    final fixtureDef = FixtureDef(shape)
+      ..density = 1.0
+      ..restitution = 0.0
+      ..friction = 0.0;
+
+    final bodyDef = BodyDef()
+      ..position = position
+      ..type = BodyType.dynamic;
+
+    final body = world.createBody(bodyDef);
+    body.userData = this; // Set userData to this Marble instance
+    fixture = body.createFixture(fixtureDef);
+    return body;
   }
 
   @override
-  void update(double dt) {
-    super.update(dt);
-    if (!hasCollided) {
-      position.add(velocity * dt);
+  void onMount() {
+    super.onMount();
+    print('Marble mounted with body: $body');
+  }
+
+  void shrinkAndDisappear() {
+    const int steps = 20;
+    const double shrinkFactor = 0.05;
+    double currentRadius = shape.radius;
+
+    // Slow down marble
+    body.linearVelocity = body.linearVelocity * 0.5;
+
+    for (int i = 0; i < steps; i++) {
+      Future.delayed(Duration(milliseconds: i * 50), () {
+        if (currentRadius > 0) {
+          currentRadius -= shrinkFactor;
+          if (currentRadius < 0.1) {
+            currentRadius = 0.1; // Ensure the radius does not become too small
+          }
+          shape.radius = currentRadius;
+          fixture.shape = shape;
+          // Ensure the marble's position and size are valid
+          body.setTransform(body.position, body.angle);
+        } else {
+          if (world != null) {
+            world.destroyBody(body);
+          }
+        }
+      });
     }
-  }
-
-  @override
-  void onCollisionStart(
-      Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(intersectionPoints, other);
-    if (other is Wall && !hasCollided) {
-      hasCollided = true;
-      velocity = -velocity * 0.9;
-    }
-  }
-
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    super.onCollisionEnd(other);
-    if (other is Wall) {
-      hasCollided = false;
-    }
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    canvas.drawCircle(
-        Offset(position.x, position.y), 10, Paint()..color = Colors.white);
   }
 }
