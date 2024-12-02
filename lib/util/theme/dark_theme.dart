@@ -131,14 +131,19 @@ class DarkColors implements ThemeColors {
             // backgroundColor: DarkColors.darkBlue,
           ),
         ),
+        // I want the line color to be white always
         inputDecorationTheme: InputDecorationTheme(
-          labelStyle: TextStyle(color: DarkColors.black),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: DarkColors.white),
+          ),
+          hintStyle: TextStyle(color: DarkColors.darkBlue),
+          labelStyle: TextStyle(color: DarkColors.white),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: DarkColors.white),
           ),
         ),
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: DarkColors.black,
+          cursorColor: DarkColors.darkPurple,
         ),
         switchTheme: SwitchThemeData(
           thumbColor: WidgetStateProperty.resolveWith((states) {
