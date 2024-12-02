@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/bootstrap.dart';
@@ -24,14 +26,31 @@ class _ScreenGameState extends State<ScreenGame> {
   late DBConnect dbConnect;
   late GameLabyrinth _gameLabyrinth;
   Alignment? pauseButtonAlignment;
+  Timer? _timer;
+  int _elapsedSeconds = 0;
 
   @override
   void initState() {
     super.initState();
     dbConnect = DBConnect();
     dbConnect.initDatabase();
-    _gameLabyrinth = GameLabyrinth(widget.level.maze);
+    _gameLabyrinth = GameLabyrinth(widget.level.maze, _stopTimer);
     _setupBackButtonHandler();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!isPaused) {
+        setState(() {
+          _elapsedSeconds++;
+        });
+      }
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
   }
 
   void _setupBackButtonHandler() {
@@ -182,6 +201,16 @@ class _ScreenGameState extends State<ScreenGame> {
                 ),
               ),
             ),
+
+          // Timer display
+          Positioned(
+            top: 20,
+            right: 20,
+            child: Text(
+              'Time: $_elapsedSeconds s',
+              style: TextStyle(fontSize: 24, color: Colors.white),
+            ),
+          ),
         ],
       ),
     );

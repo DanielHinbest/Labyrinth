@@ -12,8 +12,9 @@ class GameLabyrinth extends Forge2DGame {
   final Maze maze;
   final List<Hole> holes = [];
   Goal? goal; // Change to a single goal object
+  final Function onGoalReached; // Callback to stop the timer
 
-  GameLabyrinth(this.maze) : super(gravity: Vector2.zero());
+  GameLabyrinth(this.maze, this.onGoalReached) : super(gravity: Vector2.zero());
 
   Marble? marble;
 
@@ -61,8 +62,8 @@ class GameLabyrinth extends Forge2DGame {
     // Check for collision with the goal object
     if (goal != null && goal!.body != null && isColliding(marble!, goal!)) {
       print('Marble reached the goal');
-      goal!.changeMarbleColorToRainbow(
-          marble!); // Change marble color to rainbow
+      goal!.changeMarbleColorToRainbow(marble!); // Change marble color to rainbow
+      onGoalReached(); // Call the callback to stop the timer
     }
   }
 
