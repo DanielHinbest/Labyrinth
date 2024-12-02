@@ -22,6 +22,7 @@ class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
   bool isPauseButtonVisible = false; // Initially hidden
   late DBConnect dbConnect;
+  late GameLabyrinth _gameLabyrinth;
   Alignment? pauseButtonAlignment;
 
   @override
@@ -29,6 +30,7 @@ class _ScreenGameState extends State<ScreenGame> {
     super.initState();
     dbConnect = DBConnect();
     dbConnect.initDatabase();
+    _gameLabyrinth = GameLabyrinth(widget.level.maze);
     _setupBackButtonHandler();
   }
 
@@ -67,6 +69,7 @@ class _ScreenGameState extends State<ScreenGame> {
   void pause() {
     setState(() {
       isPaused = true;
+      _gameLabyrinth.pauseEngine();
     });
   }
 
@@ -75,6 +78,7 @@ class _ScreenGameState extends State<ScreenGame> {
     setState(() {
       isPaused = false;
       isPauseButtonVisible = false; // Hide the pause button after resuming
+      _gameLabyrinth.resumeEngine();
     });
   }
 
@@ -118,7 +122,7 @@ class _ScreenGameState extends State<ScreenGame> {
         children: [
           // Game widget
           GameWidget(
-            game: GameLabyrinth(widget.level.maze),
+            game: _gameLabyrinth,
           ),
 
           // Capture tap to show the pause button in a corner
