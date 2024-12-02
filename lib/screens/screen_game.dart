@@ -1,8 +1,10 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:labyrinth/bootstrap.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:labyrinth/screens/screen_title.dart';
 
 import '../game/game_labyrinth.dart';
 import 'package:labyrinth/data/db_connect.dart';
@@ -26,6 +28,18 @@ class _ScreenGameState extends State<ScreenGame> {
     super.initState();
     dbConnect = DBConnect();
     dbConnect.initDatabase();
+    _setupBackButtonHandler();
+  }
+
+  void _setupBackButtonHandler() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ModalRoute.of(context)?.addScopedWillPopCallback(() async {
+        setState(() {
+          isPaused = !isPaused;
+        });
+        return false;
+      });
+    });
   }
 
   // Method to show the pause button on the first tap
@@ -57,7 +71,12 @@ class _ScreenGameState extends State<ScreenGame> {
 
   // Method to go back to the main menu
   void mainMenu() {
-    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ScreenTitle(),
+      ),
+    );
   }
 
   void endGame(int finalScore) async {
@@ -90,7 +109,8 @@ class _ScreenGameState extends State<ScreenGame> {
             GestureDetector(
               onTap: showPauseButton,
               child: Container(
-                color: Colors.transparent, // Invisible area to detect the first tap
+                color: Colors
+                    .transparent, // Invisible area to detect the first tap
                 width: double.infinity,
                 height: double.infinity,
               ),
@@ -128,7 +148,10 @@ class _ScreenGameState extends State<ScreenGame> {
                     ),
                     // Keeping the TODO comment for restart functionality
                     ElevatedButton(
-                      onPressed: mainMenu,
+                      onPressed: () async {
+                        await AppLoader.reloadLevels();
+                        mainMenu();
+                      },
                       child: Text('Main Menu'),
                     ),
                   ],

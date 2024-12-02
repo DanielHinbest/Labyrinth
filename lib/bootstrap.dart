@@ -63,4 +63,9 @@ class AppLoader {
     ]);
     systemChromeInitialized = true;
   }
+
+  static Future<void> reloadLevels() async {
+    levels.clear();
+    await loadLevels();
+  }
 }

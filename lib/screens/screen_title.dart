@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labyrinth/bootstrap.dart';
 
 import 'package:labyrinth/components/gui_common.dart';
 import 'package:labyrinth/screens/screen_levels.dart';
@@ -35,7 +36,8 @@ class ScreenTitle extends StatelessWidget {
                 GradientButton(
                   text: 'LEVELS',
                   icon: Icons.play_arrow,
-                  onPressed: () {
+                  onPressed: () async {
+                    await AppLoader.reloadLevels();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
