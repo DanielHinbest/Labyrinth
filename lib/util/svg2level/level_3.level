@@ -1,8 +1,8 @@
 {
     "name": "level_3",
-    "desc": "A more compelx level with more holes and walls",
+    "desc": "",
     "auth": "Daniel",
-    "diff": 3,
+    "diff": 0,
     "maze": {
         "start": null,
         "goal": null,
