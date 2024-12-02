@@ -1,13 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:labyrinth/bootstrap.dart';
-import 'package:labyrinth/game/level.dart';
-import 'package:labyrinth/data/score.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:labyrinth/screens/screen_title.dart';
-
-import '../game/game_labyrinth.dart';
-import 'package:labyrinth/data/db_connect.dart';
 
 class ScreenGame extends StatefulWidget {
   final Level level;
@@ -20,28 +12,24 @@ class ScreenGame extends StatefulWidget {
 
 class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
-  bool isPauseButtonVisible = false; // Initially hidden
-  late DBConnect dbConnect;
+  bool isPauseButtonVisible = false;
+  bool hasWon = false; // Tracks whether the user has won
   late GameLabyrinth _gameLabyrinth;
   Alignment? pauseButtonAlignment;
 
   @override
   void initState() {
     super.initState();
-    dbConnect = DBConnect();
-    dbConnect.initDatabase();
-    _gameLabyrinth = GameLabyrinth(widget.level.maze);
-    _setupBackButtonHandler();
+    _gameLabyrinth = GameLabyrinth(
+      widget.level.maze,
+      onVictory: handleVictory, // Pass the victory callback
+    );
   }
 
-  void _setupBackButtonHandler() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ModalRoute.of(context)?.addScopedWillPopCallback(() async {
-        setState(() {
-          isPaused = !isPaused;
-        });
-        return false;
-      });
+  void handleVictory() {
+    setState(() {
+      hasWon = true;
+      _gameLabyrinth.pauseEngine(); // Pause the game
     });
   }
 
@@ -49,7 +37,6 @@ class _ScreenGameState extends State<ScreenGame> {
     setState(() {
       isPauseButtonVisible = true;
 
-      // Determine the tapped corner
       final tapX = details.globalPosition.dx;
       final tapY = details.globalPosition.dy;
 
@@ -65,7 +52,6 @@ class _ScreenGameState extends State<ScreenGame> {
     });
   }
 
-  // Method to open the pause menu when the pause button is tapped
   void pause() {
     setState(() {
       isPaused = true;
@@ -73,117 +59,178 @@ class _ScreenGameState extends State<ScreenGame> {
     });
   }
 
-  // Method to resume the game from the pause menu
   void resumeGame() {
     setState(() {
       isPaused = false;
-      isPauseButtonVisible = false; // Hide the pause button after resuming
+      isPauseButtonVisible = false;
       _gameLabyrinth.resumeEngine();
     });
   }
 
-  // TODO: Add logic to restart the game or level but embed it later if time permits.
   void restartGame() {
-    // Implement restart functionality here if needed
-  }
-
-  // Method to go back to the main menu
-  void mainMenu() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ScreenTitle(),
-      ),
-    );
-  }
-
-  void endGame(int finalScore) async {
-    Score score = Score(
-      id: DateTime.now().millisecondsSinceEpoch,
-      score: finalScore,
-      date: DateTime.now().toIso8601String(),
-    );
-    await dbConnect.insertScore(score);
-
-    await FirebaseFirestore.instance.collection('leaderboard').add({
-      'name': 'Player', // Replace with actual player name
-      'time': finalScore,
+    setState(() {
+      hasWon = false;
+      isPaused = false;
+      _gameLabyrinth.resetGame(); // Reset the game
     });
+  }
 
-    Navigator.pushNamed(context, '/game_over');
+  void mainMenu() {
+    Navigator.pop(context); // Go back to the main menu
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Game widget
-          GameWidget(
-            game: _gameLabyrinth,
-          ),
-
-          // Capture tap to show the pause button in a corner
-          if (!isPauseButtonVisible)
-            GestureDetector(
-              onTapDown: (details) => showPauseButton(details, screenSize),
-              child: Container(
-                color: Colors.transparent,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
-
-          // Pause button positioned in the selected corner
-          if (isPauseButtonVisible && pauseButtonAlignment != null)
-            Align(
-              alignment: pauseButtonAlignment!,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: FloatingActionButton(
-                  onPressed: pause,
-                  child: Icon(Icons.pause),
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() {
+          isPaused = !isPaused;
+        });
+        return false;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            GameWidget(game: _gameLabyrinth),
+            if (!isPauseButtonVisible)
+              GestureDetector(
+                onTapDown: (details) => showPauseButton(details, screenSize),
+                child: Container(
+                  color: Colors.transparent,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
-            ),
-
-          // Pause menu
-          if (isPaused)
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Game Paused',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: resumeGame,
-                      child: Text('Resume'),
-                    ),
-                    // Keeping the TODO comment for restart functionality
-                    ElevatedButton(
-                      onPressed: () async {
-                        await AppLoader.reloadLevels();
-                        mainMenu();
-                      },
-                      child: Text('Main Menu'),
-                    ),
-                  ],
+            if (isPauseButtonVisible && pauseButtonAlignment != null)
+              Align(
+                alignment: pauseButtonAlignment!,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: FloatingActionButton(
+                    onPressed: pause,
+                    child: Icon(Icons.pause),
+                  ),
                 ),
               ),
-            ),
-        ],
+            if (isPaused)
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Game Paused',
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: resumeGame,
+                        child: Text('Resume'),
+                      ),
+                      ElevatedButton(
+                        onPressed: mainMenu,
+                        child: Text('Main Menu'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            if (hasWon)
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Victory!',
+                        style: TextStyle(fontSize: 30, color: Colors.white),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: restartGame,
+                        child: Text('Restart'),
+                      ),
+                      ElevatedButton(
+                        onPressed: mainMenu,
+                        child: Text('Main Menu'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
+  }
+}
+
+// Game logic class with victory condition
+class GameLabyrinth extends FlameGame {
+  final VoidCallback onVictory;
+  final Maze maze;
+
+  GameLabyrinth(this.maze, {required this.onVictory});
+
+  bool _hasReachedGoal = false; // Tracks if the player has reached the goal
+
+  void checkVictoryCondition() {
+    // Example victory condition: Player reaches the goal in the maze
+    if (!_hasReachedGoal && maze.isPlayerAtGoal()) {
+      _hasReachedGoal = true; // Prevent multiple triggers
+      onVictory(); // Trigger the victory callback
+    }
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    checkVictoryCondition();
+  }
+
+  void resetGame() {
+    // Logic to reset the game state
+    _hasReachedGoal = false; // Reset the victory state
+    print("Game has been reset");
+  }
+}
+
+// Maze class with a goal-checking method
+class Maze {
+  Maze.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      throw ArgumentError("Maze data is null");
+    }
+    // Parse maze fields here
+  }
+
+  bool isPlayerAtGoal() {
+    // Replace this with your actual logic to check if the player is at the goal
+    // For example, check the player's position against the goal position
+    return true; // Placeholder: Always return true for demonstration
+  }
+}
+
+// Level class
+class Level {
+  final Maze maze;
+
+  Level.fromJson(Map<String, dynamic>? json)
+      : maze = Maze.fromJson(json?['maze']) {
+    if (json == null) {
+      throw ArgumentError("Level data is null");
+    }
   }
 }
