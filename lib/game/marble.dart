@@ -1,13 +1,16 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class Marble extends BodyComponent {
   @override
   final Vector2 position;
   late CircleShape shape;
   late Fixture fixture;
+  StreamSubscription? _accelerometerSubscription;
 
   Marble(this.position);
 
@@ -33,6 +36,22 @@ class Marble extends BodyComponent {
   void onMount() {
     super.onMount();
     print('Marble mounted with body: $body');
+    _startAccelerometer();
+  }
+
+  void _startAccelerometer() {
+    _accelerometerSubscription =
+        accelerometerEvents.listen((AccelerometerEvent event) {
+      // Update the marble's velocity based on the accelerometer data
+      final Vector2 velocity = Vector2(event.y, event.x) * 10;
+      body.linearVelocity = velocity;
+    });
+  }
+
+  @override
+  void onRemove() {
+    super.onRemove();
+    _accelerometerSubscription?.cancel();
   }
 
   void shrinkAndDisappear() {

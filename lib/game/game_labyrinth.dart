@@ -11,7 +11,7 @@ class GameLabyrinth extends Forge2DGame {
   final Maze maze;
   final List<Hole> holes = [];
 
-  GameLabyrinth(this.maze) : super(gravity: Vector2(0, 50));
+  GameLabyrinth(this.maze) : super(gravity: Vector2.zero());
 
   Marble? marble;
 
