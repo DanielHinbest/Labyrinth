@@ -120,32 +120,31 @@ class _ScreenGameState extends State<ScreenGame> {
   }
 
   void endGame(int finalScore) async {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
-  final String level = widget.level.name;
-  final String date = DateTime.now().toIso8601String().split('T').first; // Only the date part
-  final String playerName = userProvider.currentUser.username;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String level = widget.level.name;
+    final String date = DateTime.now().toIso8601String().split('T').first; // Only the date part
+    final String playerName = userProvider.currentUser.username;
 
-  // Insert the score into SQLite
-  await dbConnect.insertScore(finalScore, level, date);
-  print('Inserted score into SQLite: $finalScore for level: $level');
+    // Insert the score into SQLite
+    await dbConnect.insertScore(finalScore, level, date);
+    print('Inserted score into SQLite: $finalScore for level: $level');
 
-  // Add the score to Firestore
-  try {
-    await FirebaseFirestore.instance.collection('leaderboard').add({
-      'name': playerName,
-      'time': finalScore,
-      'level': level,
-      'date': date,
-    });
-    print('Added score to Firebase: $finalScore for player: $playerName');
-  } catch (e) {
-    print('Error adding score to Firebase: $e');
+    // Add the score to Firestore
+    try {
+      await FirebaseFirestore.instance.collection('leaderboard').add({
+        'name': playerName,
+        'time': finalScore,
+        'level': level,
+        'date': date,
+      });
+      print('Added score to Firebase: $finalScore for player: $playerName');
+    } catch (e) {
+      print('Error adding score to Firebase: $e');
+    }
+
+    // Navigate to the game over screen
+    Navigator.pushNamed(context, '/game_over');
   }
-
-  // Navigate to the game over screen
-  Navigator.pushNamed(context, '/game_over');
-}
-
 
   @override
   Widget build(BuildContext context) {

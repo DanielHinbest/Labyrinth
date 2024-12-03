@@ -58,4 +58,12 @@ class DBConnect {
     }
     return null;
   }
+
+  Future<void> clearDatabase() async {
+    final db = _database;
+    if (db == null) return;
+
+    await db.delete('scores');
+    print('Cleared all records from the local database');
+  }
 }
