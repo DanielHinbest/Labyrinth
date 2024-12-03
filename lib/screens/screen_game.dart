@@ -178,6 +178,7 @@ class _ScreenGameState extends State<ScreenGame> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final showTimer = context.read<SettingsProvider>().timerVisible;
 
     return Scaffold(
       body: Stack(
@@ -246,14 +247,15 @@ class _ScreenGameState extends State<ScreenGame> {
             ),
 
           // Timer display
-          Positioned(
-            top: 20,
-            right: 20,
-            child: Text(
-              'Time: $_elapsedSeconds s',
-              style: TextStyle(fontSize: 24, color: Colors.white),
+          if (showTimer)
+            Positioned(
+              top: 20,
+              right: 20,
+              child: Text(
+                'Time: $_elapsedSeconds s',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
             ),
-          ),
         ],
       ),
     );
