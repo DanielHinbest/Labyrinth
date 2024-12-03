@@ -198,7 +198,10 @@ class _ScreenLevelsState extends State<ScreenLevels> {
                                             LevelInfo(
                                                 level: _filteredLevels[
                                                     _selectedLevelIndex]),
-                                            Leaderboard(),
+                                            Leaderboard(
+                                                level: _filteredLevels[
+                                                        _selectedLevelIndex]
+                                                    .name), // Use updated Leaderboard widget
                                             LocalScores(
                                                 level: _filteredLevels[
                                                         _selectedLevelIndex]

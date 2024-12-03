@@ -11,20 +11,20 @@ class DBConnect {
       join(await getDatabasesPath(), 'labyrinth.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE scores(id INTEGER PRIMARY KEY, time INTEGER, level TEXT)',
+          'CREATE TABLE scores(id INTEGER PRIMARY KEY, time INTEGER, level TEXT, date TEXT)',
         );
       },
       version: 1,
     );
   }
 
-  Future<void> insertScore(int time, String level) async {
+  Future<void> insertScore(int time, String level, String date) async {
     final db = _database;
     if (db == null) return;
 
     await db.insert(
       'scores',
-      {'time': time, 'level': level},
+      {'time': time, 'level': level, 'date': date},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -39,5 +39,23 @@ class DBConnect {
       whereArgs: [level],
       orderBy: 'time ASC',
     );
+  }
+
+  Future<int?> getBestTime(String level) async {
+    final db = _database;
+    if (db == null) return null;
+
+    final result = await db.query(
+      'scores',
+      where: 'level = ?',
+      whereArgs: [level],
+      orderBy: 'time ASC',
+      limit: 1,
+    );
+
+    if (result.isNotEmpty) {
+      return result.first['time'] as int?;
+    }
+    return null;
   }
 }

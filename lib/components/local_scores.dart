@@ -26,7 +26,7 @@ class LocalScores extends StatelessWidget {
             final score = scores[index];
             return ListTile(
               title: Text('Time: ${score['time']} s'),
-              subtitle: Text('Level: ${score['level']}'),
+              subtitle: Text('Date: ${score['date']}'),
             );
           },
         );

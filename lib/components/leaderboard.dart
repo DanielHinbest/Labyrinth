@@ -1,66 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:labyrinth/util/language_manager.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Leaderboard extends StatelessWidget {
-  const Leaderboard({super.key});
+  final String level;
+
+  const Leaderboard({required this.level});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('leaderboard')
-          .orderBy('time', descending: true)
+          .where('level', isEqualTo: level)
+          .orderBy('time', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
+
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(
-              child: Text(
-                  LanguageManager.instance.translate('leaderboard_no_data')));
+          return Center(child: Text('No results found'));
         }
 
-        final leaderboardEntries = snapshot.data!.docs;
+        final scores = snapshot.data!.docs;
 
         return ListView.builder(
-          itemCount: leaderboardEntries.length,
+          itemCount: scores.length,
           itemBuilder: (context, index) {
-            final entry = leaderboardEntries[index];
-            final playerName = entry['name'];
-            final timeString = entry['time'];
-            final score = _parseTimeString(timeString);
-            final formattedTime = _formatDuration(Duration(seconds: score));
-
+            final score = scores[index];
             return ListTile(
-              leading: Text(
-                "#${index + 1}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              title: Text(playerName),
-              trailing: Text(formattedTime),
+              title: Text('Name: ${score['name']}'),
+              subtitle: Text('Time: ${score['time']} s\nDate: ${score['date']}'),
             );
           },
         );
       },
     );
-  }
-
-  int _parseTimeString(String timeString) {
-    final parts = timeString.split(':');
-    final minutes = int.parse(parts[0]);
-    final secondsParts = parts[1].split('.');
-    final seconds = int.parse(secondsParts[0]);
-
-    return minutes * 60 + seconds; // Convert to total seconds
-  }
-
-  String _formatDuration(Duration duration) {
-    String minutes = duration.inMinutes.toString().padLeft(2, '0');
-    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    String milliseconds =
-        (duration.inMilliseconds % 1000).toString().padLeft(3, '0');
-    return "$minutes:$seconds.$milliseconds";
   }
 }

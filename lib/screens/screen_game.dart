@@ -7,7 +7,9 @@ import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:labyrinth/screens/screen_title.dart';
+import 'package:provider/provider.dart';
 
+import '../data/providers/user_provider.dart';
 import '../game/game_labyrinth.dart';
 import 'package:labyrinth/data/db_connect.dart';
 
@@ -118,15 +120,51 @@ class _ScreenGameState extends State<ScreenGame> {
   }
 
   void endGame(int finalScore) async {
-    await dbConnect.insertScore(finalScore, widget.level.name);
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  final String level = widget.level.name;
+  final String date = DateTime.now().toIso8601String().split('T').first; // Only the date part
+  final String playerName = userProvider.currentUser.username;
 
-    await FirebaseFirestore.instance.collection('leaderboard').add({
-      'name': 'Player', // Replace with actual player name
-      'time': finalScore,
-    });
+  // Insert the score into SQLite
+  await dbConnect.insertScore(finalScore, level, date);
+  print('Inserted score into SQLite: $finalScore for level: $level');
 
-    Navigator.pushNamed(context, '/game_over');
+  // Get the best time from SQLite
+  int? bestTime = await dbConnect.getBestTime(level);
+  print('Best time from SQLite: $bestTime');
+
+  // Check if the new score is better than the best time
+  if (bestTime == null || finalScore < bestTime) {
+    try {
+      // Query Firebase for the current best record of the user for this level
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('leaderboard')
+          .where('level', isEqualTo: level)
+          .where('name', isEqualTo: playerName)
+          .get();
+
+      // Delete the previous record if it exists
+      for (var doc in querySnapshot.docs) {
+        await doc.reference.delete();
+        print('Deleted previous record from Firebase: ${doc.id}');
+      }
+
+      // Add the new best record to Firebase
+      await FirebaseFirestore.instance.collection('leaderboard').add({
+        'name': playerName,
+        'time': finalScore,
+        'level': level,
+        'date': date,
+      });
+      print('Added new best record to Firebase: $finalScore for player: $playerName');
+    } catch (e) {
+      print('Error logging to Firebase: $e');
+    }
   }
+
+  // Navigate to the game over screen
+  Navigator.pushNamed(context, '/game_over');
+}
 
   @override
   Widget build(BuildContext context) {

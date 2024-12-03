@@ -60,12 +60,11 @@ class GameLabyrinth extends Forge2DGame {
       }
     }
 
-    // Check for collision with the goal object
     if (!_goalReached && goal != null && goal!.body != null && isColliding(marble!, goal!)) {
       print('Marble reached the goal');
-      goal!.changeMarbleColorToRainbow(marble!); // Change marble color to rainbow
-      _goalReached = true; // Set the flag to true
-      onGoalReached(); // Call the callback to stop the timer
+      goal!.changeMarbleColorToRainbow(marble!);
+      _goalReached = true;
+      onGoalReached(); // Ensure this is called
     }
   }
 
