@@ -302,10 +302,19 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
-                                          content: Text(
-                                              'Music is now ${value ? 'on' : 'off'}'),
+                                          duration: const Duration(seconds: 2),
+                                          content: Text(LanguageManager.instance
+                                              .translate(
+                                                  'screen_settings_music_snackbar',
+                                                  {
+                                                'status': value ? 'on' : 'off'
+                                              })),
                                           action: SnackBarAction(
-                                              label: 'UNDO', onPressed: () {}),
+                                              label: LanguageManager.instance
+                                                  .translate('btn_undo'),
+                                              onPressed: () async {
+                                                await settings.setMusic(!value);
+                                              }),
                                         ),
                                       );
 

@@ -30,6 +30,7 @@
   "screen_title_levels": "NIVEAUX",
   "screen_title_options": "OPTIONS",
   "screen_settings_music_label": "Musique",
+  "screen_settings_music_snackbar": "La musique est maintenant $status",
   "screen_settings_sound_label": "Effets sonores",
   "screen_settings_language_label": "Langue",
   "screen_settings_theme_label": "Thème",

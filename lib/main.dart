@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:labyrinth/util/audio_service.dart';
 import 'package:provider/provider.dart';
 
 import 'package:labyrinth/bootstrap.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ],
         builder: (context, _) {
           return Consumer<SettingsProvider>(builder: (context, settings, _) {
+            if (settings.musicOn) {
+              AudioService.instance.playBackgroundMusic(AudioService.menuBgm);
+            }
             return MaterialApp(
               title: 'Labyrinth',
               theme: getThemeColors(settings.theme).theme,
