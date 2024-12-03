@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/bootstrap.dart';
+import 'package:labyrinth/data/providers/settings_provider.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:labyrinth/screens/screen_title.dart';
+import 'package:labyrinth/util/audio_service.dart';
+import 'package:labyrinth/util/logging.dart';
 import 'package:provider/provider.dart';
 
 import '../data/providers/user_provider.dart';
@@ -33,6 +36,26 @@ class _ScreenGameState extends State<ScreenGame> {
   Timer? _timer;
   int _elapsedSeconds = 0;
 
+  Future<void> _startGameMusic() async {
+    if (context.read<SettingsProvider>().musicOn) {
+      appLogger.d('Stopping menu music, starting game music');
+      await AudioService.instance.stopBackgroundMusic(); // Stop menu music
+      await AudioService.instance
+          .playBackgroundMusic(AudioService.gameBgm); // Start game music
+      appLogger.d('Game music started');
+    }
+  }
+
+  Future<void> _stopGameMusic() async {
+    if (context.read<SettingsProvider>().musicOn) {
+      appLogger.d('Stopping game music, starting menu music');
+      await AudioService.instance.stopBackgroundMusic(); // Stop game music
+      await AudioService.instance
+          .playBackgroundMusic(AudioService.menuBgm); // Start menu music
+      appLogger.d('Menu music started');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +63,8 @@ class _ScreenGameState extends State<ScreenGame> {
     dbConnect.initDatabase();
     _gameLabyrinth = GameLabyrinth(widget.level.maze, _stopTimer);
     _setupBackButtonHandler();
+    // Start game music and stop menu music
+    _startGameMusic();
     _startTimer();
   }
 
@@ -112,7 +137,8 @@ class _ScreenGameState extends State<ScreenGame> {
   }
 
   // Method to go back to the main menu
-  void mainMenu() {
+  Future<void> mainMenu() async {
+    await _stopGameMusic();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -209,8 +235,8 @@ class _ScreenGameState extends State<ScreenGame> {
                     // Keeping the TODO comment for restart functionality
                     ElevatedButton(
                       onPressed: () async {
-                        await AppLoader.loadLevels();
-                        mainMenu();
+                        await AppLoader.reloadLevels();
+                        await mainMenu();
                       },
                       child: Text('Main Menu'),
                     ),

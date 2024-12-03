@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:labyrinth/util/audio_service.dart';
 import 'package:provider/provider.dart';
 
 import 'package:labyrinth/bootstrap.dart';
@@ -14,14 +15,8 @@ import 'package:labyrinth/data/providers/user_provider.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 import 'package:labyrinth/util/language_manager.dart';
 import 'package:labyrinth/util/app_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'data/firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   AppLoader.bootstrap(() => const MyApp());
 }
 
@@ -37,6 +32,9 @@ class MyApp extends StatelessWidget {
         ],
         builder: (context, _) {
           return Consumer<SettingsProvider>(builder: (context, settings, _) {
+            if (settings.musicOn) {
+              AudioService.instance.playBackgroundMusic(AudioService.menuBgm);
+            }
             return MaterialApp(
               title: 'Labyrinth',
               theme: getThemeColors(settings.theme).theme,

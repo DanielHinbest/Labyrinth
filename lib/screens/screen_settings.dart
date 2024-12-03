@@ -32,56 +32,130 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(
-            child: Text(
-              LanguageManager.instance
-                  .translate('screen_settings_credits_dialog_title'),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: DefaultTabController(
+              length: 2,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Title
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Center(
+                      child: Text(
+                        LanguageManager.instance
+                            .translate('screen_settings_credits_dialog_title'),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  // TabBar
+                  TabBar(
+                    tabs: [
+                      Tab(
+                          text: LanguageManager.instance.translate(
+                              'screen_settings_credits_tab_contributors')),
+                      Tab(
+                          text: LanguageManager.instance
+                              .translate('screen_settings_credits_tab_music')),
+                    ],
+                  ),
+                  // Content Area
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        // Contributors Tab
+                        SingleChildScrollView(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Daniel Hinbest',
+                                  style:
+                                      TextStyle(fontSize: 16, inherit: true)),
+                              Text('Jugal Patel',
+                                  style:
+                                      TextStyle(fontSize: 16, inherit: true)),
+                              Text('Syed Rizvi',
+                                  style:
+                                      TextStyle(fontSize: 16, inherit: true)),
+                              Text('Raje Singh',
+                                  style:
+                                      TextStyle(fontSize: 16, inherit: true)),
+                              Text('Zachary Wayne',
+                                  style:
+                                      TextStyle(fontSize: 16, inherit: true)),
+                              const SizedBox(
+                                  height: 20), // Space between names and footer
+                              Text(
+                                'Mobile Devices Final Project',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                  inherit: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Music Attribution Tab
+                        SingleChildScrollView(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Music Attribution',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text(
+                                'Impact Lento by Kevin MacLeod\n'
+                                'Impact Allegretto by Kevin MacLeod\n',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              const Text(
+                                'Both songs are licensed under a\n'
+                                'Attribution 3.0 International License.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Close Button
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child:
+                          Text(LanguageManager.instance.translate('btn_close')),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          content: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Daniel Hinbest',
-                    style: TextStyle(fontSize: 16, inherit: true)),
-                Text('Jugal Patel',
-                    style: TextStyle(fontSize: 16, inherit: true)),
-                Text('Syed Rizvi',
-                    style: TextStyle(fontSize: 16, inherit: true)),
-                Text('Raje Singh',
-                    style: TextStyle(fontSize: 16, inherit: true)),
-                Text('Zachary Wayne',
-                    style: TextStyle(fontSize: 16, inherit: true)),
-                SizedBox(height: 20), // Space between names and footer
-                // Footer text
-                Text(
-                  'Mobile Devices Final Project',
-                  style: TextStyle(
-                      fontSize: 12,
-                      // color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                      inherit: true),
-                ),
-              ],
-            ),
-          ),
-          contentPadding: EdgeInsets.all(5),
-          actionsPadding: EdgeInsets.all(0),
-          actions: [
-            Center(
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text(LanguageManager.instance.translate('btn_close')),
-              ),
-            ),
-          ],
         );
       },
     );
@@ -232,10 +306,19 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
-                                          content: Text(
-                                              'Music is now ${value ? 'on' : 'off'}'),
+                                          duration: const Duration(seconds: 2),
+                                          content: Text(LanguageManager.instance
+                                              .translate(
+                                                  'screen_settings_music_snackbar',
+                                                  {
+                                                'status': value ? 'on' : 'off'
+                                              })),
                                           action: SnackBarAction(
-                                              label: 'UNDO', onPressed: () {}),
+                                              label: LanguageManager.instance
+                                                  .translate('btn_undo'),
+                                              onPressed: () async {
+                                                await settings.setMusic(!value);
+                                              }),
                                         ),
                                       );
 
@@ -266,8 +349,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                                         'screen_settings_theme_label'),
                                     value: settings.theme,
                                     items: AppTheme.values
-                                        .map((e) =>
-                                            e.toString().split('.').last)
+                                        .map(
+                                            (e) => e.toString().split('.').last)
                                         .toList(),
                                     onChanged: (value) =>
                                         _updateSetting(() async {

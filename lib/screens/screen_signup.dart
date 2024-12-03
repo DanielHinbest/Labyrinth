@@ -65,13 +65,14 @@ class _SignUpOverlayState extends State<SignUpOverlay> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Sign Up',
+                        Center(
+                            child: Text(
+                          'Sign Up [INCOMPLETE PAGE WIP]',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
+                        )),
                         SizedBox(height: 20),
                         // Username Field
                         TextFormField(

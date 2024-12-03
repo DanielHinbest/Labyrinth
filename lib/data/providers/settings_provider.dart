@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labyrinth/data/settings.dart';
+import 'package:labyrinth/util/audio_service.dart';
 import 'package:labyrinth/util/language_manager.dart';
 import 'package:labyrinth/util/logging.dart';
 
@@ -36,6 +37,11 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> setMusic(bool musicOn) async {
     _musicOn = musicOn;
+    if (_musicOn) {
+      AudioService.instance.playBackgroundMusic(AudioService.menuBgm);
+    } else {
+      AudioService.instance.stopBackgroundMusic();
+    }
     await Settings.setMusic(musicOn);
     notifyListeners();
   }
