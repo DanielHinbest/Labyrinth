@@ -14,8 +14,14 @@ import 'package:labyrinth/data/providers/user_provider.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 import 'package:labyrinth/util/language_manager.dart';
 import 'package:labyrinth/util/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'data/firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   AppLoader.bootstrap(() => const MyApp());
 }
 

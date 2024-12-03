@@ -7,6 +7,8 @@ import 'package:labyrinth/data/settings.dart';
 import 'package:labyrinth/util/language_manager.dart';
 import 'package:labyrinth/util/app_theme.dart';
 
+import '../data/db_connect.dart';
+
 class SettingsOverlay extends StatefulWidget {
   const SettingsOverlay({super.key});
 
@@ -85,6 +87,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
     );
   }
 
+  final DBConnect dbConnect = DBConnect();
+
   void _showResetProgress() {
     showDialog(
       context: context,
@@ -102,8 +106,8 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
               child: Text(LanguageManager.instance.translate('btn_cancel')),
             ),
             TextButton(
-              onPressed: () {
-                // Add logic to reset progress here
+              onPressed: () async {
+                await dbConnect.clearDatabase();
                 Navigator.of(context).pop(); // Close the dialog
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

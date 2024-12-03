@@ -1,66 +1,67 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:labyrinth/util/language_manager.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Leaderboard extends StatelessWidget {
-  const Leaderboard({super.key});
+  final String level;
+
+  const Leaderboard({required this.level});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('leaderboard')
-          .orderBy('time', descending: true)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(
-              child: Text(
-                  LanguageManager.instance.translate('leaderboard_no_data')));
-        }
+      return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('leaderboard')
+            .where('level', isEqualTo: level)
+            .orderBy('time', descending: false)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-        final leaderboardEntries = snapshot.data!.docs;
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(child: Text('No results found'));
+          }
 
-        return ListView.builder(
-          itemCount: leaderboardEntries.length,
-          itemBuilder: (context, index) {
-            final entry = leaderboardEntries[index];
-            final playerName = entry['name'];
-            final timeString = entry['time'];
-            final score = _parseTimeString(timeString);
-            final formattedTime = _formatDuration(Duration(seconds: score));
+          final scores = snapshot.data!.docs;
 
-            return ListTile(
-              leading: Text(
-                "#${index + 1}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              title: Text(playerName),
-              trailing: Text(formattedTime),
-            );
-          },
-        );
-      },
+          return ListView.builder(
+            itemCount: scores.length,
+            itemBuilder: (context, index) {
+              final score = scores[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '#${index + 1}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '\t\t${score['name']}',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Text(
+                      '${score['time']} s',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
     );
-  }
-
-  int _parseTimeString(String timeString) {
-    final parts = timeString.split(':');
-    final minutes = int.parse(parts[0]);
-    final secondsParts = parts[1].split('.');
-    final seconds = int.parse(secondsParts[0]);
-
-    return minutes * 60 + seconds; // Convert to total seconds
-  }
-
-  String _formatDuration(Duration duration) {
-    String minutes = duration.inMinutes.toString().padLeft(2, '0');
-    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    String milliseconds =
-        (duration.inMilliseconds % 1000).toString().padLeft(3, '0');
-    return "$minutes:$seconds.$milliseconds";
   }
 }

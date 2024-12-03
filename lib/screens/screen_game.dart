@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/bootstrap.dart';
@@ -5,7 +7,9 @@ import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:labyrinth/screens/screen_title.dart';
+import 'package:provider/provider.dart';
 
+import '../data/providers/user_provider.dart';
 import '../game/game_labyrinth.dart';
 import 'package:labyrinth/data/db_connect.dart';
 
@@ -26,14 +30,32 @@ class _ScreenGameState extends State<ScreenGame> {
   late DBConnect dbConnect;
   late GameLabyrinth _gameLabyrinth;
   Alignment? pauseButtonAlignment;
+  Timer? _timer;
+  int _elapsedSeconds = 0;
 
   @override
   void initState() {
     super.initState();
     dbConnect = DBConnect();
     dbConnect.initDatabase();
-    _gameLabyrinth = GameLabyrinth(widget.level.maze);
+    _gameLabyrinth = GameLabyrinth(widget.level.maze, _stopTimer);
     _setupBackButtonHandler();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!isPaused) {
+        setState(() {
+          _elapsedSeconds++;
+        });
+      }
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    endGame(_elapsedSeconds);
   }
 
   void _setupBackButtonHandler() {
@@ -100,18 +122,30 @@ class _ScreenGameState extends State<ScreenGame> {
   }
 
   void endGame(int finalScore) async {
-    Score score = Score(
-      id: DateTime.now().millisecondsSinceEpoch,
-      score: finalScore,
-      date: DateTime.now().toIso8601String(),
-    );
-    await dbConnect.insertScore(score);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final String level = widget.level.name;
+    final String date =
+        DateTime.now().toIso8601String().split('T').first; // Only the date part
+    final String playerName = userProvider.currentUser.username;
 
-    await FirebaseFirestore.instance.collection('leaderboard').add({
-      'name': 'Player', // Replace with actual player name
-      'time': finalScore,
-    });
+    // Insert the score into SQLite
+    await dbConnect.insertScore(finalScore, level, date);
+    print('Inserted score into SQLite: $finalScore for level: $level');
 
+    // Add the score to Firestore
+    try {
+      await FirebaseFirestore.instance.collection('leaderboard').add({
+        'name': playerName,
+        'time': finalScore,
+        'level': level,
+        'date': date,
+      });
+      print('Added score to Firebase: $finalScore for player: $playerName');
+    } catch (e) {
+      print('Error adding score to Firebase: $e');
+    }
+
+    // Navigate to the game over screen
     Navigator.pushNamed(context, '/game_over');
   }
 
@@ -184,9 +218,18 @@ class _ScreenGameState extends State<ScreenGame> {
                 ),
               ),
             ),
+
+          // Timer display
+          Positioned(
+            top: 20,
+            right: 20,
+            child: Text(
+              'Time: $_elapsedSeconds s',
+              style: TextStyle(fontSize: 24, color: Colors.white),
+            ),
+          ),
         ],
       ),
     );
   }
 }
-

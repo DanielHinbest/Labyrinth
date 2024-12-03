@@ -11,6 +11,7 @@ import 'package:labyrinth/components/level_info.dart';
 import 'package:labyrinth/components/search_overlay.dart';
 import 'package:labyrinth/components/level_filter_modal.dart';
 import 'package:labyrinth/util/language_manager.dart';
+import 'package:labyrinth/components/local_scores.dart'; // Import LocalScores
 
 class ScreenLevels extends StatefulWidget {
   const ScreenLevels({super.key});
@@ -197,8 +198,14 @@ class _ScreenLevelsState extends State<ScreenLevels> {
                                             LevelInfo(
                                                 level: _filteredLevels[
                                                     _selectedLevelIndex]),
-                                            Leaderboard(),
-                                            Center(child: Text('Local Scores')),
+                                            Leaderboard(
+                                                level: _filteredLevels[
+                                                        _selectedLevelIndex]
+                                                    .name), // Use updated Leaderboard widget
+                                            LocalScores(
+                                                level: _filteredLevels[
+                                                        _selectedLevelIndex]
+                                                    .name), // Use LocalScores widget
                                           ],
                                         ),
                                       ),
