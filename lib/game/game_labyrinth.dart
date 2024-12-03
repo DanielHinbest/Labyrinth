@@ -22,7 +22,7 @@ class GameLabyrinth extends Forge2DGame {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    print('World type: ${world.runtimeType}');
+    // print('World type: ${world.runtimeType}');
 
     Vector2 marbleSpawnPosition = maze.start;
 
@@ -55,7 +55,7 @@ class GameLabyrinth extends Forge2DGame {
     for (final hole in holes) {
       if (hole.body == null) continue;
       if (isColliding(marble!, hole)) {
-        print('Marble entered the hole');
+        // print('Marble entered the hole');
         marble!.shrinkAndDisappear();
       }
     }
@@ -64,7 +64,7 @@ class GameLabyrinth extends Forge2DGame {
         goal != null &&
         goal!.body != null &&
         isColliding(marble!, goal!)) {
-      print('Marble reached the goal');
+      // print('Marble reached the goal');
       goal!.changeMarbleColorToRainbow(marble!);
       _goalReached = true;
       onGoalReached(); // Ensure this is called
@@ -79,8 +79,8 @@ class GameLabyrinth extends Forge2DGame {
     final distance = marblePosition.distanceTo(componentPosition);
     final collisionThreshold = marble.shape.radius +
         (component is Hole ? component.radius : (component as Goal).radius);
-    print('Distance: $distance');
-    print('Collision threshold: $collisionThreshold');
+    // print('Distance: $distance');
+    // print('Collision threshold: $collisionThreshold');
 
     return distance < collisionThreshold;
   }

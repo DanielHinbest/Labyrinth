@@ -28,7 +28,7 @@ class Hole extends BodyComponent {
   @override
   void onMount() {
     super.onMount();
-    print('Hole mounted with body: $body');
+    // print('Hole mounted with body: $body');
   }
 
   @override

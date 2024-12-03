@@ -28,7 +28,7 @@ class Goal extends BodyComponent {
   @override
   void onMount() {
     super.onMount();
-    print('Goal mounted with body: $body');
+    // print('Goal mounted with body: $body');
   }
 
   @override

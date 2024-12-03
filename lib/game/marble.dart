@@ -35,7 +35,7 @@ class Marble extends BodyComponent {
   @override
   void onMount() {
     super.onMount();
-    print('Marble mounted with body: $body');
+    // print('Marble mounted with body: $body');
     _startAccelerometer();
   }
 

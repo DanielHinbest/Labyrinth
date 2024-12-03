@@ -159,7 +159,7 @@ class _ScreenGameState extends State<ScreenGame> {
 
     // Insert the score into SQLite
     await dbConnect.insertScore(finalScore, level, date);
-    print('Inserted score into SQLite: $finalScore for level: $level');
+    // print('Inserted score into SQLite: $finalScore for level: $level');
 
     // Add the score to Firestore
     try {
@@ -169,9 +169,9 @@ class _ScreenGameState extends State<ScreenGame> {
         'level': level,
         'date': date,
       });
-      print('Added score to Firebase: $finalScore for player: $playerName');
+      // print('Added score to Firebase: $finalScore for player: $playerName');
     } catch (e) {
-      print('Error adding score to Firebase: $e');
+      // print('Error adding score to Firebase: $e');
     }
 
     setState(() {

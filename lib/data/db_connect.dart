@@ -64,6 +64,6 @@ class DBConnect {
     if (db == null) return;
 
     await db.delete('scores');
-    print('Cleared all records from the local database');
+    // print('Cleared all records from the local database');
   }
 }
