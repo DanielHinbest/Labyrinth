@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:labyrinth/bootstrap.dart';
+import 'package:labyrinth/components/victory_overlay.dart';
 import 'package:labyrinth/data/providers/settings_provider.dart';
 import 'package:labyrinth/game/level.dart';
 import 'package:labyrinth/data/score.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:labyrinth/screens/screen_title.dart';
 import 'package:labyrinth/util/audio_service.dart';
+import 'package:labyrinth/util/language_manager.dart';
 import 'package:labyrinth/util/logging.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +32,7 @@ class ScreenGame extends StatefulWidget {
 class _ScreenGameState extends State<ScreenGame> {
   bool isPaused = false;
   bool isPauseButtonVisible = false; // Initially hidden
+  bool showVictoryOverlay = false;
   late DBConnect dbConnect;
   late GameLabyrinth _gameLabyrinth;
   Alignment? pauseButtonAlignment;
@@ -171,8 +174,7 @@ class _ScreenGameState extends State<ScreenGame> {
       print('Error adding score to Firebase: $e');
     }
 
-    // Navigate to the game over screen
-    Navigator.pushNamed(context, '/game_over');
+    showVictoryOverlay = true;
   }
 
   @override
@@ -225,13 +227,15 @@ class _ScreenGameState extends State<ScreenGame> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Game Paused',
+                      LanguageManager.instance
+                          .translate('screen_game_pause_title'),
                       style: TextStyle(fontSize: 24, color: Colors.white),
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: resumeGame,
-                      child: Text('Resume'),
+                      child: Text(LanguageManager.instance
+                          .translate('screen_game_pause_resume')),
                     ),
                     // Keeping the TODO comment for restart functionality
                     ElevatedButton(
@@ -239,11 +243,21 @@ class _ScreenGameState extends State<ScreenGame> {
                         await AppLoader.reloadLevels();
                         await mainMenu();
                       },
-                      child: Text('Main Menu'),
+                      child: Text(LanguageManager.instance
+                          .translate('screen_game_pause_main_menu')),
                     ),
                   ],
                 ),
               ),
+            ),
+
+          if (showVictoryOverlay)
+            VictoryOverlay(
+              onNextLevel: () async {
+                await AppLoader.reloadLevels();
+                mainMenu(); // go back to main menu for now, some issues with changing levels in this context
+              },
+              onMainMenu: mainMenu,
             ),
 
           // Timer display
@@ -252,7 +266,8 @@ class _ScreenGameState extends State<ScreenGame> {
               top: 20,
               right: 20,
               child: Text(
-                'Time: $_elapsedSeconds s',
+                LanguageManager.instance.translate(
+                    'screen_game_timer', {'time': '$_elapsedSeconds s'}),
                 style: TextStyle(fontSize: 24, color: Colors.white),
               ),
             ),

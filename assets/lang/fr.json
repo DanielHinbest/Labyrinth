@@ -45,5 +45,11 @@
   "screen_settings_credits_button": "Crédits",
   "screen_settings_credits_dialog_title": "Crédits",
   "screen_settings_credits_tab_contributors": "Contributeurs",
-  "screen_settings_credits_tab_music": "Musique"
+  "screen_settings_credits_tab_music": "Musique",
+  "screen_game_pause_resume": "Reprendre",
+  "screen_game_pause_main_menu": "Menu principal",
+  "screen_game_timer": "Temps : $time",
+  "screen_game_victory_title": "Vous avez gagné!",
+  "screen_game_victory_next_level": "Niveau suivant",
+  "screen_game_victory_main_menu": "Menu principal"
 }
