@@ -174,7 +174,9 @@ class _ScreenGameState extends State<ScreenGame> {
       print('Error adding score to Firebase: $e');
     }
 
-    showVictoryOverlay = true;
+    setState(() {
+      showVictoryOverlay = true;
+    });
   }
 
   @override
